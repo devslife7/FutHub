@@ -61,7 +61,12 @@ function LeagueSearchBar( props ) {
   return (
     <>
       <List>
-        <TextField onChange={ (event) => props.searchLeagueTerm( event.target.value )} className={classes.searchInput} label="Search Leagues..."/>
+        <TextField
+          value={ props.leagues.searchTerm }
+          onChange={ (event) => props.searchLeagueTerm( event.target.value )}
+          className={classes.searchInput}
+          label="Search Leagues..."
+          />
         <Divider />
         <ListItem button key='Popular'>
           <ListItemIcon> <SportsSoccerIcon /> </ListItemIcon>
@@ -107,7 +112,7 @@ function LeagueSearchBar( props ) {
           <ListItemText primary='Date' />
         </ListItem>
         <Typography noWrap style={{marginTop: '10px'}}>
-          Results: { (Object.entries(props.leagues).length > 0) && props.leagues.display.length }
+          Results: { props.leagues.display.length }
         </Typography>
       </List>
     </>

@@ -43,22 +43,19 @@ function Leagues( props ) {
 
   }, [setLeagues])
 
-  // const handleChange = (event, value) => {
-  //   setPage(value);
-  // };
 
-  // const indexOfLastPost = currentPage * leaguesPerPage
-  // const indexOfFirstPost = indexOfLastPost - leaguesPerPage
-  // const currentLeagues = props.leagues.display.slice(indexOfFirstPost, indexOfLastPost)
+  // let results
 
   const renderLeagues = () => {
-    if (Object.entries(props.leagues).length > 0) {
+    // if (Object.entries(props.leagues).length > 0) {
       const indexOfLastPost = currentPage * leaguesPerPage
       const indexOfFirstPost = indexOfLastPost - leaguesPerPage
       let leagues = props.leagues.display
-      if (props.leagues.searchTerm) {
-        leagues = leagues.filter( league => league.name.toLowerCase().includes(props.leagues.searchTerm.toLowerCase()) )
-      }
+
+      leagues = leagues.filter( league => league.name.toLowerCase().includes(props.leagues.searchTerm.toLowerCase()) || league.country.toLowerCase().includes(props.leagues.searchTerm.toLowerCase()) )
+
+      // results = leagues.length
+
       let currentLeagues = leagues.slice(indexOfFirstPost, indexOfLastPost)
 
       return currentLeagues.map( (l, idx) => 
@@ -66,7 +63,7 @@ function Leagues( props ) {
           <LeagueCard league={l}/>
         </Grid>
       )
-    }
+    // }
   }
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
@@ -76,7 +73,8 @@ function Leagues( props ) {
       <Grid container spacing={3}>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            <LeagueSearchBar/>
+            <LeagueSearchBar />
+            {/* <LeagueSearchBar results={results}/> */}
           </Paper>
         </Grid>
         <Grid item xs={9} container spacing={4} style={{marginLeft: 10}}>
@@ -85,7 +83,7 @@ function Leagues( props ) {
             <Grid item xs={12} style={{ justifyContent: 'center'}}>
               <Pagination
                 leaguesPerPage={leaguesPerPage}
-                totalLeagues={ (Object.entries(props.leagues).length > 0) && props.leagues.display.length}
+                totalLeagues={ props.leagues.display.length }
                 paginate={paginate}
               />
             </Grid>

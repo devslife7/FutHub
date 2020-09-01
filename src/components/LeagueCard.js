@@ -65,12 +65,26 @@ export default function LeagueCard( {league} ) {
                 </Typography>
               </Grid>
               <Grid item>
-                <Button
+                { league.standings === 1
+                ? <Button
+                    onClick={ () => console.log(league.league_id)}
+                    variant='outlined' 
+                    color='primary'
+                    >Standings
+                  </Button>
+                : <Button
+                    variant='outlined' 
+                    color='primary'
+                    disabled
+                    >Standings
+                  </Button>
+                }
+                {/* <Button
                   onClick={ () => console.log(league.league_id)}
                   variant='outlined' 
                   color='primary'
                   >Standings
-                </Button>
+                </Button> */}
               </Grid>
             </Grid>
             <Grid item>

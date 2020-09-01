@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,11 +25,16 @@ const useStyles = makeStyles((theme) => ({
   buttonNotClicked: {
     margin: '10px',
     borderRadius: '0px',
+    // backgroundColor: 'red'
   },
   buttonClicked: {
     margin: '10px',
     borderRadius: '0px',
     borderBottom: '2px solid',
+  },
+  links: {
+    textDecoration: 'none',
+    color: 'white',
   }
 }))
 
@@ -58,7 +64,7 @@ function NavBar(props) {
               onClick={ () => setButtonClicked('Favorites')}
               className={ isMenuButtonClicked('Favorites') }
               color="inherit"
-              >Friends
+              >Favorites
             </Button>
             <Button
               onClick={ () => setButtonClicked('Friends')}
@@ -70,14 +76,26 @@ function NavBar(props) {
               onClick={ () => setButtonClicked('Leagues')}
               className={ isMenuButtonClicked('Leagues') } 
               color="inherit"
-              >Leagues
+              >
+                <Link to="/" className={classes.links}>
+                  Leagues
+                </Link>
             </Button>
             <Button 
               onClick={ () => setButtonClicked('Login')}
               className={ isMenuButtonClicked('Login') } 
               color="inherit"
-              >Login
+              >
+                <Link to="/login" className={classes.links}>
+                  Login
+                </Link>
             </Button>
+            {/* <Button 
+              onClick={ () => setButtonClicked('Login')}
+              className={ isMenuButtonClicked('Login') } 
+              color="inherit"
+              >Login
+            </Button> */}
             {/* <Paper square>
               <Tabs
                 value={value}

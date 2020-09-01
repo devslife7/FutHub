@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import leaguesReducer from './leagues';
+import userReducer from './user';
 
 export default combineReducers({
-  leagues: leaguesReducer
+  leagues: leaguesReducer,
+  user: userReducer
 });
 
 
