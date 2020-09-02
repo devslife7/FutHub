@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react'
+// import { useState } from 'react'
 import { connect } from 'react-redux'
 import { addFavoriteLeague, removeFavoriteLeague } from '../actions/leagues'
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeagues} ) {
   const classes = useStyles()
-  const [ favorite, setFavorite ] = useState(league.is_favorite)
+  // const [ favorite, setFavorite ] = useState(league.is_favorite)
 
   const handleFavourite = () => {
 
@@ -69,7 +69,7 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
   }
 
   const isFavorite = () => {
-    let filtered = favLeagues.filter( fav => fav.id == league.id)
+    let filtered = favLeagues.filter( fav => fav.id === league.id)
     return filtered.length > 0
   }
 

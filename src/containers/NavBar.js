@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react' // add use effect for nav button to be consistant upon refresh
+import { useState, useEffect } from 'react' // add use effect for nav button to be consistant upon refresh
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container'
+import { setCurrentUser } from '../actions/user';
 
 // import Paper from '@material-ui/core/Paper';
 // import Tabs from '@material-ui/core/Tabs';
@@ -39,19 +40,35 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function NavBar({ currentUser }) {
+function NavBar({ loggedIn, setCurrentUser }) {
+  console.log('renders NavBar')
+  // if (!!localStorage.currentUser) {
+  //   const currentUser = JSON.parse(localStorage.currentUser)
+  // } else {
+  //   // const currentUser = {
+  //   //   name: 'not logged in'
+  //   // }
+  // }
+  const currentUser = (!!localStorage.currentUser) ? JSON.parse(localStorage.currentUser) : null
+  console.log('navbar currentUser', currentUser)
+
   const classes = useStyles()
   const [ buttonClicked, setButtonClicked ] = useState('Leagues')
+  // const [ loggedIn, setLoggedIn ] = useState(!!localStorage.currentUser)
+
+  useEffect( () => {
+
+    if (!!localStorage.currentUser) {
+      const currentUser1 = JSON.parse( localStorage.currentUser )
+      setCurrentUser(currentUser1)
+    }
+
+  }, [])
+
 
   const isMenuButtonClicked = buttonName => {
     return buttonClicked === buttonName ? classes.buttonClicked : classes.buttonNotClicked
   }
-
-  // const [value, setValue] = React.useState(2);
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   return (
     <div className={classes.root}>
@@ -88,11 +105,12 @@ function NavBar({ currentUser }) {
                   Friends
                 </Link>
             </Button>
-            { localStorage.currentUser
+            { loggedIn
             ?  <Button
                 style={{ color: 'white' }}
                 >
                   <Link to="/profile" className={classes.links}>
+                  {/* {console.log( currentUser )} */}
                   hello {currentUser.name}
                   </Link>
               </Button>
@@ -135,8 +153,17 @@ function NavBar({ currentUser }) {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user.currentUser
+    loggedIn: state.user.loggedIn
   }
 }
 
-export default connect(mapStateToProps)(NavBar)
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user))
+    }
+  }
+}
+
+// export default (NavBar)
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

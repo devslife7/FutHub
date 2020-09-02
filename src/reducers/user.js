@@ -1,6 +1,7 @@
 export default (
   state = {
-    currentUser: {}
+    currentUser: {},
+    loggedIn: false
   },
   action
   ) => {
@@ -11,7 +12,15 @@ export default (
       console.log(action)
       return  {
         ...state,
-        currentUser: action.user
+        currentUser: action.user,
+        loggedIn: true
+      }
+    case "LOGOUT_CURRENT_USER":
+      console.log(action)
+      return  {
+        ...state,
+        currentUser: {},
+        loggedIn: false
       }
 
     default:

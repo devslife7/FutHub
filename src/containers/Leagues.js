@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Leagues( props ) {
-  console.log("renders leagues component")
+  console.log("renders Leagues")
   const classes = useStyles()
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ leaguesPerPage ] = useState(9)

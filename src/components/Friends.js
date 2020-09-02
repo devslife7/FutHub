@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Friends = (props) => {
+  const currentUser = JSON.parse(localStorage.currentUser)
   const classes = useStyles()
   const [ userList, setUserList ] = useState([])
   const [ friendList, setFriendList ] = useState([])
@@ -63,7 +64,7 @@ const Friends = (props) => {
 
     // setFriendList(props.history.location.state.friendList)
 
-    fetch(friendsURL + localStorage.currentUser)
+    fetch(friendsURL + currentUser.id)
       .then( resp => resp.json() )
       .then( data => setFriendList(data.friends) )
 
@@ -71,7 +72,7 @@ const Friends = (props) => {
       .then( resp => resp.json() )
       .then( data => setUserList( data.users ))
 
-  }, [])
+  }, [currentUser.id])
 
   function handleAddFriend( friendId ) {
     // let friendIds = friendList.map( friend => friend.id )
@@ -82,7 +83,7 @@ const Friends = (props) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user_id: localStorage.currentUser,
+        user_id: currentUser.id,
         friend_id: friendId
       })
     }
@@ -91,6 +92,7 @@ const Friends = (props) => {
       .then( resp => resp.json() )
       .then( data => {
         // console.log(data)
+
         const friendObj = userList.filter( user => user.id === friendId )[0]
         // console.log('frined obj', friendObj)
         setFriendList( [...friendList, friendObj] )
@@ -123,10 +125,10 @@ const Friends = (props) => {
   }
 
   function generateUsers(userList) {
-    const currentUser = parseInt(localStorage.currentUser, 10)
+    // const currentUser = parseInt(localStorage.currentUser, 10)
     const friendIds = friendList.map( user => user.id )
 
-    userList = userList.filter( user => user.id !== currentUser )
+    userList = userList.filter( user => user.id !== currentUser.id )
     userList = userList.filter( user => user.name.toLowerCase().includes(searchTerm.toLowerCase()) )
   
     return userList.map( ( user, idx) => 

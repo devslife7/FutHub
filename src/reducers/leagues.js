@@ -13,7 +13,6 @@ export default (
   switch (action.type) {
 
     case "SET_LEAGUES":
-      console.log(action)
       const displayLeagues = action.leagues.filter( league =>  popular_league_ids.includes(league.league_id))
       const favLeagues = action.leagues.filter( league =>  league.is_favorite === true )
       return  {

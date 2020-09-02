@@ -4,3 +4,8 @@ export const setCurrentUser = (user) => {
     user
   }
 }
+export const logOutCurrentUser = () => {
+  return {
+    type: "LOGOUT_CURRENT_USER"
+  }
+}

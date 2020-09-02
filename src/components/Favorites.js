@@ -4,6 +4,7 @@ import LeagueCard from '../components/LeagueCard'
 import { Grid } from '@material-ui/core'
 
 function Favorites({ favorites }) {
+  console.log('renders Favorites')
 
   const renderFavoriteLeagues = () => {
     return favorites.map( (fav, idx) =>

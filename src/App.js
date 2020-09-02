@@ -16,9 +16,10 @@ import Profile from './components/Profile'
 const leaguesURL = "http://localhost:3000/leagues"
 
 function App({ setLeagues }) {
+  console.log('renders App')
 
   useEffect( () => {
-    console.log('renders app mount')
+    console.log('renders App on mount')
 
     fetch( leaguesURL)
       .then( resp => resp.json() )
@@ -28,7 +29,6 @@ function App({ setLeagues }) {
 
   }, [setLeagues])
 
-  console.log('renders app component')
   return (
     <Router>
       <NavBar/>
