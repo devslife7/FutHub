@@ -11,6 +11,7 @@ import SignUp from './components/SignUp'
 import StickyFooter from './components/StickyFooter'
 import Friends from './components/Friends'
 import Favorites from './components/Favorites'
+import Profile from './components/Profile'
 
 const leaguesURL = "http://localhost:3000/leagues"
 
@@ -37,6 +38,7 @@ function App({ setLeagues }) {
         <Route exact path='/signup' component={SignUp} />
         <Route exact path='/friends' component={Friends} />
         <Route exact path='/favorites' component={Favorites} />
+        <Route exact path='/profile' component={Profile} />
       </Container>
       <StickyFooter/>
     </Router>

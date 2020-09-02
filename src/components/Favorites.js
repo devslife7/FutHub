@@ -7,7 +7,7 @@ function Favorites({ favorites }) {
 
   const renderFavoriteLeagues = () => {
     return favorites.map( (fav, idx) =>
-    <Grid key={idx} item xs={4}>
+    <Grid key={idx} item xs={3}>
       <LeagueCard league={fav}/>
     </Grid>
     )
@@ -16,7 +16,7 @@ function Favorites({ favorites }) {
   return (
     <div>
       <h2>Favorites leagues:</h2>
-      <Grid item xs={9} container spacing={4}>
+      <Grid item xs={12} container spacing={4}>
         {renderFavoriteLeagues()}
       </Grid>
     </div>

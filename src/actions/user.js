@@ -1,18 +1,6 @@
-export const signupName = (leagues) => {
+export const setCurrentUser = (user) => {
   return {
-    type: "SET_LEAGUES",
-    leagues
-  }
-}
-export const signupUsername = (leagues) => {
-  return {
-    type: "SET_LEAGUES",
-    leagues
-  }
-}
-export const signupPassword = (leagues) => {
-  return {
-    type: "SET_LEAGUES",
-    leagues
+    type: "SET_CURRENT_USER",
+    user
   }
 }

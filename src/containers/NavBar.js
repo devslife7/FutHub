@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react' // add use effect for nav button to be consistant upon refresh
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function NavBar(props) {
+function NavBar({ currentUser }) {
   const classes = useStyles()
   const [ buttonClicked, setButtonClicked ] = useState('Leagues')
 
@@ -87,15 +88,25 @@ function NavBar(props) {
                   Friends
                 </Link>
             </Button>
-            <Button 
-              onClick={ () => setButtonClicked('Login')}
-              className={ isMenuButtonClicked('Login') } 
-              color="inherit"
-              >
-                <Link to="/login" className={classes.links}>
-                  Login
-                </Link>
-            </Button>
+            { localStorage.currentUser
+            ?  <Button
+                style={{ color: 'white' }}
+                >
+                  <Link to="/profile" className={classes.links}>
+                  hello {currentUser.name}
+                  </Link>
+              </Button>
+            : <Button 
+                onClick={ () => setButtonClicked('Login')}
+                className={ isMenuButtonClicked('Login') } 
+                color="inherit"
+                >
+                  <Link to="/login" className={classes.links}>
+                    Login
+                  </Link>
+              </Button>
+            }
+
             {/* <Button 
               onClick={ () => setButtonClicked('Login')}
               className={ isMenuButtonClicked('Login') } 
@@ -122,4 +133,10 @@ function NavBar(props) {
   );
 }
 
-export default NavBar
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(NavBar)

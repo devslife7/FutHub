@@ -1,6 +1,5 @@
 export default (
   state = {
-    newUser: {},
     currentUser: {}
   },
   action
@@ -8,9 +7,11 @@ export default (
 
   switch (action.type) {
 
-    case "SET_LEAGUES":
+    case "SET_CURRENT_USER":
+      console.log(action)
       return  {
-        ...state
+        ...state,
+        currentUser: action.user
       }
 
     default:

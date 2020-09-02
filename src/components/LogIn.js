@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
+import { setCurrentUser } from '../actions/user'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -49,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogIn = (props) => {
+const LogIn = ({ history, setCurrentUser }) => {
+  //setCurrentUser
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -94,9 +97,8 @@ const LogIn = (props) => {
         else {
           localStorage.token = data.token
           localStorage.currentUser = data.user.id
-          // localStorage.name = data.user.name
-          // localStorage.userData = JSON.stringify( data.user )
-          props.history.push("/")
+          setCurrentUser(data.user)
+          history.push("/")
         }
       })
   }
@@ -165,4 +167,12 @@ const LogIn = (props) => {
   );
 }
 
-export default LogIn
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(LogIn)
