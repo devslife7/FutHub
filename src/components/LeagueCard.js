@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react'
+import { connect } from 'react-redux'
+import { addFavoriteLeague, removeFavoriteLeague } from '../actions/leagues'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -7,9 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
-// import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+
+const leaguesURL = 'http://localhost:3000/leagues/'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,9 +36,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LeagueCard( {league} ) {
+function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeagues} ) {
   const classes = useStyles()
-  const [ favorite, setFavorite ] = useState(false)
+  const [ favorite, setFavorite ] = useState(league.is_favorite)
+
+  const handleFavourite = () => {
+
+    const isFav = isFavorite()
+
+    if (isFav){
+      removeFavoriteLeague(league.id)
+    }
+    else {
+      addFavoriteLeague(league)
+    }
+
+    const patchRequest = {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        league: {
+          is_favorite: !isFav
+        }
+      })
+    }
+    console.log(patchRequest)
+    fetch(leaguesURL + league.id, patchRequest)
+      .then( resp => resp.json() )
+      .then( data => console.log( data ) )
+  }
+
+  const isFavorite = () => {
+    let filtered = favLeagues.filter( fav => fav.id == league.id)
+    return filtered.length > 0
+  }
 
 
   return (
@@ -88,8 +124,8 @@ export default function LeagueCard( {league} ) {
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton onClick={ () => setFavorite(!favorite) }>
-              { favorite ? <StarIcon color='primary' /> : <StarBorderIcon/> }
+              <IconButton onClick={ () => handleFavourite() }>
+              { isFavorite() ? <StarIcon color='primary' /> : <StarBorderIcon/> }
               </IconButton>
             </Grid>
           </Grid>
@@ -98,3 +134,22 @@ export default function LeagueCard( {league} ) {
     </div>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addFavoriteLeague: league => {
+      dispatch(addFavoriteLeague(league))
+    },
+    removeFavoriteLeague: leagueId => {
+      dispatch(removeFavoriteLeague(leagueId))
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    favLeagues: state.leagues.favorites
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeagueCard)

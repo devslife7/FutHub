@@ -93,7 +93,7 @@ const LogIn = (props) => {
         }
         else {
           localStorage.token = data.token
-          // localStorage.username = data.user.username
+          localStorage.currentUser = data.user.id
           // localStorage.name = data.user.name
           // localStorage.userData = JSON.stringify( data.user )
           props.history.push("/")

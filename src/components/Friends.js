@@ -2,26 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar'
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button'
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import Avatar from '@material-ui/core/Avatar'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-// import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
-import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 
 const baseURL = 'http://localhost:3000/'
 const userURL = baseURL + 'users/'
-const friendURL = baseURL + 'friendships/'
+const friendsURL = baseURL + 'friends/'
+const friendshipsURL = baseURL + 'friendships/'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,17 +30,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   large: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
+    width: theme.spacing(7),
+    height: theme.spacing(7),
     },
   gridStyle: {
-      backgroundColor: '#EAEAEA',
-      borderRadius: '20px',
-      padding: '0px 0px'
+    marginTop: '50px',
+    // backgroundColor: '#EAEAEA',
+    // borderRadius: '20px',
+    padding: '0px 0px'
   },
   title: {
-    margin: theme.spacing(4, 0, 2),
+    textAlign: 'center',
+    margin: '10px 0px 0px 0px',
+    color: '#4791db',
+    fontSize: "28px"
   },
+  outerPaper: {
+    height: '800px',
+    textAlign: 'center',
+    padding: '5px'
+  }
 }))
 
 const Friends = (props) => {
@@ -50,12 +57,15 @@ const Friends = (props) => {
   const [ userList, setUserList ] = useState([])
   const [ friendList, setFriendList ] = useState([])
   const [ searchTerm, setSearchTerm ] = useState('')
-  const [ colorCycle, setColorCycle ] = useState('')
-  const currentUser = props.history.location.state.currentUser
+  // const currentUser = props.history.location.state.currentUser
 
   useEffect( () => {
 
-    setFriendList(props.history.location.state.friendList)
+    // setFriendList(props.history.location.state.friendList)
+
+    fetch(friendsURL + localStorage.currentUser)
+      .then( resp => resp.json() )
+      .then( data => setFriendList(data.friends) )
 
     fetch(userURL)
       .then( resp => resp.json() )
@@ -64,7 +74,7 @@ const Friends = (props) => {
   }, [])
 
   function handleAddFriend( friendId ) {
-    let friendIds = friendList.map( friend => friend.id )
+    // let friendIds = friendList.map( friend => friend.id )
   
     const postRequest = {
       method: 'POST',
@@ -72,12 +82,12 @@ const Friends = (props) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user_id: currentUser.id,
+        user_id: localStorage.currentUser,
         friend_id: friendId
       })
     }
   
-    fetch(friendURL, postRequest)
+    fetch(friendshipsURL, postRequest)
       .then( resp => resp.json() )
       .then( data => {
         // console.log(data)
@@ -86,7 +96,7 @@ const Friends = (props) => {
         setFriendList( [...friendList, friendObj] )
 
 
-        friendIds = friendList.map( friend => friend.id )
+        // friendIds = friendList.map( friend => friend.id )
         // console.log(friendIds)
       })
   }
@@ -95,46 +105,44 @@ const Friends = (props) => {
     // console.log('renders friendlist')
   
     return friendList.map( ( friend, idx ) =>
-      <ListItem key={friend.id} style={{ paddingLeft: '100px'}}>
-        <ListItemAvatar>
+      <ListItem key={friend.id} style={{ paddingLeft: '40px', marginRight: '0px'}}>
+        {/* <ListItemAvatar>
           <Avatar src="/broken-image.jpg"/>
-        </ListItemAvatar>
+        </ListItemAvatar> */}
         <ListItemText
           primary={ friend.name }
           secondary= { friend.username }
         />
-        {/* <ListItemSecondaryAction style={{ paddingRight: '50px'}}>
+        <ListItemSecondaryAction style={{ paddingRight: '0px'}}>
           <IconButton edge="end" aria-label="delete">
             <DeleteIcon />
           </IconButton>
-        </ListItemSecondaryAction> */}
+        </ListItemSecondaryAction>
       </ListItem>,
     )
   }
 
   function generateUsers(userList) {
-    const currentUser = props.history.location.state.currentUser
+    const currentUser = parseInt(localStorage.currentUser, 10)
     const friendIds = friendList.map( user => user.id )
-    
 
-    userList = userList.filter( user => user.id !== currentUser.id )
-
+    userList = userList.filter( user => user.id !== currentUser )
     userList = userList.filter( user => user.name.toLowerCase().includes(searchTerm.toLowerCase()) )
   
     return userList.map( ( user, idx) => 
-      <ListItem style={{ paddingLeft: '80px'}} key={idx}>
-        <ListItemAvatar>
-          <Avatar src="/broken-image.jpg" style={{marginRight: '0px'}} />
-        </ListItemAvatar>
+      <ListItem style={{ paddingLeft: '40px'}} key={idx}>
+        {/* <ListItemAvatar>
+          <Avatar src="/broken-image.jpg"/>
+        </ListItemAvatar> */}
         <ListItemText
           primary= { user.name }
           secondary= { user.username }
         />
         { !friendIds.includes( user.id ) ?
-        <IconButton edge="end" aria-label="delete" onClick={ (e) => handleAddFriend( user.id )} style={{paddingRight: '60px'}}>
+        <IconButton edge="end" aria-label="delete" onClick={ (e) => handleAddFriend( user.id )} style={{marginRight: '50px'}}>
           <GroupAddIcon color='primary' />
         </IconButton>
-        : <PersonAddDisabledIcon color='disabled' style={{paddingRight: '50px'}}/>
+        : <PersonAddDisabledIcon color='disabled' style={{marginRight: '60px'}}/>
         }
       </ListItem>,
     )
@@ -142,56 +150,54 @@ const Friends = (props) => {
   
   return (
     <>
-      <Container maxWidth="lg">
-        <Grid container justify='center' alignItems='center' spacing={10} className={classes.gridStyle}>
-          <Grid item xs={4} style={{ marginBotton: '300px'}}>
-            <Paper elevation={2} >
-            </Paper>
-            <Paper elevation={6} style={{ height: '650px', textAlign: 'center', padding: '5px'}}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%'}}>
-                  <Typography variant="h5" className={classes.title} style={{ textAlign: 'center', margin: '12px 0px', color: '#4791db', fontSize: "29px"}}>
-                    Friend List
-                  </Typography>
-                  <Paper>
-                    <List style={{ height: '518px', overflow: 'auto'}}>
-                      { generateFriends() }
-                    </List>
-                  </Paper>
-                  <Button
-                      onClick={ () => props.history.push('/dashboard')}
-                      style={{ marginTop: '12px', backgroundColor: '#4791db', color: 'white'}}
-                      variant='contained'
-                      >Dashboard
-                  </Button>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-          <IconButton style={{backgroundColor: colorCycle, color: 'white' }} onClick={ () => props.history.push('/dashboard')} >
-            <SwapHorizIcon fontSize='large' />
-          </IconButton>
-          <Grid item xs={4} style={{ marginBotton: '100px'}}>
-            <Paper elevation={5} style={{ height: '650px', textAlign: 'center', padding: '5px'}}>
+      <Grid container justify='space-evenly' alignItems='center' spacing={3} className={classes.gridStyle}>
+        <Grid item xs={3} style={{ marginBotton: '300px'}}>
+          <Paper elevation={6} className={classes.outerPaper}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%'}}>
-                <Typography variant="h5" style={{ textAlign: 'center', marginTop: '10px', marginBotton: '0px', color: '#4791db', fontSize: "28px"}}>
-                  All Users
+                <Typography variant="h5" className={classes.title}>
+                  Friends
                 </Typography>
                 <div style={{ display: 'flex', justify: 'center'}}>
-                  <TextField onChange={ e => setSearchTerm(e.target.value) } label="Search Users..." style={{ margin: '0px 20px 10px 40px'}}/>
+                  <TextField
+                    onChange={ e => setSearchTerm(e.target.value) }
+                    label="Search Friends..."
+                    style={{ margin: '0px 20px 10px 40px'}}
+                  />
                 </div>  
                 <Paper>
-                  <List style={{ height: '532px', overflow: 'auto'}} >
-                    { generateUsers(userList) }
+                  <List style={{ height: '680px', overflow: 'auto'}}>
+                    { generateFriends() }
                   </List>
                 </Paper>
               </Grid>
             </Grid>
-            </Paper>
-          </Grid>
+          </Paper>
         </Grid>
-      </Container>
+        <Grid item xs={3}>
+          <Paper elevation={5} className={classes.outerPaper}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%'}}>
+              <Typography variant="h5" className={classes.title}>
+                All Users
+              </Typography>
+              <div style={{ display: 'flex', justify: 'center'}}>
+                <TextField
+                  onChange={ e => setSearchTerm(e.target.value) }
+                  label="Search Users..."
+                  style={{ margin: '0px 20px 10px 40px'}}
+                />
+              </div>  
+              <Paper>
+                <List style={{ height: '680px', overflow: 'auto'}} >
+                  { generateUsers(userList) }
+                </List>
+              </Paper>
+            </Grid>
+          </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
     </>
   )
 }

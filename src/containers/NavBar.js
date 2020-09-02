@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react'
+import { useState } from 'react' // add use effect for nav button to be consistant upon refresh
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -60,18 +60,6 @@ function NavBar(props) {
             <Typography variant="h6" className={classes.title}>
               FutHub
             </Typography>
-            <Button
-              onClick={ () => setButtonClicked('Favorites')}
-              className={ isMenuButtonClicked('Favorites') }
-              color="inherit"
-              >Favorites
-            </Button>
-            <Button
-              onClick={ () => setButtonClicked('Friends')}
-              className={ isMenuButtonClicked('Friends') }
-              color="inherit"
-              >Friends
-            </Button>
             <Button 
               onClick={ () => setButtonClicked('Leagues')}
               className={ isMenuButtonClicked('Leagues') } 
@@ -79,6 +67,24 @@ function NavBar(props) {
               >
                 <Link to="/" className={classes.links}>
                   Leagues
+                </Link>
+            </Button>
+            <Button
+              onClick={ () => setButtonClicked('Favorites')}
+              className={ isMenuButtonClicked('Favorites') }
+              color="inherit"
+              >
+                <Link to="/favorites" className={classes.links}>
+                  Favorites
+                </Link>
+            </Button>
+            <Button
+              onClick={ () => setButtonClicked('Friends')}
+              className={ isMenuButtonClicked('Friends') }
+              color="inherit"
+              >
+                <Link to="/friends" className={classes.links}>
+                  Friends
                 </Link>
             </Button>
             <Button 

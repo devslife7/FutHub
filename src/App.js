@@ -1,4 +1,7 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { setLeagues } from './actions/leagues'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import NavBar from './containers/NavBar'
@@ -7,25 +10,45 @@ import LogIn from './components/LogIn'
 import SignUp from './components/SignUp'
 import StickyFooter from './components/StickyFooter'
 import Friends from './components/Friends'
-// import { BottomNavigation } from '@material-ui/core';
+import Favorites from './components/Favorites'
 
-function App() {
+const leaguesURL = "http://localhost:3000/leagues"
+
+function App({ setLeagues }) {
+
+  useEffect( () => {
+    console.log('renders app mount')
+
+    fetch( leaguesURL)
+      .then( resp => resp.json() )
+      .then( data => {
+        setLeagues(data.all)
+      })
+
+  }, [setLeagues])
+
+  console.log('renders app component')
   return (
     <Router>
       <NavBar/>
-
       <Container>
         <Route exact path='/' component={Leagues} />
         <Route exact path='/login' component={LogIn} />
         <Route exact path='/signup' component={SignUp} />
-        {/* <Route exact path='/friends' component={Friends} /> */}
-
+        <Route exact path='/friends' component={Friends} />
+        <Route exact path='/favorites' component={Favorites} />
       </Container>
       <StickyFooter/>
-
-      {/* <BottomNavigation/> */}
     </Router>
   )
 }
 
-export default App
+const mapDispatchToProps = dispatch => {
+  return {
+    setLeagues: leagues => {
+      dispatch(setLeagues(leagues))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

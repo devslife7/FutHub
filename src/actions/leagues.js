@@ -29,3 +29,16 @@ export const searchLeagueTerm = (searchTerm) => {
     searchTerm
   }
 }
+
+export const addFavoriteLeague = (league) => {
+  return {
+    type: "ADD_TO_FAVORITES",
+    league
+  }
+}
+export const removeFavoriteLeague = (leagueId) => {
+  return {
+    type: "REMOVE_FROM_FAVORITES",
+    leagueId
+  }
+}

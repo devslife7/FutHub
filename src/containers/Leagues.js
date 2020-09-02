@@ -1,16 +1,12 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { connect } from 'react-redux';
-import { setLeagues } from '../actions/leagues'
+import { useState } from 'react'
+import { connect } from 'react-redux'
 import LeagueCard from '../components/LeagueCard'
 import LeagueSearchBar from '../components/LeaguesSearchBar'
 import Pagination from '../components/Pagination'
-// import { Pagination } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
-const leaguesURL = "http://localhost:3000/leagues"
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,20 +25,6 @@ function Leagues( props ) {
   const classes = useStyles()
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ leaguesPerPage ] = useState(9)
-  const { setLeagues } = props
-  
-
-  useEffect( () => {
-    console.log('renders on mount')
-
-    fetch( leaguesURL)
-      .then( resp => resp.json() )
-      .then( data => {
-        setLeagues(data.all)
-      })
-
-  }, [setLeagues])
-
 
   // let results
 
@@ -93,18 +75,10 @@ function Leagues( props ) {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setLeagues: league => {
-      dispatch(setLeagues(league))
-    }
-  }
-}
-
 const mapStateToProps = state => {
   return {
     leagues: state.leagues
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Leagues)
+export default connect(mapStateToProps)(Leagues)
