@@ -1,6 +1,7 @@
 import React from 'react';
 // import { useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { addFavoriteLeague, removeFavoriteLeague } from '../actions/leagues'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  links: {
+    textDecoration: 'none',
+    color: 'green',
+  }
 }));
 
 function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeagues} ) {
@@ -41,7 +46,6 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
   // const [ favorite, setFavorite ] = useState(league.is_favorite)
 
   const handleFavourite = () => {
-
     const isFav = isFavorite()
 
     if (isFav){
@@ -73,6 +77,10 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
     return filtered.length > 0
   }
 
+  // const handleStandings = () => {
+  //   history.push("/standings")
+  // }
+
 
   return (
     <div className={classes.root}>
@@ -103,10 +111,13 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
               <Grid item>
                 { league.standings === 1
                 ? <Button
-                    onClick={ () => console.log(league.league_id)}
+                    // onClick={ () => handleStandings() }
                     variant='outlined' 
                     color='primary'
-                    >Standings
+                    >
+                      <Link to="/standings" className={classes.links}>
+                        Standings
+                      </Link>
                   </Button>
                 : <Button
                     variant='outlined' 

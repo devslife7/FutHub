@@ -1,30 +1,38 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { logOutCurrentUser } from '../actions/user'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 
-function profile() {
-  // const currentUser = JSON.parse(localStorage.currentUser)
+function Profile({ history, logOutCurrentUser}) {
+  const currentUser = JSON.parse(localStorage.currentUser)
+
+  const handelLogOut = () => {
+    localStorage.clear()
+    history.push("/login")
+    logOutCurrentUser()
+}
   return (
-    <Grid item xs={6} container direction='column' justify='space-between' alignItems='center' spacing={8}>
+    <Grid item xs={12} container direction='column' justify='space-between' alignItems='center' spacing={8}>
       <Grid item xs={12} >
-        <Paper elevation={6} style={{ textAlign: 'center', padding: '30px', width: '350px'}}>
+        <Paper elevation={6} style={{ textAlign: 'center', padding: '100px', width: '100%', marginTop: '50px'}}>
           <Avatar src="/broken-image.jpg" style={{margin: 'auto'}}
             // className={classes.large}
           />
-          <h3 style={{ fontFamily: 'roboto'}}>Welcome, {/*currentUser.name*/}!</h3>
-          <h3>username{/*user.username*/}</h3>
-          <p>Member since: created at{ /*createAt*/ }</p>
+          <h3 style={{ fontFamily: 'roboto'}}>{currentUser.name}</h3>
+          <h3>{currentUser.username}</h3>
+          {/* <p>Member since: today</p> */}
           <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '40px'}}>
-            <Button
+            {/* <Button
               // onClick={handleClickOpen}
               variant='outlined'
               color='primary'
               >Edit
-            </Button>
+            </Button> */}
             <Button
-              // onClick={handelLogOut}
+              onClick={handelLogOut}
               variant='outlined'
               color='primary'
               >Log out
@@ -57,4 +65,12 @@ function profile() {
   )
 }
 
-export default profile
+const mapDispatchToProps = dispatch => {
+  return {
+    logOutCurrentUser: () => {
+      dispatch(logOutCurrentUser())
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Profile)

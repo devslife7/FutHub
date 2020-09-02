@@ -12,6 +12,7 @@ import StickyFooter from './components/StickyFooter'
 import Friends from './components/Friends'
 import Favorites from './components/Favorites'
 import Profile from './components/Profile'
+import Standings from './components/Standings'
 
 const leaguesURL = "http://localhost:3000/leagues"
 
@@ -39,6 +40,7 @@ function App({ setLeagues }) {
         <Route exact path='/friends' component={Friends} />
         <Route exact path='/favorites' component={Favorites} />
         <Route exact path='/profile' component={Profile} />
+        <Route exact path='/standings' component={Standings} />
       </Container>
       <StickyFooter/>
     </Router>
