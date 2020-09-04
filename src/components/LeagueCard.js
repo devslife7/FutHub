@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     textDecoration: 'none',
-    color: 'green',
+    color: 'inherit',
   }
 }));
 
-function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeagues} ) {
+function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeagues, loggedIn} ) {
   const classes = useStyles()
   // const [ favorite, setFavorite ] = useState(league.is_favorite)
 
@@ -105,7 +105,7 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
                   {league.league_type}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Season Ends: {league.season_end}
+                  Active: {league.is_current === 1 ? 'Yes' : 'No'}
                 </Typography>
               </Grid>
               <Grid item>
@@ -135,9 +135,12 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton onClick={ () => handleFavourite() }>
-              { isFavorite() ? <StarIcon color='primary' /> : <StarBorderIcon/> }
-              </IconButton>
+              { loggedIn
+              ? <IconButton onClick={ () => handleFavourite() }>
+                  { isFavorite() ? <StarIcon color='primary' /> : <StarBorderIcon/> }
+                </IconButton>
+              : null
+              }
             </Grid>
           </Grid>
         </Grid>
@@ -159,7 +162,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    favLeagues: state.leagues.favorites
+    favLeagues: state.leagues.favorites,
+    loggedIn: state.user.loggedIn
   }
 }
 

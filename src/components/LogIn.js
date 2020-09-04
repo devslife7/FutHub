@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -61,9 +61,9 @@ const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
   const classes = useStyles();
 
   useEffect( () => {
-    localStorage.clear()
+    localStorage.clear() // clears the localStorage data upon component mount
     logOutCurrentUser()
-  }, [] ) // clears the localStorage data upon component mount
+  }, [logOutCurrentUser] )
 
   const openSnackBar = () => setOpen(true)
 
@@ -99,8 +99,9 @@ const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
         }
         else {
           localStorage.token = data.token
-          localStorage.currentUser = JSON.stringify( data.user )
-          setCurrentUser(data.user)
+          localStorage.currentUser = JSON.stringify( data.user ) // sets user in localStorage
+          console.log(data.user)
+          setCurrentUser(data.user) // sets user in redux
           history.push("/")
         }
       })

@@ -29,7 +29,6 @@ function Leagues( props ) {
   // let results
 
   const renderLeagues = () => {
-    // if (Object.entries(props.leagues).length > 0) {
       const indexOfLastPost = currentPage * leaguesPerPage
       const indexOfFirstPost = indexOfLastPost - leaguesPerPage
       let leagues = props.leagues.display
@@ -45,7 +44,6 @@ function Leagues( props ) {
           <LeagueCard league={l}/>
         </Grid>
       )
-    // }
   }
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
@@ -56,7 +54,6 @@ function Leagues( props ) {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <LeagueSearchBar />
-            {/* <LeagueSearchBar results={results}/> */}
           </Paper>
         </Grid>
         <Grid item xs={9} container spacing={4} style={{marginLeft: 10}}>

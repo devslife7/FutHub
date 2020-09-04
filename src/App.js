@@ -13,6 +13,7 @@ import Friends from './components/Friends'
 import Favorites from './components/Favorites'
 import Profile from './components/Profile'
 import Standings from './components/Standings'
+import Upcoming from './components/Upcoming'
 
 const leaguesURL = "http://localhost:3000/leagues"
 
@@ -21,6 +22,7 @@ function App({ setLeagues }) {
 
   useEffect( () => {
     console.log('renders App on mount')
+    console.log('fetches leagues')
 
     fetch( leaguesURL)
       .then( resp => resp.json() )
@@ -41,6 +43,7 @@ function App({ setLeagues }) {
         <Route exact path='/favorites' component={Favorites} />
         <Route exact path='/profile' component={Profile} />
         <Route exact path='/standings' component={Standings} />
+        <Route exact path='/upcoming' component={Upcoming} />
       </Container>
       <StickyFooter/>
     </Router>

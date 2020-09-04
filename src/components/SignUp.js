@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { setCurrentUser } from '../actions/user'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { connect } from 'react-redux';
 
 
 const signUpURL = 'http://localhost:3000/signup'
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp(props) {
+function SignUp({ history, setCurrentUser }) {
   const [username, setUsername] = useState("")
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
@@ -103,10 +105,9 @@ export default function SignUp(props) {
       }
       else{
         localStorage.token = data.token
-        // console.log(data)
-        // localStorage.username = data.user.username
-        // localStorage.userData = JSON.stringify( data.user )
-        props.history.push("/")
+        localStorage.currentUser = JSON.stringify( data.user )
+        setCurrentUser(data.user)
+        history.push("/")
       }
     })
   }
@@ -188,3 +189,13 @@ export default function SignUp(props) {
     </Container>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SignUp)

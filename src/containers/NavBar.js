@@ -1,18 +1,16 @@
 import React from 'react';
-import { useState, useEffect } from 'react' // add use effect for nav button to be consistant upon refresh
+import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container'
-import { setCurrentUser } from '../actions/user';
-
-// import Paper from '@material-ui/core/Paper';
-// import Tabs from '@material-ui/core/Tabs';
-// import Tab from '@material-ui/core/Tab';
+import Avatar from '@material-ui/core/Avatar'
+import { setCurrentUser, logOutCurrentUser } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,50 +22,84 @@ const useStyles = makeStyles((theme) => ({
   navBarPadding: {
     padding: '0px'
   },
-  buttonNotClicked: {
-    margin: '10px',
-    borderRadius: '0px',
-    // backgroundColor: 'red'
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
   },
-  buttonClicked: {
-    margin: '10px',
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+  linkNotClicked: {
+    borderRadius: '0px',
+  },
+  linkClicked: {
     borderRadius: '0px',
     borderBottom: '2px solid',
   },
   links: {
     textDecoration: 'none',
     color: 'white',
+    margin: '0px 10px',
+    padding: '10px 5px',
+  },
+  typography: {
+    padding: theme.spacing(2),
+  },
+  button: {
+    backgroundColor: '#2196f3',
+    color: 'white',
+    textDecoration: 'none',
+    borderRadius: '5px',
+    margin: '10px',
+    padding: '7px 18px',
+  },
+  onHover: {
+    "&:hover": {
+      backgroundColor: '#2087DA',
+      borderRadius: '3px',
+    }
   }
 }))
 
-function NavBar({ loggedIn, setCurrentUser }) {
+function NavBar({ loggedIn, setCurrentUser, logOutCurrentUser }) {
+  console.log('--------------------')
   console.log('renders NavBar')
-  // if (!!localStorage.currentUser) {
-  //   const currentUser = JSON.parse(localStorage.currentUser)
-  // } else {
-  //   // const currentUser = {
-  //   //   name: 'not logged in'
-  //   // }
-  // }
-  const currentUser = (!!localStorage.currentUser) ? JSON.parse(localStorage.currentUser) : null
-  console.log('navbar currentUser', currentUser)
-
   const classes = useStyles()
-  const [ buttonClicked, setButtonClicked ] = useState('Leagues')
-  // const [ loggedIn, setLoggedIn ] = useState(!!localStorage.currentUser)
+  const [ linkClicked, setLinkClicked ] = useState('Leagues')
+  const currentUser = (!!localStorage.currentUser) ? JSON.parse(localStorage.currentUser) : null
+
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
 
   useEffect( () => {
-
     if (!!localStorage.currentUser) {
       const currentUser1 = JSON.parse( localStorage.currentUser )
       setCurrentUser(currentUser1)
     }
+  }, [setCurrentUser])
 
-  }, [])
+  const isMenuLinkClicked = linkName => {
+    return linkClicked === linkName ? classes.linkClicked : classes.linkNotClicked
+  }
 
+  const handleProfileOptions = (event) => {
+    handleClick(event)
+  }
 
-  const isMenuButtonClicked = buttonName => {
-    return buttonClicked === buttonName ? classes.buttonClicked : classes.buttonNotClicked
+  const handleLogOut = () => {
+    handleClose()
+    localStorage.clear()
+    logOutCurrentUser()
   }
 
   return (
@@ -78,75 +110,97 @@ function NavBar({ loggedIn, setCurrentUser }) {
             <Typography variant="h6" className={classes.title}>
               FutHub
             </Typography>
-            <Button 
-              onClick={ () => setButtonClicked('Leagues')}
-              className={ isMenuButtonClicked('Leagues') } 
-              color="inherit"
-              >
-                <Link to="/" className={classes.links}>
-                  Leagues
-                </Link>
-            </Button>
-            <Button
-              onClick={ () => setButtonClicked('Favorites')}
-              className={ isMenuButtonClicked('Favorites') }
-              color="inherit"
-              >
-                <Link to="/favorites" className={classes.links}>
-                  Favorites
-                </Link>
-            </Button>
-            <Button
-              onClick={ () => setButtonClicked('Friends')}
-              className={ isMenuButtonClicked('Friends') }
-              color="inherit"
-              >
-                <Link to="/friends" className={classes.links}>
-                  Friends
-                </Link>
-            </Button>
+              <Link
+                to="/upcoming"
+                onClick={ () => setLinkClicked('Games')}
+                className={`${isMenuLinkClicked('Games')} ${classes.links} ${classes.onHover}`} 
+              >Games
+              </Link>
+              <Link
+                to="/"
+                onClick={ () => setLinkClicked('Leagues')}
+                className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`} 
+              >Leagues
+              </Link>
             { loggedIn
-            ?  <Button
-                style={{ color: 'white' }}
-                >
-                  <Link to="/profile" className={classes.links}>
-                  {/* {console.log( currentUser )} */}
-                  hello {currentUser.name}
-                  </Link>
-              </Button>
-            : <Button 
-                onClick={ () => setButtonClicked('Login')}
-                className={ isMenuButtonClicked('Login') } 
-                color="inherit"
-                >
-                  <Link to="/login" className={classes.links}>
-                    Login
-                  </Link>
-              </Button>
+            ? <div>
+                <Link
+                  onClick={ () => setLinkClicked('Favorites')}
+                  className={`${isMenuLinkClicked('Favorites')} ${classes.links} ${classes.onHover}`}
+                  to="/favorites"
+                  >Favorites
+                </Link>
+                <Link
+                  onClick={ () => setLinkClicked('Friends')}
+                  className={`${isMenuLinkClicked('Friends')} ${classes.links} ${classes.onHover}`}
+                  to="/friends"
+                  > Friends
+                </Link>
+              </div>
+            : null
             }
-
-            {/* <Button 
-              onClick={ () => setButtonClicked('Login')}
-              className={ isMenuButtonClicked('Login') } 
-              color="inherit"
-              >Login
-            </Button> */}
-            {/* <Paper square>
-              <Tabs
-                value={value}
-                indicatorColor="primary"
-                textColor="primary"
-                onChange={handleChange}
-                aria-label="disabled tabs example"
-              >
-                <Tab label="Active" />
-                <Tab label="Disabled" disabled />
-                <Tab label="Active" />
-              </Tabs>
-            </Paper> */}
+            { loggedIn
+            ? <Link to="#"
+                onClick={handleProfileOptions}
+                className={`${isMenuLinkClicked('profile')} ${classes.links} ${classes.onHover}`}
+                style={{ display: 'flex', alignItems: 'center' }}
+                > {currentUser.name}
+                <Avatar
+                  src="/broken-image.jpg"
+                  style={{marginLeft: '6px'}}
+                  className={classes.small}
+                />
+              </Link>
+            : <Link
+                onClick={ () => setLinkClicked('Login')}
+                className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
+                to="/login"
+                >Login
+              </Link>
+            }
           </Toolbar>
         </Container>
       </AppBar>
+      
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Paper elevation={0} style={{ textAlign: 'center', padding: '30px'}}>
+          <Avatar src="/broken-image.jpg" style={{margin: '0px auto'}}
+            className={classes.large}
+          />
+          { loggedIn
+          &&
+          <div>
+            <h3>{currentUser.name}</h3>
+            <h3>{currentUser.username}</h3>
+          </div>
+          }
+          <Link
+            onClick={handleClose}
+            className={classes.button}
+            to="/profile"
+            >Profile
+          </Link>
+          <Link
+            onClick={handleLogOut}
+            className={classes.button}
+            to="/"
+            >Log Out
+          </Link>
+        </Paper>
+      </Popover>
     </div>
   );
 }
@@ -161,9 +215,10 @@ const mapDispatchToProps = dispatch => {
   return {
     setCurrentUser: user => {
       dispatch(setCurrentUser(user))
+    },
+    logOutCurrentUser: () => {
+      dispatch(logOutCurrentUser())
     }
   }
 }
-
-// export default (NavBar)
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

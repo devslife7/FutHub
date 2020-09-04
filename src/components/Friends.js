@@ -15,10 +15,11 @@ import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 const baseURL = 'http://localhost:3000/'
 const userURL = baseURL + 'users/'
-const friendsURL = baseURL + 'friends/'
+// const friendsURL = baseURL + 'friends/'
 const friendshipsURL = baseURL + 'friendships/'
 
 const useStyles = makeStyles((theme) => ({
@@ -52,31 +53,28 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Friends = (props) => {
+function Friends() {
+  console.log('renders Friends')
   const currentUser = JSON.parse(localStorage.currentUser)
   const classes = useStyles()
   const [ userList, setUserList ] = useState([])
-  const [ friendList, setFriendList ] = useState([])
+  const [ friendList, setFriendList ] = useState(currentUser.friends)
   const [ searchTerm, setSearchTerm ] = useState('')
-  // const currentUser = props.history.location.state.currentUser
+  const [ friendSearchTerm, setFriendSearchTerm ] = useState('')
+  // const [ loading, setLoading ] = useState(false)
 
   useEffect( () => {
-
-    // setFriendList(props.history.location.state.friendList)
-
-    fetch(friendsURL + currentUser.id)
-      .then( resp => resp.json() )
-      .then( data => setFriendList(data.friends) )
-
+    // setLoading(true)
     fetch(userURL)
       .then( resp => resp.json() )
-      .then( data => setUserList( data.users ))
+      .then( data => {
+        // setLoading(false)
+        setUserList( data.users )
+      })
 
   }, [currentUser.id])
 
-  function handleAddFriend( friendId ) {
-    // let friendIds = friendList.map( friend => friend.id )
-  
+  const handleAddFriend = friendId => {
     const postRequest = {
       method: 'POST',
       headers: {
@@ -90,24 +88,18 @@ const Friends = (props) => {
   
     fetch(friendshipsURL, postRequest)
       .then( resp => resp.json() )
-      .then( data => {
-        // console.log(data)
-
+      .then( () => {
         const friendObj = userList.filter( user => user.id === friendId )[0]
-        // console.log('frined obj', friendObj)
         setFriendList( [...friendList, friendObj] )
-
-
-        // friendIds = friendList.map( friend => friend.id )
-        // console.log(friendIds)
       })
   }
 
-  function generateFriends() {
-    // console.log('renders friendlist')
+  const generateFriends = () => {
+
+    let filteredFriendList = friendList.filter(user => user.name.toLowerCase().includes(friendSearchTerm.toLowerCase()))
   
-    return friendList.map( ( friend, idx ) =>
-      <ListItem key={friend.id} style={{ paddingLeft: '40px', marginRight: '0px'}}>
+    return filteredFriendList.map( ( friend, idx ) =>
+      <ListItem key={idx} style={{ paddingLeft: '40px', marginRight: '0px'}}>
         {/* <ListItemAvatar>
           <Avatar src="/broken-image.jpg"/>
         </ListItemAvatar> */}
@@ -124,8 +116,7 @@ const Friends = (props) => {
     )
   }
 
-  function generateUsers(userList) {
-    // const currentUser = parseInt(localStorage.currentUser, 10)
+  const generateUsers = userList => {
     const friendIds = friendList.map( user => user.id )
 
     userList = userList.filter( user => user.id !== currentUser.id )
@@ -162,7 +153,7 @@ const Friends = (props) => {
                 </Typography>
                 <div style={{ display: 'flex', justify: 'center'}}>
                   <TextField
-                    onChange={ e => setSearchTerm(e.target.value) }
+                    onChange={ e => setFriendSearchTerm(e.target.value) }
                     label="Search Friends..."
                     style={{ margin: '0px 20px 10px 40px'}}
                   />
@@ -192,6 +183,7 @@ const Friends = (props) => {
               </div>  
               <Paper>
                 <List style={{ height: '680px', overflow: 'auto'}} >
+                  {/* { loading && <CircularProgress style={{marginTop: '50px'}} /> } */}
                   { generateUsers(userList) }
                 </List>
               </Paper>
