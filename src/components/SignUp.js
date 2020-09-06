@@ -100,12 +100,11 @@ function SignUp({ history, setCurrentUser }) {
     .then(resp => resp.json())
     .then(data => {
       if(data.error){
-        // console.log(data.error)
         openSnackBar(data.error)
       }
       else{
         localStorage.token = data.token
-        localStorage.currentUser = JSON.stringify( data.user )
+        localStorage.userId = data.user.id
         setCurrentUser(data.user)
         history.push("/")
       }
@@ -192,8 +191,8 @@ function SignUp({ history, setCurrentUser }) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentUser: user => {
-      dispatch(setCurrentUser(user))
+    setCurrentUser: payload => {
+      dispatch(setCurrentUser(payload))
     }
   }
 }

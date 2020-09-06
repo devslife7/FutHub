@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
-  //setCurrentUser
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -94,14 +93,12 @@ const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
       .then(resp => resp.json())
       .then(data => {
         if (data.error){
-          console.log('Error:', data.error);
           openSnackBar()
         }
         else {
           localStorage.token = data.token
-          localStorage.currentUser = JSON.stringify( data.user ) // sets user in localStorage
-          console.log(data.user)
-          setCurrentUser(data.user) // sets user in redux
+          localStorage.userId = data.user.id
+          setCurrentUser(data.user)
           history.push("/")
         }
       })

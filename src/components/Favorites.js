@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import LeagueCard from '../components/LeagueCard'
 import { Grid } from '@material-ui/core'
 
-function Favorites({ favorites }) {
+function Favorites({ favLeagues }) {
   console.log('renders Favorites')
 
   const renderFavoriteLeagues = () => {
-    return favorites.map( (fav, idx) =>
+    return favLeagues.map( (fav, idx) =>
     <Grid key={idx} item xs={3}>
-      <LeagueCard league={fav}/>
+      <LeagueCard currentLeague={fav}/>
     </Grid>
     )
   }
@@ -26,7 +26,7 @@ function Favorites({ favorites }) {
 
 const mapStateToProps = state => {
   return {
-    favorites: state.leagues.favorites
+    favLeagues: state.user.currentUser.favLeagues
   }
 }
 

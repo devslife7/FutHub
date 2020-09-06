@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper';
@@ -19,8 +20,8 @@ import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 
 const baseURL = 'http://localhost:3000/'
 const userURL = baseURL + 'users/'
-// const friendsURL = baseURL + 'friends/'
 const friendshipsURL = baseURL + 'friendships/'
+const removeFriendshipURL = friendshipsURL + 'remove/'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,26 +54,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Friends() {
+function Friends({ currentUser }) {
   console.log('renders Friends')
-  const currentUser = JSON.parse(localStorage.currentUser)
   const classes = useStyles()
   const [ userList, setUserList ] = useState([])
   const [ friendList, setFriendList ] = useState(currentUser.friends)
   const [ searchTerm, setSearchTerm ] = useState('')
   const [ friendSearchTerm, setFriendSearchTerm ] = useState('')
-  // const [ loading, setLoading ] = useState(false)
+  const [ loading, setLoading ] = useState(false)
 
   useEffect( () => {
-    // setLoading(true)
+    setLoading(true)
     fetch(userURL)
       .then( resp => resp.json() )
       .then( data => {
-        // setLoading(false)
-        setUserList( data.users )
+        setUserList( data )
+        setLoading(false)
+        setFriendList( currentUser.friends )
       })
 
-  }, [currentUser.id])
+  }, [currentUser.friends])
 
   const handleAddFriend = friendId => {
     const postRequest = {
@@ -94,9 +95,35 @@ function Friends() {
       })
   }
 
+  const handleRemoveFriend = friendId => {
+    console.log('this is freind IDIDID: ', friendId)
+    const postRequest = {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        friendship: {
+          user_id: currentUser.id,
+          friend_id: friendId
+        }
+      })
+    }
+    fetch(removeFriendshipURL, postRequest)
+      .then( resp => resp.json() )
+      .then( () => {
+        const friendObj = userList.filter( user => user.id === friendId )[0]
+        const friendIndex = friendList.findIndex( f => f === friendObj )
+
+        setFriendList( [...friendList.slice(0, friendIndex), ...friendList.slice(friendIndex + 1)] )
+      })
+  }
+
   const generateFriends = () => {
+    console.log('generateFriends runs')
 
     let filteredFriendList = friendList.filter(user => user.name.toLowerCase().includes(friendSearchTerm.toLowerCase()))
+    console.log('this is friendsList', friendList)
   
     return filteredFriendList.map( ( friend, idx ) =>
       <ListItem key={idx} style={{ paddingLeft: '40px', marginRight: '0px'}}>
@@ -108,7 +135,7 @@ function Friends() {
           secondary= { friend.username }
         />
         <ListItemSecondaryAction style={{ paddingRight: '0px'}}>
-          <IconButton edge="end" aria-label="delete">
+          <IconButton edge="end" aria-label="delete" onClick={ () => handleRemoveFriend(friend.id)}>
             <DeleteIcon />
           </IconButton>
         </ListItemSecondaryAction>
@@ -117,7 +144,7 @@ function Friends() {
   }
 
   const generateUsers = userList => {
-    const friendIds = friendList.map( user => user.id )
+    const friendIds = currentUser.friends.map( user => user.id )
 
     userList = userList.filter( user => user.id !== currentUser.id )
     userList = userList.filter( user => user.name.toLowerCase().includes(searchTerm.toLowerCase()) )
@@ -140,6 +167,7 @@ function Friends() {
       </ListItem>,
     )
   }
+
   
   return (
     <>
@@ -184,7 +212,9 @@ function Friends() {
               <Paper>
                 <List style={{ height: '680px', overflow: 'auto'}} >
                   {/* { loading && <CircularProgress style={{marginTop: '50px'}} /> } */}
-                  { generateUsers(userList) }
+                  { loading
+                  ? <div>Loading...</div>
+                  : generateUsers(userList) }
                 </List>
               </Paper>
             </Grid>
@@ -196,4 +226,10 @@ function Friends() {
   )
 }
 
-export default Friends
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser,
+  }
+}
+
+export default connect(mapStateToProps)(Friends)

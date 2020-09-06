@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { displayWorldLeagues, displayAllLeagues, displayPopularLeagues, searchLeagueTerm } from '../actions/leagues'
+import { setSearchTermLeagues, fetchPopularLeagues, fetchInternationalLeagues, fetchAllLeagues } from '../actions/leagues'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
@@ -54,31 +54,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LeagueSearchBar( props ) {
+function LeagueSearchBar({ setSearchTermLeagues, searchTerm, displayLeagues, fetchPopularLeagues, fetchInternationalLeagues, fetchAllLeagues }) {
   const classes = useStyles()
-  // const {displayWorldLeagues}
 
   return (
     <>
       <List>
         <TextField
-          value={ props.leagues.searchTerm }
-          onChange={ (event) => props.searchLeagueTerm( event.target.value )}
+          value={ searchTerm }
+          onChange={ (event) => setSearchTermLeagues( event.target.value )}
           className={classes.searchInput}
           label="Search Leagues..."
           />
         <Divider />
-        <ListItem button key='Popular'>
+        <ListItem button key='Popular' onClick={ fetchPopularLeagues }>
           <ListItemIcon> <SportsSoccerIcon /> </ListItemIcon>
-          <ListItemText primary='Popular' onClick={ () => props.displayPopularLeagues() }/>
+          <ListItemText primary='Popular'/>
         </ListItem>
-        <ListItem button key='World'>
+        <ListItem button key='International' onClick={ fetchInternationalLeagues } >
           <ListItemIcon> <LanguageIcon /> </ListItemIcon>
-          <ListItemText primary='World' onClick={ () => props.displayWorldLeagues() } />
+          <ListItemText primary='International' />
         </ListItem>
-        <ListItem button key='All'>
+        <ListItem button key='All'  onClick={ fetchAllLeagues } >
           <ListItemIcon> <BlurCircularIcon /> </ListItemIcon>
-          <ListItemText primary='All' onClick={ () => props.displayAllLeagues() } />
+          <ListItemText primary='All' />
         </ListItem>
         <Divider className={classes.divider} />
         {/* <FormControl variant="outlined" className={classes.formControl}>
@@ -112,7 +111,7 @@ function LeagueSearchBar( props ) {
           <ListItemText primary='Date' />
         </ListItem>
         <Typography noWrap style={{marginTop: '10px'}}>
-          Results: { props.leagues.display.length }
+          Results: { displayLeagues.length }
         </Typography>
       </List>
     </>
@@ -121,23 +120,18 @@ function LeagueSearchBar( props ) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    displayWorldLeagues: () => {
-      dispatch(displayWorldLeagues())
-    },
-    displayAllLeagues: () => {
-      dispatch(displayAllLeagues())
-    },
-    displayPopularLeagues: () => {
-      dispatch(displayPopularLeagues())
-    },
-    searchLeagueTerm: (searchTerm) => {
-      dispatch(searchLeagueTerm(searchTerm))
-    },
+    setSearchTermLeagues: (searchTerm) => dispatch(setSearchTermLeagues(searchTerm)),
+    fetchPopularLeagues: () => dispatch(fetchPopularLeagues()),
+    fetchInternationalLeagues: () => dispatch(fetchInternationalLeagues()),
+    fetchAllLeagues: () => dispatch(fetchAllLeagues())
   }
 }
 
 const mapStateToProps = state => {
-  return { leagues: state.leagues }
+  return {
+    displayLeagues: state.leagues.display,
+    searchTerm: state.searchTerm
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeagueSearchBar)

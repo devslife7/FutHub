@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { logOutCurrentUser } from '../actions/user'
+import { setCurrentUser, logOutCurrentUser } from '../actions/user'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
+
+const usersURL = 'http://localhost:3000/users/'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Profile({ history, logOutCurrentUser}) {
-  const currentUser = JSON.parse(localStorage.currentUser)
+function Profile({ history, logOutCurrentUser, currentUser, setCurrentUser}) {
   const classes = useStyles()
   const [ newName, setNewName ] = useState(currentUser.name)
   const [ newUserName, setNewUserName ] = useState(currentUser.username)
@@ -55,15 +57,13 @@ function Profile({ history, logOutCurrentUser}) {
         })
     }
 
-    // fetch(userURL + currentUser.id, patchRequest)
-    //     .then( resp => resp.json() )
-    //     .then( data => {
-    //         localStorage.username = data.user.username
-    //         localStorage.name = data.user.name
-    //         localStorage.userData = JSON.stringify( data.user )
-    //         setCurrentUser( data.user )
-    //     })
-    
+    fetch(usersURL + currentUser.id, patchRequest)
+        .then( resp => resp.json() )
+        .then( user => {
+          console.log('THIS: ', user )
+            localStorage.userId = user.id
+            setCurrentUser( user )
+        })
     handleClose()
   }
 
@@ -83,8 +83,12 @@ function Profile({ history, logOutCurrentUser}) {
             <Avatar src="/broken-image.jpg" style={{margin: 'auto'}}
               className={classes.large}
             />
-            <h3 style={{ fontFamily: 'roboto'}}>{currentUser.name}</h3>
-            <h3>{currentUser.username}</h3>
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em'}} >
+              {currentUser.name}
+            </Typography>
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em'}} >
+              {currentUser.username}
+            </Typography>
             {/* <p>Member since: today</p> */}
             <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '40px'}}>
               <Button
@@ -174,8 +178,17 @@ const mapDispatchToProps = dispatch => {
   return {
     logOutCurrentUser: () => {
       dispatch(logOutCurrentUser())
+    },
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(Profile)
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

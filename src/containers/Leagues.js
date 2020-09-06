@@ -1,12 +1,13 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import LeagueCard from '../components/LeagueCard'
 import LeagueSearchBar from '../components/LeaguesSearchBar'
-import Pagination from '../components/Pagination'
+// import Pagination from '../components/Pagination'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import { fetchPopularLeagues } from '../actions/leagues'
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,33 +21,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Leagues( props ) {
+function Leagues({ fetchPopularLeagues, displayLeagues, searchTerm, loading } ) {
   console.log("renders Leagues")
   const classes = useStyles()
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ leaguesPerPage ] = useState(9)
 
-  // let results
+
+  useEffect(() => {
+    fetchPopularLeagues()
+  }, [fetchPopularLeagues])
 
   const renderLeagues = () => {
       const indexOfLastPost = currentPage * leaguesPerPage
       const indexOfFirstPost = indexOfLastPost - leaguesPerPage
-      let leagues = props.leagues.display
 
-      leagues = leagues.filter( league => league.name.toLowerCase().includes(props.leagues.searchTerm.toLowerCase()) || league.country.toLowerCase().includes(props.leagues.searchTerm.toLowerCase()) )
+      let searchedLeagues = displayLeagues.filter( league => {
+        return league.name.toLowerCase().includes(searchTerm.toLowerCase()) || league.country.toLowerCase().includes(searchTerm.toLowerCase())
+      })
 
-      // results = leagues.length
-
-      let currentLeagues = leagues.slice(indexOfFirstPost, indexOfLastPost)
-
-      return currentLeagues.map( (l, idx) => 
+      return searchedLeagues.slice(indexOfFirstPost, indexOfLastPost).map( (league, idx) => 
         <Grid key={idx} item xs={4}>
-          <LeagueCard league={l}/>
+          <LeagueCard currentLeague={league}/>
         </Grid>
       )
   }
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   return (
     <div className={classes.root}>
@@ -57,14 +58,19 @@ function Leagues( props ) {
           </Paper>
         </Grid>
         <Grid item xs={9} container spacing={4} style={{marginLeft: 10}}>
-            {renderLeagues()}
+            { loading
+            ? <div
+                style={{marginTop: '20vh', marginLeft: '40vh', fontSize: '22px'}}
+              > Loading... </div>
+            : renderLeagues() 
+            }
             {/* <Pagination count={5} page={1} onChange={paginate} shape="rounded"/> */}
             <Grid item xs={12} style={{ justifyContent: 'center'}}>
-              <Pagination
+              {/* <Pagination
                 leaguesPerPage={leaguesPerPage}
                 totalLeagues={ props.leagues.display.length }
                 paginate={paginate}
-              />
+              /> */}
             </Grid>
         </Grid>
       </Grid>
@@ -74,8 +80,16 @@ function Leagues( props ) {
 
 const mapStateToProps = state => {
   return {
-    leagues: state.leagues
+    displayLeagues: state.leagues.display,
+    searchTerm: state.leagues.searchTerm,
+    loading: state.leagues.loading
   }
 }
 
-export default connect(mapStateToProps)(Leagues)
+const mapDisptachToProps = dispatch => {
+  return {
+    fetchPopularLeagues: () => dispatch(fetchPopularLeagues())
+  }
+}
+
+export default connect(mapStateToProps, mapDisptachToProps)(Leagues)

@@ -2,7 +2,7 @@ import React from 'react';
 // import { useState } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { addFavoriteLeague, removeFavoriteLeague } from '../actions/leagues'
+import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -13,7 +13,7 @@ import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 
-const leaguesURL = 'http://localhost:3000/leagues/'
+// const leaguesURL = 'http://localhost:3000/leagues/'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,46 +41,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeagues, loggedIn} ) {
+function LeagueCard({ currentLeague, addFavoriteLeague, removeFavoriteLeague, favLeagues, loggedIn, currentUserId }) {
   const classes = useStyles()
-  // const [ favorite, setFavorite ] = useState(league.is_favorite)
 
   const handleFavourite = () => {
-    const isFav = isFavorite()
-
-    if (isFav){
-      removeFavoriteLeague(league.id)
-    }
-    else {
-      addFavoriteLeague(league)
-    }
-
-    const patchRequest = {
-      method: 'PATCH',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        league: {
-          is_favorite: !isFav
-        }
-      })
-    }
-    console.log(patchRequest)
-    fetch(leaguesURL + league.id, patchRequest)
-      .then( resp => resp.json() )
-      .then( data => console.log( data ) )
+    !isFavorite() ?
+    addFavoriteLeague(currentLeague, currentUserId) :
+    removeFavoriteLeague(currentLeague.userRelationshipId)
   }
 
-  const isFavorite = () => {
-    let filtered = favLeagues.filter( fav => fav.id === league.id)
-    return filtered.length > 0
-  }
-
-  // const handleStandings = () => {
-  //   history.push("/standings")
-  // }
-
+  const isFavorite = () => favLeagues.find(league => league.id === currentLeague.id)
 
   return (
     <div className={classes.root}>
@@ -88,31 +58,34 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} src={league.logo} alt='league logo' />
+              <img className={classes.img} src={currentLeague.logo} alt='league logo' />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  {league.name}
+                  {currentLeague.name}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  { league.flag && <img style={{width: '23px', marginRight: '10px'}} src={league.flag} alt='league logo'/> }
-                  {league.country}
+                  { currentLeague.flag && <img style={{width: '23px', marginRight: '10px'}} src={currentLeague.flag} alt='league logo'/> }
+                  {currentLeague.country === "World" ? "International" : currentLeague.country}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {league.league_type}
+                  {currentLeague.league_type}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Active: {league.is_current === 1 ? 'Yes' : 'No'}
+                  Active: {currentLeague.is_current === 1 ? 'Yes' : 'No'}
                 </Typography>
+                {/* <Typography variant="body2" color="textSecondary">
+                  leagueId: {currentLeague.id}
+                </Typography> */}
               </Grid>
               <Grid item>
-                { league.standings === 1
+                { currentLeague.standings === 1
                 ? <Button
                     // onClick={ () => handleStandings() }
-                    variant='outlined' 
+                    variant='outlined'
                     color='primary'
                     >
                       <Link to="/standings" className={classes.links}>
@@ -126,17 +99,11 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
                     >Standings
                   </Button>
                 }
-                {/* <Button
-                  onClick={ () => console.log(league.league_id)}
-                  variant='outlined' 
-                  color='primary'
-                  >Standings
-                </Button> */}
               </Grid>
             </Grid>
             <Grid item>
               { loggedIn
-              ? <IconButton onClick={ () => handleFavourite() }>
+              ? <IconButton onClick={ handleFavourite }>
                   { isFavorite() ? <StarIcon color='primary' /> : <StarBorderIcon/> }
                 </IconButton>
               : null
@@ -151,8 +118,8 @@ function LeagueCard( {league, addFavoriteLeague, removeFavoriteLeague, favLeague
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFavoriteLeague: league => {
-      dispatch(addFavoriteLeague(league))
+    addFavoriteLeague: (currentLeague, currentUserId) => {
+      dispatch(addFavoriteLeague(currentLeague, currentUserId))
     },
     removeFavoriteLeague: leagueId => {
       dispatch(removeFavoriteLeague(leagueId))
@@ -162,8 +129,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    favLeagues: state.leagues.favorites,
-    loggedIn: state.user.loggedIn
+    favLeagues: state.user.currentUser.favLeagues,
+    loggedIn: state.user.loggedIn,
+    currentUserId: state.user.currentUser.id
   }
 }
 

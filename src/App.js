@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { setLeagues } from './actions/leagues'
+import { setCurrentUser } from './actions/user'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import NavBar from './containers/NavBar'
@@ -15,28 +15,31 @@ import Profile from './components/Profile'
 import Standings from './components/Standings'
 import Upcoming from './components/Upcoming'
 
-const leaguesURL = "http://localhost:3000/leagues"
+const usersURL = "http://localhost:3000/users/"
 
-function App({ setLeagues }) {
+function App({ setCurrentUser, setLeagues }) {
   console.log('renders App')
 
   useEffect( () => {
     console.log('renders App on mount')
     console.log('fetches leagues')
 
-    fetch( leaguesURL)
+    if (!!localStorage.userId){
+      fetch( usersURL + localStorage.userId )
       .then( resp => resp.json() )
-      .then( data => {
-        setLeagues(data.all)
-      })
+      .then( user => {
+          setCurrentUser(user)
+        })
+    }
 
-  }, [setLeagues])
+  }, [setCurrentUser])
 
   return (
     <Router>
       <NavBar/>
       <Container>
         <Route exact path='/' component={Leagues} />
+        <Route exact path='/leagues' component={Leagues} />
         <Route exact path='/login' component={LogIn} />
         <Route exact path='/signup' component={SignUp} />
         <Route exact path='/friends' component={Friends} />
@@ -52,8 +55,8 @@ function App({ setLeagues }) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLeagues: leagues => {
-      dispatch(setLeagues(leagues))
+    setCurrentUser: user => {
+      dispatch(setCurrentUser(user))
     }
   }
 }

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from 'react'
+import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +9,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Avatar from '@material-ui/core/Avatar'
-import { setCurrentUser, logOutCurrentUser } from '../actions/user';
+import { logOutCurrentUser } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     textDecoration: 'none',
+    fontSize: '1.14em',
     color: 'white',
-    margin: '0px 10px',
-    padding: '10px 5px',
+    margin: '0px 0px',
+    padding: '14px 20px 14px 20px',
   },
   typography: {
     padding: theme.spacing(2),
@@ -56,19 +56,16 @@ const useStyles = makeStyles((theme) => ({
   },
   onHover: {
     "&:hover": {
-      backgroundColor: '#2087DA',
-      borderRadius: '3px',
+      color: 'rgb(255, 255, 255, 0.6)',
     }
   }
 }))
 
-function NavBar({ loggedIn, setCurrentUser, logOutCurrentUser }) {
+function NavBar({ loggedIn, currentUser, logOutCurrentUser }) {
   console.log('--------------------')
   console.log('renders NavBar')
   const classes = useStyles()
   const [ linkClicked, setLinkClicked ] = useState('Leagues')
-  const currentUser = (!!localStorage.currentUser) ? JSON.parse(localStorage.currentUser) : null
-
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -79,14 +76,6 @@ function NavBar({ loggedIn, setCurrentUser, logOutCurrentUser }) {
   };
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
-
-
-  useEffect( () => {
-    if (!!localStorage.currentUser) {
-      const currentUser1 = JSON.parse( localStorage.currentUser )
-      setCurrentUser(currentUser1)
-    }
-  }, [setCurrentUser])
 
   const isMenuLinkClicked = linkName => {
     return linkClicked === linkName ? classes.linkClicked : classes.linkNotClicked
@@ -107,20 +96,20 @@ function NavBar({ loggedIn, setCurrentUser, logOutCurrentUser }) {
       <AppBar position="static" color='primary'>
         <Container>
           <Toolbar className={classes.navBarPadding}>
-            <Typography variant="h6" className={classes.title}>
-              FutHub
+            <Typography variant="h1" className={classes.title}>
+              FutFriends
             </Typography>
+              <Link
+                to="/"
+                onClick={ () => setLinkClicked('Leagues')}
+                className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`}
+              >Leagues
+              </Link>
               <Link
                 to="/upcoming"
                 onClick={ () => setLinkClicked('Games')}
                 className={`${isMenuLinkClicked('Games')} ${classes.links} ${classes.onHover}`} 
               >Games
-              </Link>
-              <Link
-                to="/"
-                onClick={ () => setLinkClicked('Leagues')}
-                className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`} 
-              >Leagues
               </Link>
             { loggedIn
             ? <div>
@@ -207,15 +196,13 @@ function NavBar({ loggedIn, setCurrentUser, logOutCurrentUser }) {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.user.loggedIn
+    loggedIn: state.user.loggedIn,
+    currentUser: state.user.currentUser,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentUser: user => {
-      dispatch(setCurrentUser(user))
-    },
     logOutCurrentUser: () => {
       dispatch(logOutCurrentUser())
     }

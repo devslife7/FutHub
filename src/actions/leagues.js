@@ -1,44 +1,45 @@
-export const setLeagues = (leagues) => {
-  return {
-    type: "SET_LEAGUES",
-    leagues
+const popularLeaguesURL = "http://localhost:3000/leagues/popular"
+const internationalLeaguesURL = "http://localhost:3000/leagues/international"
+const allLeaguesURL = "http://localhost:3000/leagues"
+
+export const fetchPopularLeagues = () => {
+  return (dispatch) => {
+    dispatch({ type: "LOADING_LEAGUES" })
+
+    fetch(popularLeaguesURL)
+      .then( resp => resp.json() )
+      .then( popularLeagues => {
+        dispatch({ type: "ADD_DISPLAY_LEAGUES", payload: popularLeagues })
+      })
   }
 }
 
-export const displayWorldLeagues = () => {
-  return {
-    type: "DISPLAY_WORLD_LEAGUES"
+export const fetchInternationalLeagues = () => {
+  return (dispatch) => {
+    dispatch({ type: "LOADING_LEAGUES" })
+
+    fetch(internationalLeaguesURL)
+      .then( resp => resp.json() )
+      .then( internationalLeagues => {
+        dispatch({ type: "ADD_DISPLAY_LEAGUES", payload: internationalLeagues })
+      })
+  }
+}
+export const fetchAllLeagues = () => {
+  return (dispatch) => {
+    dispatch({ type: "LOADING_LEAGUES" })
+
+    fetch(allLeaguesURL)
+      .then( resp => resp.json() )
+      .then( allLeagues => {
+        dispatch({ type: "ADD_DISPLAY_LEAGUES", payload: allLeagues })
+      })
   }
 }
 
-export const displayAllLeagues = () => {
+export const setSearchTermLeagues = searchTerm => {
   return {
-    type: "DISPLAY_ALL_LEAGUES"
-  }
-}
-
-export const displayPopularLeagues = () => {
-  return {
-    type: "DISPLAY_POPULAR_LEAGUES"
-  }
-}
-
-export const searchLeagueTerm = (searchTerm) => {
-  return {
-    type: "SEARCH_LEAGUE_TERM",
-    searchTerm
-  }
-}
-
-export const addFavoriteLeague = (league) => {
-  return {
-    type: "ADD_TO_FAVORITES",
-    league
-  }
-}
-export const removeFavoriteLeague = (leagueId) => {
-  return {
-    type: "REMOVE_FROM_FAVORITES",
-    leagueId
+    type: "SET_SEARCH_TERM_LEAGUE",
+    payload: searchTerm
   }
 }
