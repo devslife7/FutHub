@@ -24,10 +24,12 @@ function App({ setCurrentUser, setLeagues }) {
     console.log('renders App on mount')
     console.log('fetches leagues')
 
+
     if (!!localStorage.userId){
       fetch( usersURL + localStorage.userId )
       .then( resp => resp.json() )
       .then( user => {
+          console.log('this is the return of the server: ', user)
           setCurrentUser(user)
         })
     }

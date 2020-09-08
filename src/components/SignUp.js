@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../actions/user'
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { connect } from 'react-redux';
 
 
 const signUpURL = 'http://localhost:3000/signup'
@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignUp({ history, setCurrentUser }) {
+function SignUp({ history }) {
+  const dispatch = useDispatch()
   const [username, setUsername] = useState("")
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
@@ -105,7 +106,7 @@ function SignUp({ history, setCurrentUser }) {
       else{
         localStorage.token = data.token
         localStorage.userId = data.user.id
-        setCurrentUser(data.user)
+        dispatch(setCurrentUser(data.user))
         history.push("/")
       }
     })
@@ -189,12 +190,4 @@ function SignUp({ history, setCurrentUser }) {
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentUser: payload => {
-      dispatch(setCurrentUser(payload))
-    }
-  }
-}
-
-export default connect(null, mapDispatchToProps)(SignUp)
+export default SignUp

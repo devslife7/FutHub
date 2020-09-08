@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Avatar from '@material-ui/core/Avatar'
+import Divider from '@material-ui/core/Divider'
 import { logOutCurrentUser } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    fontSize: '1.55em',
+    fontWeight: '400'
   },
   navBarPadding: {
     padding: '0px'
@@ -61,10 +64,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function NavBar({ loggedIn, currentUser, logOutCurrentUser }) {
+function NavBar() {
   console.log('--------------------')
   console.log('renders NavBar')
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user.currentUser)
+  const loggedIn = useSelector(state => state.user.loggedIn)
   const [ linkClicked, setLinkClicked ] = useState('Leagues')
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -88,7 +94,7 @@ function NavBar({ loggedIn, currentUser, logOutCurrentUser }) {
   const handleLogOut = () => {
     handleClose()
     localStorage.clear()
-    logOutCurrentUser()
+    dispatch(logOutCurrentUser())
   }
 
   return (
@@ -129,7 +135,10 @@ function NavBar({ loggedIn, currentUser, logOutCurrentUser }) {
             : null
             }
             { loggedIn
-            ? <Link to="#"
+            ? 
+            <>
+              <Divider orientation="vertical" style={{height: '36px'}}/>
+              <Link to="#"
                 onClick={handleProfileOptions}
                 className={`${isMenuLinkClicked('profile')} ${classes.links} ${classes.onHover}`}
                 style={{ display: 'flex', alignItems: 'center' }}
@@ -140,6 +149,7 @@ function NavBar({ loggedIn, currentUser, logOutCurrentUser }) {
                   className={classes.small}
                 />
               </Link>
+              </>
             : <Link
                 onClick={ () => setLinkClicked('Login')}
                 className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
@@ -194,18 +204,4 @@ function NavBar({ loggedIn, currentUser, logOutCurrentUser }) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    loggedIn: state.user.loggedIn,
-    currentUser: state.user.currentUser,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    logOutCurrentUser: () => {
-      dispatch(logOutCurrentUser())
-    }
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default NavBar

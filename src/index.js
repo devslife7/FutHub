@@ -21,21 +21,22 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#2196f3'
+      // main: '#43a047'
     }
   },
-  typography: {
-    fontFamily: 'Arial',
-    h1: {
-      fontSize: '1.5em',
-      fontFamily: 'Arial'
-    }
-  }
+  // typography: {
+  //   fontFamily: 'Arial',
+  //   h1: {
+  //     fontSize: '1.5em',
+  //     fontFamily: 'Arial'
+  //   }
+  // }
 })
 
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <App />
+      <App/>
     </ThemeProvider>
   </Provider>,
   document.getElementById('root')

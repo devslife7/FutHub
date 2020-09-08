@@ -1,10 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import LeagueCard from '../components/LeagueCard'
 import { Grid } from '@material-ui/core'
 
-function Favorites({ favLeagues }) {
+function Favorites() {
   console.log('renders Favorites')
+  const favLeagues = useSelector(state => state.user.currentUser.favLeagues)
 
   const renderFavoriteLeagues = () => {
     return favLeagues.map( (fav, idx) =>
@@ -24,10 +25,4 @@ function Favorites({ favLeagues }) {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    favLeagues: state.user.currentUser.favLeagues
-  }
-}
-
-export default connect(mapStateToProps)(Favorites)
+export default Favorites

@@ -1,8 +1,7 @@
 import React from 'react';
-// import { useState } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user'
+import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -12,8 +11,6 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-
-// const leaguesURL = 'http://localhost:3000/leagues/'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,13 +38,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LeagueCard({ currentLeague, addFavoriteLeague, removeFavoriteLeague, favLeagues, loggedIn, currentUserId }) {
+function LeagueCard({ currentLeague }) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const currentUserId = useSelector(state => state.user.currentUser.id)
+  const favLeagues = useSelector(state => state.user.currentUser.favLeagues)
+  const loggedIn = useSelector(state => state.user.loggedIn)
 
   const handleFavourite = () => {
+    console.log("USERrelationship: ", currentLeague)
     !isFavorite() ?
-    addFavoriteLeague(currentLeague, currentUserId) :
-    removeFavoriteLeague(currentLeague.userRelationshipId)
+    dispatch(addFavoriteLeague(currentLeague, currentUserId)) :
+    dispatch(removeFavoriteLeague(currentLeague.userRelationshipId))
   }
 
   const isFavorite = () => favLeagues.find(league => league.id === currentLeague.id)
@@ -77,9 +79,9 @@ function LeagueCard({ currentLeague, addFavoriteLeague, removeFavoriteLeague, fa
                 <Typography variant="body2" color="textSecondary">
                   Active: {currentLeague.is_current === 1 ? 'Yes' : 'No'}
                 </Typography>
-                {/* <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" color="textSecondary">
                   leagueId: {currentLeague.id}
-                </Typography> */}
+                </Typography>
               </Grid>
               <Grid item>
                 { currentLeague.standings === 1
@@ -116,23 +118,4 @@ function LeagueCard({ currentLeague, addFavoriteLeague, removeFavoriteLeague, fa
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addFavoriteLeague: (currentLeague, currentUserId) => {
-      dispatch(addFavoriteLeague(currentLeague, currentUserId))
-    },
-    removeFavoriteLeague: leagueId => {
-      dispatch(removeFavoriteLeague(leagueId))
-    }
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    favLeagues: state.user.currentUser.favLeagues,
-    loggedIn: state.user.loggedIn,
-    currentUserId: state.user.currentUser.id
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeagueCard)
+export default LeagueCard

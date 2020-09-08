@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser, logOutCurrentUser } from '../actions/user'
 import { makeStyles } from '@material-ui/core/styles';
+import LeagueCardSmall from './LeagueCardSmall'
+import FriendCard from './FriendCard'
+import WatchPartyCard from './WatchPartyCard'
+import InvitationCard from './InvitationCard'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
@@ -19,7 +23,7 @@ const usersURL = 'http://localhost:3000/users/'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: '50px'
+    marginTop: '15px'
   },
   small: {
     width: theme.spacing(4),
@@ -31,8 +35,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Profile({ history, logOutCurrentUser, currentUser, setCurrentUser}) {
+function Profile({ history}) {
   const classes = useStyles()
+  const currentUser = useSelector(state => state.user.currentUser)
+  const friends = useSelector(state => state.user.currentUser.friends)
+  const dispatch = useDispatch()
   const [ newName, setNewName ] = useState(currentUser.name)
   const [ newUserName, setNewUserName ] = useState(currentUser.username)
   const [ open, setOpen ] = useState(false)
@@ -40,8 +47,11 @@ function Profile({ history, logOutCurrentUser, currentUser, setCurrentUser}) {
   const handelLogOut = () => {
     localStorage.clear()
     history.push("/")
-    logOutCurrentUser()
+    dispatch(logOutCurrentUser())
   }
+
+  const handleClickOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const handleEditUser = () => {
     console.log('editing user...')
@@ -60,73 +70,118 @@ function Profile({ history, logOutCurrentUser, currentUser, setCurrentUser}) {
     fetch(usersURL + currentUser.id, patchRequest)
         .then( resp => resp.json() )
         .then( user => {
-          console.log('THIS: ', user )
             localStorage.userId = user.id
-            setCurrentUser( user )
+            dispatch(setCurrentUser(user))
         })
     handleClose()
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const renderFavLeagues = () => {
+    console.log('renders leagues')
+    return currentUser.favLeagues.map( (league, idx) => 
+        <Grid key={idx} item xs={4}>
+          <LeagueCardSmall currentLeague={league}/>
+        </Grid>
+    )
+  }
+  const renderFriends = () => {
+    return currentUser.friends.map( (friend, idx) => 
+        <Grid key={idx} item xs={2}>
+          <FriendCard friend={friend}/>
+        </Grid>
+    )
+  }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const renderWatchParties = () => {
+    return currentUser.watchparties.map( (party, idx) => 
+        <Grid key={idx} item xs={3}>
+          <WatchPartyCard party={party}/>
+        </Grid>
+    )
+  }
+  const renderInvitations = () => {
+    return currentUser.invitations.map( (invitation, idx) => 
+        <Grid key={idx} item xs={3}>
+          <InvitationCard invitation={invitation}/>
+        </Grid>
+    )
+  }
 
   return (
     <>
       <Grid item xs={12} container spacing={4} className={classes.root}>
         <Grid item xs={3} >
-          <Paper elevation={3} style={{ textAlign: 'center'}} >
+          <Paper elevation={3} style={{ textAlign: 'center', padding: '30px'}} >
             <Avatar src="/broken-image.jpg" style={{margin: 'auto'}}
               className={classes.large}
             />
-            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em'}} >
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '20px'}} >
               {currentUser.name}
             </Typography>
-            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em'}} >
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '20px 0px'}} >
               {currentUser.username}
             </Typography>
-            {/* <p>Member since: today</p> */}
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '40px'}}>
-              <Button
-                onClick={handleClickOpen}
-                variant='outlined'
-                color='primary'
-                >Edit
-              </Button>
-              <Button
-                onClick={handelLogOut}
-                variant='outlined'
-                color='primary'
-                >Log out
-              </Button>
-            </div>
+            <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+              Parties: {currentUser.watchparties.length}
+            </Typography>
+            <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+              Friends: {friends.length}
+            </Typography>
+            <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+              Leagues: {currentUser.favLeagues.length}
+            </Typography>
+            <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+              Invitations: {currentUser.invitations.length}
+            </Typography>
+              <Grid container direction='column' spacing={3}>
+                  <Button
+                    style={{ margin: '40px 0px 0px 0px'}}
+                    onClick={handleClickOpen}
+                    variant='contained'
+                    color='primary'
+                    >Edit
+                  </Button>
+                  <Button
+                    style={{ margin: '20px 0px 0px 0px'}}
+                    onClick={handelLogOut}
+                    variant='outlined'
+                    color='primary'
+                    >Log out
+                  </Button>
+              </Grid>
           </Paper>
         </Grid>
+
         <Grid item xs={9} >
-          <Paper elevation={3} >
-            <h3 style={{ fontFamily: 'roboto'}}>{currentUser.name}</h3>
-            <h3>{currentUser.username}</h3>
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '40px'}}>
-              <Button
-                // onClick={handleClickOpen}
-                variant='outlined'
-                color='primary'
-                >Edit
-              </Button>
-              <Button
-                onClick={handelLogOut}
-                variant='outlined'
-                color='primary'
-                >Log out
-              </Button>
-            </div>
+          <Paper elevation={3} style={{ padding: '30px'}}>
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '0px'}} >
+              Favorite Leagues:
+            </Typography>
+            <Grid container spacing={2}>
+              {renderFavLeagues()}
+            </Grid>
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '20px'}} >
+              Friends:
+            </Typography>
+            <Grid container spacing={2}>
+              {renderFriends()}
+            </Grid>
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '20px'}} >
+              WatchParties:
+            </Typography>
+            <Grid container spacing={2}>
+              {renderWatchParties()}
+            </Grid>
+            <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '20px'}} >
+              Invitations:
+            </Typography>
+            <Grid container spacing={2}>
+              {renderInvitations()}
+            </Grid>
           </Paper>
         </Grid>
       </Grid>
+
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
       <DialogTitle>Edit Profile</DialogTitle>
       <DialogContent>
@@ -174,21 +229,4 @@ function Profile({ history, logOutCurrentUser, currentUser, setCurrentUser}) {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logOutCurrentUser: () => {
-      dispatch(logOutCurrentUser())
-    },
-    setCurrentUser: user => {
-      dispatch(setCurrentUser(user))
-    }
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    currentUser: state.user.currentUser
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default Profile

@@ -39,3 +39,15 @@ export const removeFavoriteLeague = userRelationshipId => {
       .then( () => dispatch({ type: "REMOVE_FROM_FAVORITES", payload: userRelationshipId }) )
   }
 }
+export const addWatchParty = watchparty => {
+  return {
+    type: "ADD_WATCHPARTY",
+    payload: watchparty
+  }
+}
+export const removeWatchParty = watchpartyId => {
+  return {
+    type: "REMOVE_WATCHPARTY",
+    payload: watchpartyId
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setSearchTermLeagues, fetchPopularLeagues, fetchInternationalLeagues, fetchAllLeagues } from '../actions/leagues'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
@@ -20,7 +20,6 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import Select from '@material-ui/core/Select';
 // import FormControl from '@material-ui/core/FormControl';
-
 
 const drawerWidth = 240;
 
@@ -54,28 +53,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LeagueSearchBar({ setSearchTermLeagues, searchTerm, displayLeagues, fetchPopularLeagues, fetchInternationalLeagues, fetchAllLeagues }) {
+function LeagueSearchBar() {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const displayLeagues = useSelector(state => state.leagues.display)
+  const searchTerm = useSelector(state => state.searchTerm)
 
   return (
     <>
       <List>
         <TextField
           value={ searchTerm }
-          onChange={ (event) => setSearchTermLeagues( event.target.value )}
+          onChange={ (event) => dispatch(setSearchTermLeagues( event.target.value )) }
           className={classes.searchInput}
           label="Search Leagues..."
           />
         <Divider />
-        <ListItem button key='Popular' onClick={ fetchPopularLeagues }>
+        <ListItem button key='Popular' onClick={ () => dispatch(fetchPopularLeagues()) }>
           <ListItemIcon> <SportsSoccerIcon /> </ListItemIcon>
           <ListItemText primary='Popular'/>
         </ListItem>
-        <ListItem button key='International' onClick={ fetchInternationalLeagues } >
+        <ListItem button key='International' onClick={ () => dispatch(fetchInternationalLeagues()) } >
           <ListItemIcon> <LanguageIcon /> </ListItemIcon>
           <ListItemText primary='International' />
         </ListItem>
-        <ListItem button key='All'  onClick={ fetchAllLeagues } >
+        <ListItem button key='All'  onClick={ () => dispatch(fetchAllLeagues()) } >
           <ListItemIcon> <BlurCircularIcon /> </ListItemIcon>
           <ListItemText primary='All' />
         </ListItem>
@@ -118,20 +120,4 @@ function LeagueSearchBar({ setSearchTermLeagues, searchTerm, displayLeagues, fet
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setSearchTermLeagues: (searchTerm) => dispatch(setSearchTermLeagues(searchTerm)),
-    fetchPopularLeagues: () => dispatch(fetchPopularLeagues()),
-    fetchInternationalLeagues: () => dispatch(fetchInternationalLeagues()),
-    fetchAllLeagues: () => dispatch(fetchAllLeagues())
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    displayLeagues: state.leagues.display,
-    searchTerm: state.searchTerm
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeagueSearchBar)
+export default LeagueSearchBar

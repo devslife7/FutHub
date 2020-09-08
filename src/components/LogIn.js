@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { setCurrentUser, logOutCurrentUser } from '../actions/user'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
-
+function LogIn({ history }) {
+  const dispatch = useDispatch()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
@@ -61,8 +61,8 @@ const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
 
   useEffect( () => {
     localStorage.clear() // clears the localStorage data upon component mount
-    logOutCurrentUser()
-  }, [logOutCurrentUser] )
+    dispatch(logOutCurrentUser())
+  }, [dispatch] )
 
   const openSnackBar = () => setOpen(true)
 
@@ -98,7 +98,7 @@ const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
         else {
           localStorage.token = data.token
           localStorage.userId = data.user.id
-          setCurrentUser(data.user)
+          dispatch(setCurrentUser(data.user))
           history.push("/")
         }
       })
@@ -168,15 +168,4 @@ const LogIn = ({ history, setCurrentUser, logOutCurrentUser }) => {
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentUser: user => {
-      dispatch(setCurrentUser(user))
-    },
-    logOutCurrentUser: () => {
-      dispatch(logOutCurrentUser())
-    }
-  }
-}
-
-export default connect(null, mapDispatchToProps)(LogIn)
+export default LogIn

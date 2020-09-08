@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import LeagueCard from '../components/LeagueCard'
 import LeagueSearchBar from '../components/LeaguesSearchBar'
 // import Pagination from '../components/Pagination'
@@ -21,16 +21,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Leagues({ fetchPopularLeagues, displayLeagues, searchTerm, loading } ) {
+function Leagues() {
   console.log("renders Leagues")
   const classes = useStyles()
-  const [ currentPage, setCurrentPage ] = useState(1)
+  const dispatch = useDispatch()
+  const displayLeagues = useSelector(state => state.leagues.display)
+  const searchTerm = useSelector(state => state.leagues.searchTerm)
+  const loading = useSelector(state => state.leagues.loading)
+
+  const [ currentPage ] = useState(1)
   const [ leaguesPerPage ] = useState(9)
 
 
   useEffect(() => {
-    fetchPopularLeagues()
-  }, [fetchPopularLeagues])
+    dispatch(fetchPopularLeagues())
+  }, [dispatch])
 
   const renderLeagues = () => {
       const indexOfLastPost = currentPage * leaguesPerPage
@@ -78,18 +83,4 @@ function Leagues({ fetchPopularLeagues, displayLeagues, searchTerm, loading } ) 
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    displayLeagues: state.leagues.display,
-    searchTerm: state.leagues.searchTerm,
-    loading: state.leagues.loading
-  }
-}
-
-const mapDisptachToProps = dispatch => {
-  return {
-    fetchPopularLeagues: () => dispatch(fetchPopularLeagues())
-  }
-}
-
-export default connect(mapStateToProps, mapDisptachToProps)(Leagues)
+export default Leagues
