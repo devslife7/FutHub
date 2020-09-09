@@ -38,7 +38,7 @@ function FriendCard({ friend }) {
       <Paper className={classes.paper}>
         <Grid container direction='column'>
           <Grid item>
-            <Avatar src="/broken-image.jpg" style={{margin: 'auto', marginBottom: '0px'}}
+            <Avatar src={friend.profile_img} style={{margin: 'auto', marginBottom: '0px'}}
               className={classes.image}
             />
           </Grid>

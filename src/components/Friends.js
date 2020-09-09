@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addFriend, removeFriend } from '../actions/user'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-// import Avatar from '@material-ui/core/Avatar'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import DeleteIcon from '@material-ui/icons/Delete';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
-// import CircularProgress from '@material-ui/core/CircularProgress';
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import GroupAddIcon from '@material-ui/icons/GroupAdd';
+// import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+// import GoogleMaps from './GoogleMaps';
+
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 const baseURL = 'http://localhost:3000/'
 const userURL = baseURL + 'users/'
@@ -32,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    width: theme.spacing(18),
+    height: theme.spacing(18),
     },
   gridStyle: {
     marginTop: '50px',
@@ -48,34 +53,42 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "28px"
   },
   outerPaper: {
-    height: '800px',
+    minHeight: '65vh',
     textAlign: 'center',
     padding: '5px'
   }
 }))
 
-function Friends({ currentUser }) {
+const initialUser = {
+  id: null,
+  name: '',
+  username: '',
+  profile_img: null,
+  invitations: [],
+  watchparties: [],
+  friends: [],
+  user_leagues: []
+}
+
+function Friends() {
   console.log('renders Friends')
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user.currentUser)
   const [ userList, setUserList ] = useState([])
-  const [ friendList, setFriendList ] = useState(currentUser.friends)
   const [ searchTerm, setSearchTerm ] = useState('')
-  const [ friendSearchTerm, setFriendSearchTerm ] = useState('')
-  const [ loading, setLoading ] = useState(false)
+  const [ currentFriend, setCurrentFriend ] = useState(initialUser)
 
   useEffect( () => {
-    setLoading(true)
     fetch(userURL)
       .then( resp => resp.json() )
-      .then( data => {
-        setUserList( data )
-        setLoading(false)
-        setFriendList( currentUser.friends )
+      .then( users => {
+        setUserList( users )
       })
 
   }, [currentUser.friends])
 
-  const handleAddFriend = friendId => {
+  const handleAddFriend = () => {
     const postRequest = {
       method: 'POST',
       headers: {
@@ -83,20 +96,19 @@ function Friends({ currentUser }) {
       },
       body: JSON.stringify({
         user_id: currentUser.id,
-        friend_id: friendId
+        friend_id: currentFriend.id
       })
     }
   
     fetch(friendshipsURL, postRequest)
       .then( resp => resp.json() )
-      .then( () => {
-        const friendObj = userList.filter( user => user.id === friendId )[0]
-        setFriendList( [...friendList, friendObj] )
+      .then( friend => {
+        console.log(friend)
+        dispatch(addFriend(friend))
       })
   }
 
-  const handleRemoveFriend = friendId => {
-    console.log('this is freind IDIDID: ', friendId)
+  const handleRemoveFriend = () => {
     const postRequest = {
       method: 'POST',
       headers: {
@@ -105,87 +117,84 @@ function Friends({ currentUser }) {
       body: JSON.stringify({
         friendship: {
           user_id: currentUser.id,
-          friend_id: friendId
+          friend_id: currentFriend.id
         }
       })
     }
     fetch(removeFriendshipURL, postRequest)
       .then( resp => resp.json() )
-      .then( () => {
-        const friendObj = userList.filter( user => user.id === friendId )[0]
-        const friendIndex = friendList.findIndex( f => f === friendObj )
-
-        setFriendList( [...friendList.slice(0, friendIndex), ...friendList.slice(friendIndex + 1)] )
+      .then( (data) => {
+        console.log(data)
+        dispatch(removeFriend(currentFriend.id))
       })
   }
 
   const generateFriends = () => {
-    console.log('generateFriends runs')
-
-    let filteredFriendList = friendList.filter(user => user.name.toLowerCase().includes(friendSearchTerm.toLowerCase()))
-    console.log('this is friendsList', friendList)
-  
-    return filteredFriendList.map( ( friend, idx ) =>
+    return currentUser.friends.map( ( friend, idx ) =>
       <ListItem key={idx} style={{ paddingLeft: '40px', marginRight: '0px'}}>
-        {/* <ListItemAvatar>
-          <Avatar src="/broken-image.jpg"/>
-        </ListItemAvatar> */}
+        <ListItemAvatar>
+          <Avatar src={friend.profile_img}/>
+        </ListItemAvatar>
         <ListItemText
           primary={ friend.name }
           secondary= { friend.username }
         />
-        <ListItemSecondaryAction style={{ paddingRight: '0px'}}>
-          <IconButton edge="end" aria-label="delete" onClick={ () => handleRemoveFriend(friend.id)}>
-            <DeleteIcon />
-          </IconButton>
-        </ListItemSecondaryAction>
+        <IconButton onClick={ () => fetchFriend(friend)}>
+          <ChevronRightIcon/>
+        </IconButton>
       </ListItem>,
     )
   }
 
-  const generateUsers = userList => {
-    const friendIds = currentUser.friends.map( user => user.id )
+  const renderUsersList = () => {
+    const userNames = userList.map(friend => {
+      return {
+        name: friend.name,
+        id: friend.id
+      }
+    })
+    let filteredUserNames = userNames.filter(friend => friend.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
-    userList = userList.filter( user => user.id !== currentUser.id )
-    userList = userList.filter( user => user.name.toLowerCase().includes(searchTerm.toLowerCase()) )
-  
-    return userList.map( ( user, idx) => 
-      <ListItem style={{ paddingLeft: '40px'}} key={idx}>
-        {/* <ListItemAvatar>
-          <Avatar src="/broken-image.jpg"/>
-        </ListItemAvatar> */}
-        <ListItemText
-          primary= { user.name }
-          secondary= { user.username }
-        />
-        { !friendIds.includes( user.id ) ?
-        <IconButton edge="end" aria-label="delete" onClick={ (e) => handleAddFriend( user.id )} style={{marginRight: '50px'}}>
-          <GroupAddIcon color='primary' />
-        </IconButton>
-        : <PersonAddDisabledIcon color='disabled' style={{marginRight: '60px'}}/>
-        }
-      </ListItem>,
-    )
+    if (filteredUserNames.length === 0){
+      return (
+        <div
+          style={{padding: '10px'}}
+          >No Matches
+        </div>
+      )
+    }
+
+    return filteredUserNames.map((friend, idx) => 
+        <div
+          style={{padding: '10px'}}
+          onClick={() => fetchFriend(friend)}
+          key={idx}
+          >{friend.name}
+        </div>
+      )
+  }
+
+  const fetchFriend = friend => {
+    setSearchTerm('')
+
+    fetch(userURL + friend.id)
+      .then( resp => resp.json() )
+      .then( data => {
+        setCurrentFriend(data)
+      })
   }
 
   
   return (
     <>
-      <Grid container justify='space-evenly' alignItems='center' spacing={3} className={classes.gridStyle}>
-        <Grid item xs={3} style={{ marginBotton: '300px'}}>
+      <Grid container justify='space-evenly' alignItems='flex-start' spacing={3} className={classes.gridStyle}>
+        <Grid item xs={3}>
           <Paper elevation={6} className={classes.outerPaper}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%'}}>
-                <Typography variant="h5" className={classes.title}>
-                  Friends
+                <Typography variant="h5" className={classes.title} style={{margin: '30px 0px 15px 0px'}}>
+                  Friends: {currentUser.friends.length}
                 </Typography>
-                <div style={{ display: 'flex', justify: 'center'}}>
-                  <TextField
-                    onChange={ e => setFriendSearchTerm(e.target.value) }
-                    label="Search Friends..."
-                    style={{ margin: '0px 20px 10px 40px'}}
-                  />
-                </div>  
                 <Paper>
                   <List style={{ height: '680px', overflow: 'auto'}}>
                     { generateFriends() }
@@ -195,30 +204,79 @@ function Friends({ currentUser }) {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={9}>
           <Paper elevation={5} className={classes.outerPaper}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%'}}>
-              <Typography variant="h5" className={classes.title}>
-                All Users
-              </Typography>
-              <div style={{ display: 'flex', justify: 'center'}}>
+            <Grid container spacing={5} justify="center" style={{marginTop: '0px'}}>
+              <Grid item xs={4}>
+                <Typography variant="h5" className={classes.title}>
+                  Search Users
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
                 <TextField
-                  onChange={ e => setSearchTerm(e.target.value) }
-                  label="Search Users..."
-                  style={{ margin: '0px 20px 10px 40px'}}
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  id="outlined-basic"
+                  label="Search..."
+                  variant="outlined"
+                  style={{width: '220px'}}
                 />
-              </div>  
-              <Paper>
-                <List style={{ height: '680px', overflow: 'auto'}} >
-                  {/* { loading && <CircularProgress style={{marginTop: '50px'}} /> } */}
-                  { loading
-                  ? <div>Loading...</div>
-                  : generateUsers(userList) }
-                </List>
-              </Paper>
+                { searchTerm.length >= 2 ?
+                  <Paper style={{position: 'absolute', marginLeft: '7vh', padding: '10px 20px 10px 20px'}}>
+                    {renderUsersList()}
+                  </Paper>
+                : null
+              }
+              </Grid>
             </Grid>
-          </Grid>
+            { currentFriend.id ?
+              <>
+                <Grid container justify='center' style={{ margin: '50px 0px'}}>
+                  <Grid item xs={3}
+                    // style={{backgroundColor: 'red'}}
+                  >
+                    <Avatar src={currentFriend.profile_img} style={{margin: 'auto'}} className={classes.large} />
+                    { currentUser.friends.find(friend => friend.id === currentFriend.id) ?
+                      <Button variant='outlined' color='primary' style={{marginTop: '10px'}} onClick={handleRemoveFriend}>Remove friend</Button>
+                      :
+                      <Button variant='outlined' color='primary' style={{marginTop: '10px'}} onClick={handleAddFriend}>Add friend</Button>
+                    }
+                  </Grid>
+                  <Grid item xs={3}
+                    // style={{backgroundColor: 'yellow'}}
+                  >
+                    <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '20px'}} >
+                      {currentFriend.name}
+                    </Typography>
+                    <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '20px 0px'}} >
+                      {currentFriend.username}
+                    </Typography>
+                    <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+                      Attending Parties: {currentFriend.watchparties.length}
+                    </Typography>
+                    <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+                      Friends: {currentFriend.friends.length}
+                    </Typography>
+                    <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '10px'}} >
+                      Favorite Leagues: {currentFriend.user_leagues.length}
+                    </Typography>
+                  </Grid>
+                </Grid>
+
+                <Grid container>
+                  <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '0px'}} >
+                    Favorite Leagues:
+                  </Typography>
+                  <Grid container spacing={2}>
+                    {/* {renderFavLeagues()} */}
+                  </Grid>
+                </Grid>
+              </>
+            : 
+              <Typography color='textSecondary'gutterBottom style={{fontSize: '1em', marginTop: '20vh'}} >
+                Select a user to see more info...
+              </Typography>
+            }
           </Paper>
         </Grid>
       </Grid>
@@ -226,10 +284,4 @@ function Friends({ currentUser }) {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.user.currentUser,
-  }
-}
-
-export default connect(mapStateToProps)(Friends)
+export default Friends

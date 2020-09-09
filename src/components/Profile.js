@@ -17,6 +17,10 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
+// import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+// import Input from '@material-ui/core/Input'
+// import FormHelperText from '@material-ui/core/FormHelperText'
 
 const usersURL = 'http://localhost:3000/users/'
 
@@ -30,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(4),
   },
   large: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
+    width: theme.spacing(17),
+    height: theme.spacing(17),
   }
 }))
 
@@ -40,8 +44,8 @@ function Profile({ history}) {
   const currentUser = useSelector(state => state.user.currentUser)
   const friends = useSelector(state => state.user.currentUser.friends)
   const dispatch = useDispatch()
-  const [ newName, setNewName ] = useState(currentUser.name)
-  const [ newUserName, setNewUserName ] = useState(currentUser.username)
+  const [ newName, setNewName ] = useState('')
+  const [ newUserName, setNewUserName ] = useState('')
   const [ open, setOpen ] = useState(false)
 
   const handelLogOut = () => {
@@ -50,12 +54,14 @@ function Profile({ history}) {
     dispatch(logOutCurrentUser())
   }
 
-  const handleClickOpen = () => setOpen(true)
+  const handleClickOpen = () => {
+    setNewName(currentUser.name)
+    setNewUserName(currentUser.username)
+    setOpen(true)
+  }
   const handleClose = () => setOpen(false)
 
   const handleEditUser = () => {
-    console.log('editing user...')
-
     const patchRequest = {
         method: 'PATCH',
         headers: {
@@ -73,6 +79,8 @@ function Profile({ history}) {
             localStorage.userId = user.id
             dispatch(setCurrentUser(user))
         })
+
+    handleUploadAvatar()
     handleClose()
   }
 
@@ -107,14 +115,40 @@ function Profile({ history}) {
     )
   }
 
+  // file upload state
+  const [avatar, setAvatar] = useState('')
+  // const [fileName, setFileName] = useState('Choose File')
+  // const [uploadedFile, setUploadedFile] = useState({})
+
+  const onChange = e => {
+    // console.log(e.target.files)
+    setAvatar(e.target.files[0])
+    // setFileName(e.target.files[0].name)
+  }
+
+  const handleUploadAvatar = () => {
+    const formData = new FormData()
+    formData.append('avatar', avatar)
+
+    const uploadURL = 'http://localhost:3000/uploadAvatar/'
+
+    fetch(uploadURL + currentUser.id, {
+      method: "PATCH",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(user => {
+       console.log(user)
+       dispatch(setCurrentUser(user))
+      });
+  }
+
   return (
     <>
       <Grid item xs={12} container spacing={4} className={classes.root}>
         <Grid item xs={3} >
           <Paper elevation={3} style={{ textAlign: 'center', padding: '30px'}} >
-            <Avatar src="/broken-image.jpg" style={{margin: 'auto'}}
-              className={classes.large}
-            />
+            <Avatar src={currentUser.profile_img} style={{margin: 'auto'}} className={classes.large} />
             <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '20px'}} >
               {currentUser.name}
             </Typography>
@@ -186,34 +220,28 @@ function Profile({ history}) {
       <DialogTitle>Edit Profile</DialogTitle>
       <DialogContent>
       <form className={classes.container} style={{ width: '250px'}}> 
-      <TextField
-          margin="normal"
-          fullWidth
-          id="name"
-          label="Name"
-          name="name"
-          autoComplete="name"
-          value={newName}
-          onChange={ e => setNewName( e.target.value )}
-      />
-      <TextField
-          margin="normal"
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          autoComplete="username"
-          value={newUserName}
-          onChange={ e => setNewUserName( e.target.value )}
-      />
-      <TextField
-          margin="normal"
-          fullWidth
-          id="img"
-          label="Image Url"
-          name="img"
-          autoComplete="img"
-      />
+        <TextField
+            margin="normal"
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            value={newName}
+            onChange={ e => setNewName( e.target.value )}
+        />
+        <TextField
+            margin="normal"
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            value={newUserName}
+            onChange={ e => setNewUserName( e.target.value )}
+        />
+        <InputLabel htmlFor="my-input" style={{margin: '20px 0px'}}>Upload Avatar Image</InputLabel>
+          <input id='customFile' type='file' placeholder='hello' onChange={onChange}/>
       </form>
       </DialogContent>
       <DialogActions>

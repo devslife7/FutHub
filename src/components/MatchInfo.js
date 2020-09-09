@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Moment from 'react-moment';
 import { useSelector, useDispatch } from 'react-redux'
 import { addWatchParty } from '../actions/user'
 import { makeStyles } from '@material-ui/core/styles';
@@ -135,7 +136,7 @@ function MatchInfo() {
     return friendList.map( ( friend, idx ) =>
       <ListItem key={idx} style={{ paddingLeft: '40px', marginRight: '0px'}}>
         <ListItemAvatar>
-          <Avatar src="/broken-image.jpg"/>
+          <Avatar src={friend.profile_img}/>
         </ListItemAvatar>
         <ListItemText primary={friend.name} secondary= {friend.username} />
         { !friendIds.includes(friend.id)
@@ -159,7 +160,7 @@ function MatchInfo() {
           <Grid container style={{ margin: '40px 0px'}} spacing={2} justify='center' alignItems='center' >
             <Grid item xs={5}>
               <Grid container justify="center" alignItems='center' direction='column'>
-                <Avatar src={currentMatch.homeTeam.logo} className={classes.logo}/>
+                <Avatar variant='square' src={currentMatch.homeTeam.logo} className={classes.logo}/>
                   <Typography variant="h1" align="center" color="textPrimary" style={{fontSize: '1.9em', marginTop: '10px'}}>
                     {currentMatch.homeTeam.team_name}
                   </Typography>
@@ -168,14 +169,14 @@ function MatchInfo() {
             <Grid item xs={2}>
               <Grid container justify="center" >
                 <Grid container direction='column' alignItems='center' >
-                  <span >{currentMatch.goalsHomeTeam} - {currentMatch.goalsAwayTeam}</span>
-                  <span >{currentMatch.statusShort}</span>
+                  <span style={{fontSize: '2.2em'}} >{currentMatch.goalsHomeTeam} - {currentMatch.goalsAwayTeam}</span>
+                  <span style={{fontSize: '1.3em'}}>{currentMatch.statusShort}</span>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={5}>
             <Grid container justify="center" alignItems="center" direction='column' >
-                <Avatar src={currentMatch.awayTeam.logo} className={classes.logo} />
+                <Avatar variant='square' src={currentMatch.awayTeam.logo} className={classes.logo} />
                 <Typography variant="h1" align="center" color="textPrimary" style={{fontSize: '1.9em', marginTop: '10px'}}>
                     {currentMatch.awayTeam.team_name}
                   </Typography>
@@ -189,7 +190,7 @@ function MatchInfo() {
                     Match League
                 </Grid>
                 <Grid item>
-                  <Avatar src={currentMatch.league.logo} />
+                  <Avatar variant='rounded' src={currentMatch.league.logo} />
                 </Grid>
                 <Grid item>
                   {currentMatch.league.name}
@@ -209,27 +210,46 @@ function MatchInfo() {
             <Grid item xs={6}>
               <Grid container justify='center' alignItems='flex-start' direction='column' spacing={2}>
                 <Grid item>
-                  Date:   {currentMatch.event_date}
+                  Date:
+                    <Moment
+                      style={{marginLeft: '36px'}}
+                      interval={0}
+                      format="MMM D, YYYY"
+                      unix
+                    >{currentMatch.event_timestamp}
+                    </Moment>
                 </Grid>
                 <Grid item>
-                  Time: {currentMatch.event_timestamp}
+                  Time:
+                    <Moment
+                      style={{marginLeft: '36px'}}
+                      unix
+                      format="hh:mm A"
+                      >{currentMatch.event_timestamp}
+                      </Moment>
                 </Grid>
                 <Grid item>
-                  Status: {currentMatch.status}
+                  Status: <span style={{marginLeft: '22px'}}>{currentMatch.status}</span>
                 </Grid>
                 <Grid item>
-                  Round: {currentMatch.round}
+                  Round: <span style={{marginLeft: '24px'}}>{currentMatch.round}</span>
                 </Grid>
                 <Grid item>
-                  Stadium: {currentMatch.venue}
+                  Stadium: <span style={{marginLeft: '10px'}}>{currentMatch.venue}</span>
                 </Grid>
-                <Grid item>
-                  Referee: {currentMatch.referee}
-                </Grid>
+                { currentMatch.referee &&
+                  <Grid item>
+                    Referee: <span style={{marginLeft: '14px'}}>{currentMatch.referee}</span>
+                  </Grid>
+                }
               </Grid>
             </Grid>
           </Grid>
-          <Button variant="contained" color="primary" onClick={handleClickOpen} style={{marginTop: '30px'}}>create watch party</Button>
+          { currentMatch.statusShort === "NS" ?
+            <Button variant="contained" color="primary" onClick={handleClickOpen} style={{marginTop: '30px'}}>create watch party</Button>
+          :
+            <Button disabled variant="contained" color="primary" style={{marginTop: '30px'}}>create watch party</Button>
+          }
         </>
       : 
         <Typography variant="h1" gutterBottom style={{fontSize: '1.4em', marginTop: '120px'}} >

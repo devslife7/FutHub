@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Avatar from '@material-ui/core/Avatar'
 import Divider from '@material-ui/core/Divider'
+import Button from '@material-ui/core/Button'
+import Badge from '@material-ui/core/Badge'
+import Grid from '@material-ui/core/Grid'
 import { logOutCurrentUser } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px'
   },
   small: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+    width: theme.spacing(5),
+    height: theme.spacing(5),
   },
   large: {
     width: theme.spacing(7),
@@ -53,9 +56,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#2196f3',
     color: 'white',
     textDecoration: 'none',
-    borderRadius: '5px',
-    margin: '10px',
-    padding: '7px 18px',
+    borderRadius: '4px',
   },
   onHover: {
     "&:hover": {
@@ -143,11 +144,9 @@ function NavBar() {
                 className={`${isMenuLinkClicked('profile')} ${classes.links} ${classes.onHover}`}
                 style={{ display: 'flex', alignItems: 'center' }}
                 > {currentUser.name}
-                <Avatar
-                  src="/broken-image.jpg"
-                  style={{marginLeft: '6px'}}
-                  className={classes.small}
-                />
+                <Badge badgeContent={currentUser.invitations.length} color="secondary">
+                  <Avatar src={currentUser.profile_img} style={{marginLeft: '6px'}} className={classes.small} />
+                </Badge>
               </Link>
               </>
             : <Link
@@ -175,29 +174,36 @@ function NavBar() {
           horizontal: 'center',
         }}
       >
-        <Paper elevation={0} style={{ textAlign: 'center', padding: '30px'}}>
-          <Avatar src="/broken-image.jpg" style={{margin: '0px auto'}}
-            className={classes.large}
-          />
+        <Paper elevation={0} style={{ padding: '20px'}}>
           { loggedIn
           &&
-          <div>
-            <h3>{currentUser.name}</h3>
-            <h3>{currentUser.username}</h3>
-          </div>
+          <>
+            <Grid container direction='column' alignItems='center'>
+              <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
+                {currentUser.name}
+              </Typography>
+              <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
+                {currentUser.username}
+              </Typography>
+              {/* <Grid container direction='column' spacing={3}> */}
+                <Link
+                  style={{margin: '8px 0px', padding: '10px 70px', fontSize: '0.95em'}}
+                  onClick={handleClose}
+                  className={classes.button}
+                  to="/profile"
+                  >PROFILE
+                </Link>
+                <Link
+                  style={{margin: '8px 0px 0px 0px', padding: '10px 70px', fontSize: '0.9em'}}
+                  onClick={handleLogOut}
+                  className={classes.button}
+                  to="/"
+                  >LOG OUT
+                </Link>
+              {/* </Grid> */}
+            </Grid>
+          </>
           }
-          <Link
-            onClick={handleClose}
-            className={classes.button}
-            to="/profile"
-            >Profile
-          </Link>
-          <Link
-            onClick={handleLogOut}
-            className={classes.button}
-            to="/"
-            >Log Out
-          </Link>
         </Paper>
       </Popover>
     </div>

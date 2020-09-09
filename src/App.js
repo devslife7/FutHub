@@ -29,7 +29,7 @@ function App({ setCurrentUser, setLeagues }) {
       fetch( usersURL + localStorage.userId )
       .then( resp => resp.json() )
       .then( user => {
-          console.log('this is the return of the server: ', user)
+          // console.log('this is the return of the server: ', user)
           setCurrentUser(user)
         })
     }
