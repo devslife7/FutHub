@@ -19,35 +19,37 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('Team 1', 159, 6.0, 24, 4.0),
-  createData('Team 2', 237, 9.0, 37, 4.3),
-  createData('Team 3', 262, 16.0, 24, 6.0),
-  createData('Team 4', 305, 3.7, 67, 4.3),
-  createData('Team 5', 356, 16.0, 49, 3.9),
-  createData('Team 6', 356, 16.0, 49, 3.9),
-  createData('Team 7', 356, 16.0, 49, 3.9),
-  createData('Team 8', 356, 16.0, 49, 3.9),
-  createData('Team 9', 356, 16.0, 49, 3.9),
-  createData('Team 10', 356, 16.0, 49, 3.9),
-  createData('Team 11', 356, 16.0, 49, 3.9),
-  createData('Team 12', 356, 16.0, 49, 3.9),
-  createData('Team 13', 356, 16.0, 49, 3.9),
-  createData('Team 14', 356, 16.0, 49, 3.9),
+  createData('Arsenal', 0, 0, 0, 0, 0),
+  createData('Manchester United', 0, 0, 0, 0, 0),
+  createData('Liverpool', 0, 0, 0, 0, 0),
+  createData('Manchester City', 0, 0, 0, 0, 0),
+  createData('Tottenham Hotspur', 0, 0, 0, 0, 0),
+  createData('Newcastle United', 0, 0, 0, 0, 0),
+  createData('Southamptop', 0, 0, 0, 0, 0),
+  createData('West Ham United', 0, 0, 0, 0, 0),
+  createData('Leeds United', 0, 0, 0, 0, 0),
+  createData('Fulham', 0, 0, 0, 0, 0),
+  createData('Everton', 0, 0, 0, 0, 0),
+  createData('Crystal Palace', 0, 0, 0, 0, 0),
+  createData('Burnley', 0, 0, 0, 0, 0),
+  createData('Leicester City', 0, 0, 0, 0, 0),
+  createData('Wolverhamptop Wanderers', 0, 0, 0, 0, 0),
 ];
 
 export default function Standings() {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} style={{ marginTop: '50px'}}>
+    <TableContainer component={Paper} style={{ marginTop: '7vh', padding: '30px'}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Teams</TableCell>
-            <TableCell align="right">Won</TableCell>
-            <TableCell align="right">Tied</TableCell>
+            <TableCell>Team</TableCell>
+            <TableCell align="right">Played</TableCell>
+            <TableCell align="right">Win</TableCell>
+            <TableCell align="right">Draw</TableCell>
             <TableCell align="right">Lost</TableCell>
-            <TableCell align="right">Average</TableCell>
+            <TableCell align="right">Points</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,6 +61,7 @@ export default function Standings() {
               <TableCell align="right">{row.calories}</TableCell>
               <TableCell align="right">{row.fat}</TableCell>
               <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.protein}</TableCell>
               <TableCell align="right">{row.protein}</TableCell>
             </TableRow>
           ))}

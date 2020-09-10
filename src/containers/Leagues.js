@@ -12,7 +12,7 @@ import { fetchPopularLeagues } from '../actions/leagues'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: '50px'
+    marginTop: '7vh'
   },
   paper: {
     padding: theme.spacing(2),
@@ -45,8 +45,8 @@ function Leagues() {
         return league.name.toLowerCase().includes(searchTerm.toLowerCase()) || league.country.toLowerCase().includes(searchTerm.toLowerCase())
       })
 
-      return searchedLeagues.slice(indexOfFirstPost, indexOfLastPost).map( (league, idx) => 
-        <Grid key={idx} item xs={4}>
+      return searchedLeagues.slice(0, 20).map( (league, idx) => 
+        <Grid key={idx} item xs={3}>
           <LeagueCard currentLeague={league}/>
         </Grid>
       )
@@ -62,7 +62,7 @@ function Leagues() {
             <LeagueSearchBar />
           </Paper>
         </Grid>
-        <Grid item xs={9} container spacing={4} style={{marginLeft: 10}}>
+        <Grid item xs={9} container spacing={3} style={{marginLeft: 10}}>
             { loading
             ? <div
                 style={{marginTop: '20vh', marginLeft: '40vh', fontSize: '22px'}}

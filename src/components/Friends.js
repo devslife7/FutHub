@@ -17,6 +17,9 @@ import Typography from '@material-ui/core/Typography'
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import GroupAddIcon from '@material-ui/icons/GroupAdd';
 // import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import FriendCard from './FriendCard';
+
 
 const baseURL = 'http://localhost:3000/'
 const userURL = baseURL + 'users/'
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(18),
     },
   gridStyle: {
-    marginTop: '50px',
+    marginTop: '6vh',
     // backgroundColor: '#EAEAEA',
     // borderRadius: '20px',
     padding: '0px 0px'
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "28px"
   },
   outerPaper: {
-    minHeight: '65vh',
+    minHeight: '59vh',
     textAlign: 'center',
     padding: '5px'
   }
@@ -164,7 +167,10 @@ function Friends() {
           style={{padding: '10px'}}
           onClick={() => fetchFriend(friend)}
           key={idx}
-          >{friend.name}
+          >
+            <ButtonBase>
+              {friend.name}
+            </ButtonBase>
         </div>
       )
   }
@@ -179,6 +185,15 @@ function Friends() {
       })
   }
 
+  const renderFriendFriends = () => {
+    console.log('FRIEND: ',currentFriend)
+    return currentFriend.friends.map( (f, idx) => 
+        <Grid key={idx} item xs={2}>
+          <FriendCard friend={f}/>
+        </Grid>
+    )
+  }
+
   
   return (
     <>
@@ -191,7 +206,7 @@ function Friends() {
                   Friends: {currentUser.friends.length}
                 </Typography>
                 <Paper>
-                  <List style={{ height: '680px', overflow: 'auto'}}>
+                  <List style={{ height: '50vh', overflow: 'auto'}}>
                     { generateFriends() }
                   </List>
                 </Paper>
@@ -259,11 +274,11 @@ function Friends() {
                 </Grid>
 
                 <Grid container>
-                  <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '0px'}} >
-                    Favorite Leagues:
+                  <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', marginTop: '0px', marginLeft:'40px'}} >
+                    Friends:
                   </Typography>
-                  <Grid container spacing={2}>
-                    {/* {renderFavLeagues()} */}
+                  <Grid container spacing={2} style={{ marginLeft: '35px'}}>
+                    {renderFriendFriends()}
                   </Grid>
                 </Grid>
               </>

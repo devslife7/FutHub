@@ -16,8 +16,8 @@ function Favorites() {
   }
 
   return (
-    <div>
-      <h2>Favorites leagues:</h2>
+    <div style={{ marginTop: '7vh'}}>
+      {/* <h2>Favorites leagues:</h2> */}
       <Grid item xs={12} container spacing={4}>
         {renderFavoriteLeagues()}
       </Grid>

@@ -27,7 +27,7 @@ const usersURL = 'http://localhost:3000/users/'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: '15px'
+    marginTop: '5.6vh'
   },
   small: {
     width: theme.spacing(4),
@@ -217,42 +217,42 @@ function Profile({ history}) {
       </Grid>
 
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-      <DialogTitle>Edit Profile</DialogTitle>
-      <DialogContent>
-      <form className={classes.container} style={{ width: '250px'}}> 
-        <TextField
-            margin="normal"
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            value={newName}
-            onChange={ e => setNewName( e.target.value )}
-        />
-        <TextField
-            margin="normal"
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            value={newUserName}
-            onChange={ e => setNewUserName( e.target.value )}
-        />
-        <InputLabel htmlFor="my-input" style={{margin: '20px 0px'}}>Upload Avatar Image</InputLabel>
-          <input id='customFile' type='file' placeholder='hello' onChange={onChange}/>
-      </form>
-      </DialogContent>
-      <DialogActions>
-      <Button onClick={handleClose} color="primary">
-          Cancel
-      </Button>
-      <Button onClick={handleEditUser} color="primary">
-          Submit
-      </Button>
-      </DialogActions>
-  </Dialog>
+        <DialogTitle>Edit Profile</DialogTitle>
+        <DialogContent>
+        <form className={classes.container} style={{ width: '250px'}}> 
+          <TextField
+              margin="normal"
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              value={newName}
+              onChange={ e => setNewName( e.target.value )}
+          />
+          <TextField
+              margin="normal"
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              value={newUserName}
+              onChange={ e => setNewUserName( e.target.value )}
+          />
+          <InputLabel htmlFor="my-input" style={{margin: '20px 0px'}}>Upload Avatar Image</InputLabel>
+            <input id='customFile' type='file' placeholder='hello' onChange={onChange}/>
+        </form>
+        </DialogContent>
+        <DialogActions>
+        <Button onClick={handleClose} color="primary">
+            Cancel
+        </Button>
+        <Button onClick={handleEditUser} color="primary">
+            Submit
+        </Button>
+        </DialogActions>
+    </Dialog>
     </>
   )
 }

@@ -33,6 +33,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import SendIcon from '@material-ui/icons/Send';
 import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend';
+import TelegramIcon from '@material-ui/icons/Telegram';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 
 const watchpartiesURL = 'http://localhost:3000/watchparties'
 
@@ -75,6 +77,7 @@ function MatchInfo() {
   const dispatch = useDispatch()
   const currentMatch = useSelector(state => state.matches.currentMatch)
   const currentUser = useSelector(state => state.user.currentUser)
+  const loggedIn = useSelector(state => state.user.loggedIn)
   const friendList = useSelector(state => state.user.currentUser.friends)
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
@@ -152,15 +155,15 @@ function MatchInfo() {
 
   const generateFriends = () => {
     return friendList.map( ( friend, idx ) =>
-      <ListItem key={idx} style={{ paddingLeft: '40px', marginRight: '0px'}}>
+      <ListItem key={idx} style={{ paddingLeft: '0px', marginRight: '0px', paddingRight: '20px'}}>
         <ListItemAvatar>
           <Avatar src={friend.profile_img}/>
         </ListItemAvatar>
         <ListItemText primary={friend.name} secondary= {friend.username} />
         { !friendIds.includes(friend.id) ?
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="delete" onClick={() => setFriendIds([...friendIds, friend.id])} >
-                <SendIcon color='primary'/>
+              <IconButton edge="end" aria-label="delete" onClick={() => setFriendIds([...friendIds, friend.id])} style={{ marginLeft: '20px'}} >
+                <TelegramIcon color='primary'/>
               </IconButton>
             </ListItemSecondaryAction>
           :
@@ -172,6 +175,17 @@ function MatchInfo() {
         }
       </ListItem>,
     )
+  }
+
+  const toggleSendAllFriends = () => {
+    const allFriendIds = currentUser.friends.map( f =>  f.id )
+
+    if (friendIds.length === allFriendIds.length){
+      setFriendIds([])
+    }
+    else {
+      setFriendIds(allFriendIds)
+    }
   }
 
   const vertical = 'top'
@@ -268,11 +282,15 @@ function MatchInfo() {
               </Grid>
             </Grid>
           </Grid>
-          {/* { currentMatch.statusShort === "NS" ? */}
-            <Button variant="contained" color="primary" onClick={handleClickOpen} style={{marginTop: '30px'}}>create watch party</Button>
-          {/* :
-            <Button disabled variant="contained" color="primary" style={{marginTop: '30px'}}>create watch party</Button>
-          } */}
+          { loggedIn &&
+          <>
+            { currentMatch.statusShort === "NS" ?
+              <Button variant="contained" color="primary" onClick={handleClickOpen} style={{marginTop: '30px'}}>create watch party</Button>
+            :
+              <Button disabled variant="contained" color="primary" style={{marginTop: '30px'}}>create watch party</Button>
+            }
+          </>
+          }
         </>
       : 
         <Typography variant="h1" gutterBottom style={{fontSize: '1.4em', marginTop: '120px'}} >
@@ -308,14 +326,19 @@ function MatchInfo() {
               <Grid item xs={4} style={{ width: '900px'}} >
                   <Grid container >
                     <Grid item style={{ maxWidth: '100%', flexBasis: '100%'}}>
-                      <Typography variant="h5" style={{ textAlign: 'center'}}>
-                        Friends
-                      </Typography>
-                      <Paper style={{width: '300px'}} >
+                      <Grid container alignItems='center'>
+                        <Typography variant="h5" style={{ textAlign: 'center'}}>
+                          Friends
+                        </Typography>
+                        <IconButton edge="end" aria-label="delete" style={{ paddingBotton: '20px'}} onClick={ () => toggleSendAllFriends() }>
+                          <PeopleAltIcon color='primary'/>
+                        </IconButton>
+                      </Grid>
+                      {/* <Paper style={{width: '300px'}} > */}
                         <List style={{ height: '400px', overflow: 'auto'}}>
                           { generateFriends() }
                         </List>
-                      </Paper>
+                      {/* </Paper> */}
                     </Grid>
                   </Grid>
               </Grid>

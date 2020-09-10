@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '40px 0px'
   },
   paper: {
-    minHeight: '70vh',
+    minHeight: '65vh',
   },
   divider: {
     width: '50vh',
@@ -51,30 +51,34 @@ function Upcoming() {
 
   return (
     <>
-      <Typography variant="h2" align="center" color="textPrimary" className={classes.title}>
+      {/* <Typography variant="h2" align="center" color="textPrimary" className={classes.title}>
         Upcoming Matches
-      </Typography>
-      <Grid container spacing={1} alignItems="flex-start" justify="flex-start">
-        <Grid item xs={5}>
+      </Typography> */}
+      <Grid container spacing={2} alignItems="center" justify="center" style={{ marginTop: '4.5vh'}}>
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <Grid container justify='center' alignItems='center'>
+            <h2 style={{ textAlign: 'center', paddingTop: '20px', fontWeight: 400}}>Matches</h2>
+            <Grid container justify='center' alignItems='center' direction='column'>
               <Grid item style={{margin: '15px 0px'}} >
                 <DatePicker setDateFromDatePicker={setDateFromDatePicker} datePickerDate={datePickerDate}/>
               </Grid>
                 { loading ?
-                  <Typography variant="h1" style={{fontSize: '1.3em', marginTop: '60px'}} >
-                    Loading...
-                  </Typography>
+                  <Grid item>
+                    <Typography variant="h1" style={{fontSize: '1.3em', marginTop: '90px'}} >
+                      Loading...
+                    </Typography>
+                  </Grid>
                 :
-                  <Paper style={{ height: '65vh', overflow: 'auto'}}>
+                  <Paper style={{ height: '50vh', overflow: 'auto'}}>
                     {renderMatches()}
                   </Paper>
                 }
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={7}>
-          <Paper style={{ height: '64vh'}}>
+        <Grid item xs={6}>
+          <Paper style={{ minHeight: '65vh'}}>
+            <h2 style={{ textAlign: 'center', paddingTop: '20px', fontWeight: 400}}>More Info</h2>
             <Grid container spacing={2} justify='center' alignItems='center'>
               <MatchInfo/>
             </Grid>

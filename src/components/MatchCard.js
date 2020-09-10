@@ -31,7 +31,7 @@ function MatchCard({ match }) {
 
   return (
     <ListItem button onClick={handleCurrentMatch}>
-      <Grid container justify='center' style={{height: '25px', padding: '0px 0px 0px 0px'}}>
+      <Grid container justify='center' style={{height: '30px', padding: '0px 0px 0px 0px'}}>
         <Grid item xs={5}
           // style={{ backgroundColor: 'yellow '}}
         >
@@ -59,7 +59,7 @@ function MatchCard({ match }) {
             }
           </Grid>
         </Grid>
-        <Grid item xs={6}
+        <Grid item xs={5}
           // style={{ backgroundColor: 'green '}}
         >
           <Grid container alignItems='center' direction='row'>

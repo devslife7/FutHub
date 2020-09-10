@@ -15,22 +15,23 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    // margin: '30pxpx'
   },
   paper: {
     padding: theme.spacing(2),
     // margin: 'auto',
-    maxWidth: 400,
-    height: '320px'
+    maxWidth: '17vh',
+    height: '24vh'
   },
   image: {
     width: 128,
     height: 128,
   },
   img: {
-    margin: 'auto',
+    // margin: 'auto',
     display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    maxWidth: '6vh',
+    maxHeight: '6vh',
   },
   links: {
     textDecoration: 'none',
@@ -57,16 +58,17 @@ function LeagueCard({ currentLeague }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} direction='column'>
           <Grid item>
-            <ButtonBase className={classes.image}>
+            <div>
               <img className={classes.img} src={currentLeague.logo} alt='league logo' />
-            </ButtonBase>
+
+            </div>
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
+                <Typography gutterBottom variant="subtitle1" style={{fontSize: '0.9em'}}>
                   {currentLeague.name}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
@@ -79,13 +81,13 @@ function LeagueCard({ currentLeague }) {
                 <Typography variant="body2" color="textSecondary">
                   Active: {currentLeague.is_current === 1 ? 'Yes' : 'No'}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                {/* <Typography variant="body2" color="textSecondary">
                   leagueId: {currentLeague.id}
-                </Typography>
+                </Typography> */}
               </Grid>
               <Grid item>
-                { currentLeague.standings === 1
-                ? <Button
+                {/* { currentLeague.standings === 1 ? */}
+                 <Button
                     // onClick={ () => handleStandings() }
                     variant='outlined'
                     color='primary'
@@ -94,13 +96,13 @@ function LeagueCard({ currentLeague }) {
                         Standings
                       </Link>
                   </Button>
-                : <Button
-                    variant='outlined' 
-                    color='primary'
-                    disabled
-                    >Standings
-                  </Button>
-                }
+                {/* <Button
+                //     variant='outlined' 
+                //     color='primary'
+                //     disabled
+                //     >Season not started
+                //   </Button>
+                // } */}
               </Grid>
             </Grid>
             <Grid item>
