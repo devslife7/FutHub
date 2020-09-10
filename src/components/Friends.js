@@ -15,7 +15,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 // import DeleteIcon from '@material-ui/icons/Delete';
-// import GroupAddIcon from '@material-ui/icons/GroupAdd';
 // import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import FriendCard from './FriendCard';
