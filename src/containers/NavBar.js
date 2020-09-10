@@ -154,6 +154,7 @@ function NavBar() {
             : <Link
                 onClick={ () => setLinkClicked('Login')}
                 className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
+                style={{ display: 'flex', alignItems: 'center' }}
                 to="/login"
                 >Login
               </Link>

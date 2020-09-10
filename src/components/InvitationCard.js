@@ -117,9 +117,9 @@ function InvitationCard({ invitation }) {
                 </IconButton>
               </Grid>
               <Grid item>
-                <IconButton onClick={() => console.log(invitation)}>
+                {/* <IconButton onClick={() => console.log(invitation)}>
                   <MoreVertIcon style={{color: 'green', fontSize: '1.2em'}}/>
-                </IconButton>
+                </IconButton> */}
               </Grid>
             </Grid>
           </Grid>

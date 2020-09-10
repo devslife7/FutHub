@@ -51,6 +51,12 @@ export const removeWatchParty = watchpartyId => {
     payload: watchpartyId
   }
 }
+export const replaceWatchParty = watchparty => {
+  return {
+    type: "REPLACE_WATCHPARTY",
+    payload: watchparty
+  }
+}
 export const addFriend = friend => {
   return {
     type: "ADD_FRIEND",

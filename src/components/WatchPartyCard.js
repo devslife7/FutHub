@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addWatchParty } from '../actions/user'
+import { replaceWatchParty } from '../actions/user'
 import Moment from 'react-moment';
 // import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
 import { removeWatchParty } from '../actions/user'
@@ -95,7 +95,7 @@ function WatchPartyCard({ party }) {
 
       fetch(watchpartyURL + party.id, patchRequest)
         .then( resp => resp.json() )
-        .then( data => dispatch(addWatchParty(data)) )
+        .then( data => dispatch(replaceWatchParty(data)) )
   }
 
   return (
@@ -135,17 +135,24 @@ function WatchPartyCard({ party }) {
             <Typography variant="subtitle1">
               Where: {party.location}
             </Typography>
-            { currentUser.name === party.creator_name &&
-              <IconButton onClick={handleClickOpen}>
-                <EditIcon color='primary'/>
-              </IconButton>
-            }
-            <IconButton onClick={handleDelete} >
-              <DeleteIcon color='error'/>
-            </IconButton>
-            <IconButton onClick={() => console.log(party)}>
-              <MoreVertIcon style={{color: 'green'}}/>
-            </IconButton>
+
+            <Grid container justify='center' alignItems='center'>
+              { currentUser.name === party.creator_name &&
+                <Grid item>
+                  <IconButton onClick={handleClickOpen}>
+                    <EditIcon color='primary'/>
+                  </IconButton>
+                </Grid>
+              }
+              <Grid item>
+                <IconButton onClick={handleDelete} >
+                  <DeleteIcon color='error'/>
+                </IconButton>
+              </Grid>
+              {/* <IconButton onClick={() => console.log(party)}>
+                <MoreVertIcon style={{color: 'green'}}/>
+              </IconButton> */}
+            </Grid>
           </Grid>
         </Grid>
       </Paper>

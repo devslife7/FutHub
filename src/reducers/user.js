@@ -68,6 +68,19 @@ export default ( state = initialState, action ) => {
           watchparties: [...state.currentUser.watchparties.concat(action.payload)]
         }
       }
+    case  "REPLACE_WATCHPARTY":
+      idx = state.currentUser.watchparties.findIndex( wp => wp.id === action.payload.id )
+      return  {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          watchparties: [
+            ...state.currentUser.watchparties.slice(0, idx),
+            action.payload,
+            ...state.currentUser.watchparties.slice(idx + 1)
+          ]
+        }
+      }
     case  "REMOVE_WATCHPARTY":
       idx = state.currentUser.watchparties.findIndex( party => party.id === action.payload )
       console.log('found index', idx)
