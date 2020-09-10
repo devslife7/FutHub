@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Moment from 'react-moment';
+import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
 import { addWatchParty } from '../actions/user'
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
+// import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -30,6 +31,8 @@ import IconButton from '@material-ui/core/IconButton'
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import SendIcon from '@material-ui/icons/Send';
+import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend';
 
 const watchpartiesURL = 'http://localhost:3000/watchparties'
 
@@ -77,8 +80,8 @@ function MatchInfo() {
   const [openSnack, setOpenSnack] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [partyName, setPartyName] = useState('');
-  const [partyTime, setPartyTime] = useState(0);
-  const [partyLocation, setPartyLocation] = useState('');
+  const [partyTime, setPartyTime] = useState('');
+  const [partyLocation, setPartyLocation] = useState('My House yoo');
   const [friendIds, setFriendIds] = useState([]);
 
   const handleClick = () => setOpenSnack(true)
@@ -93,8 +96,10 @@ function MatchInfo() {
 
   const handleClickOpen = () => {
     setPartyName(`${currentMatch.homeTeam.team_name} VS ${currentMatch.awayTeam.team_name}`)
-    setPartyTime(currentMatch.event_timestamp)
+    setPartyTime( moment.unix(currentMatch.event_timestamp).format('LT') )
     setOpen(true);
+
+    console.log("PARTYTIME", partyTime)
   };
 
   const handleClose = () => setOpen(false)
@@ -116,7 +121,14 @@ function MatchInfo() {
           name: partyName,
           time: partyTime,
           location: partyLocation,
-          creator_name: currentUser.name
+          timestamp: currentMatch.event_timestamp,
+          creator_name: currentUser.name,
+          league_name: currentMatch.league.name,
+          league_logo: currentMatch.league.logo,
+          home_team_name: currentMatch.homeTeam.team_name,
+          home_team_logo: currentMatch.homeTeam.logo,
+          away_team_name: currentMatch.awayTeam.team_name,
+          away_team_logo: currentMatch.awayTeam.logo
         },
         user_id: currentUser.id,
         friend_ids: friendIds
@@ -126,10 +138,16 @@ function MatchInfo() {
       .then( resp => resp.json() )
       .then( data => {
         dispatch(addWatchParty(data))
-        handleClick()
+        setTimeout( () => handleClick() , 700);
       })
 
     setFriendIds([])
+  }
+
+  const removeFriendFromInvList = friendId => {
+    let idx = friendIds.findIndex(id => id === friendId)
+    let newState = [...friendIds.slice(0, idx), ...friendIds.slice(idx + 1)]
+    setFriendIds(newState)
   }
 
   const generateFriends = () => {
@@ -139,18 +157,23 @@ function MatchInfo() {
           <Avatar src={friend.profile_img}/>
         </ListItemAvatar>
         <ListItemText primary={friend.name} secondary= {friend.username} />
-        { !friendIds.includes(friend.id)
-        && <ListItemSecondaryAction style={{ paddingRight: '0px'}}>
-            <IconButton edge="end" aria-label="delete" onClick={() => setFriendIds([...friendIds, friend.id])} >
-              <InsertInvitationIcon color='primary'/>
-            </IconButton>
-          </ListItemSecondaryAction>
+        { !friendIds.includes(friend.id) ?
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="delete" onClick={() => setFriendIds([...friendIds, friend.id])} >
+                <SendIcon color='primary'/>
+              </IconButton>
+            </ListItemSecondaryAction>
+          :
+            <ListItemSecondaryAction>
+              <IconButton edge="end" onClick={() => removeFriendFromInvList(friend.id)} >
+                <CancelScheduleSendIcon color='secondary'/>
+              </IconButton>
+            </ListItemSecondaryAction>
         }
       </ListItem>,
     )
   }
 
-  // vertical, horizontal
   const vertical = 'top'
   const horizontal = 'center'
   return (
@@ -190,7 +213,7 @@ function MatchInfo() {
                     Match League
                 </Grid>
                 <Grid item>
-                  <Avatar variant='rounded' src={currentMatch.league.logo} />
+                  <Avatar variant='square' src={currentMatch.league.logo} />
                 </Grid>
                 <Grid item>
                   {currentMatch.league.name}
@@ -198,7 +221,7 @@ function MatchInfo() {
                 <Grid item>
                   <Grid container justify='center' alignItems='center' spacing={1}>
                     <Grid item>
-                      <Avatar src={currentMatch.league.flag} className={classes.logoSmall} />
+                      <img className={classes.countryLogo}src={currentMatch.league.flag} alt='country logo' style={{height:'20px'}} />
                     </Grid>
                     <Grid item>
                       {currentMatch.league.country}
@@ -238,18 +261,18 @@ function MatchInfo() {
                   Stadium: <span style={{marginLeft: '10px'}}>{currentMatch.venue}</span>
                 </Grid>
                 { currentMatch.referee &&
-                  <Grid item>
-                    Referee: <span style={{marginLeft: '14px'}}>{currentMatch.referee}</span>
-                  </Grid>
+                    <Grid item>
+                      Referee: <span style={{marginLeft: '14px'}}>{currentMatch.referee}</span>
+                    </Grid>
                 }
               </Grid>
             </Grid>
           </Grid>
-          { currentMatch.statusShort === "NS" ?
+          {/* { currentMatch.statusShort === "NS" ? */}
             <Button variant="contained" color="primary" onClick={handleClickOpen} style={{marginTop: '30px'}}>create watch party</Button>
-          :
+          {/* :
             <Button disabled variant="contained" color="primary" style={{marginTop: '30px'}}>create watch party</Button>
-          }
+          } */}
         </>
       : 
         <Typography variant="h1" gutterBottom style={{fontSize: '1.4em', marginTop: '120px'}} >
@@ -275,8 +298,9 @@ function MatchInfo() {
         { activeStep === 0 ?
           <DialogContent>
             <TextField autoFocus margin="dense" label="Party Name" type="text" fullWidth value={partyName} onChange={e => setPartyName(e.target.value)}/>
+            {/* <TextField margin="dense" label="Time" type="text" fullWidth value={moment(partyTime)} onChange={e => setPartyTime(e.target.value)}/> */}
             <TextField margin="dense" label="Time" type="text" fullWidth value={partyTime} onChange={e => setPartyTime(e.target.value)}/>
-            <TextField margin="dense" label="Location" type="text" fullWidth onChange={e => setPartyLocation(e.target.value)} />
+            <TextField margin="dense" label="Location" type="text" fullWidth value={partyLocation} onChange={e => setPartyLocation(e.target.value)} />
           </DialogContent>
         : 
           <DialogContent>
@@ -295,24 +319,6 @@ function MatchInfo() {
                     </Grid>
                   </Grid>
               </Grid>
-              {/* <Grid item xs={4}>
-                <Paper elevation={5} className={classes.outerPaper}>
-                <Grid container>
-                  <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%'}}>
-                    <Typography variant="h5" style={{ fontSize: '1.3em'}}>
-                      Inviting Friends
-                    </Typography>
-                    <Paper>
-                      <List style={{ height: '400px', overflow: 'auto'}} >
-                        { loading
-                        ? <div>Loading...</div>
-                        : generateUsers(userList) }
-                      </List>
-                    </Paper>
-                  </Grid>
-                </Grid>
-                </Paper>
-              </Grid> */}
             </Grid>
           </DialogContent>
         }
@@ -327,9 +333,9 @@ function MatchInfo() {
       </Dialog>
 
       <div className={classes.root}>
-        <Snackbar open={openSnack} autoHideDuration={2000} onClose={handleSnackClose} anchorOrigin={{ vertical, horizontal }}>
+        <Snackbar open={openSnack} autoHideDuration={2100} onClose={handleSnackClose} anchorOrigin={{ vertical, horizontal }}>
           <Alert onClose={handleSnackClose} severity="success">
-            Watch Party was sucessfully created
+            Watch Party was sucessfully created / Invitations sent
           </Alert>
         </Snackbar>
       </div>

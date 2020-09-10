@@ -104,6 +104,19 @@ export default ( state = initialState, action ) => {
           ]
         }
       }
+    case  "REMOVE_INVITATION":
+      idx = state.currentUser.invitations.findIndex( inv => inv.id === action.payload )
+      return  {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          invitations: [
+            ...state.currentUser.invitations.slice(0, idx),
+            ...state.currentUser.invitations.slice(idx + 1)
+          ]
+        }
+      }
+
 
     default:
       return state

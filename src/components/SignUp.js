@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Paper from '@material-ui/core/Paper';
 
 
 const signUpURL = 'http://localhost:3000/signup'
@@ -22,7 +23,7 @@ function Alert(props) {
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" align="center" style={{color: 'white'}}>
       {'Copyright © '}
       {' FutFriends '}
       {' '}
@@ -112,11 +113,13 @@ function SignUp({ history }) {
     })
   }
 
+  const vertical = 'top'
+  const horizontal = 'center'
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+      <Paper style={{padding: '38px', marginTop: '10vh'}}>
+        <Typography component="h1" style={{ fontSize: '1.9em', color:'#2196f3'}} >
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSignup}>
@@ -171,17 +174,17 @@ function SignUp({ history }) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/login">
+              <Link to="/login" style={{ textDecoration: 'none', color:'#2196f3'}}>
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Paper>
       <Box mt={5}>
         <Copyright />
       </Box>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} >
         <Alert onClose={handleClose} severity="error">
         {error}
         </Alert>

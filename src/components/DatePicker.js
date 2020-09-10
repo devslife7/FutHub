@@ -16,12 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DatePicker({ setDateFromDatePicker, datePickerDate }) {
   const classes = useStyles();
-  // const [date, setDate ] = useState("2020-09-10")
-  // console.log('this is date:', date)
 
   return (
     <form className={classes.container} noValidate onChange={(e) => setDateFromDatePicker(e.target.value)}>
-      {console.log('renders datepicker')}
       <TextField
         id="date"
         label="Select date"

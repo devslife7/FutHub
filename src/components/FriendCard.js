@@ -1,6 +1,4 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
-// import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -15,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
     width: '85px',
-    height: '90px'
+    height: '95px'
   },
   image: {
     width: 40,
@@ -31,24 +29,29 @@ const useStyles = makeStyles((theme) => ({
 
 function FriendCard({ friend }) {
   const classes = useStyles()
-  // const currentUserId = useSelector(state => state.user.currentUser.id)
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Grid container direction='column'>
+        <Grid container direction='column' spacing={1} alignItems='center'>
           <Grid item>
             <Avatar src={friend.profile_img} style={{margin: 'auto', marginBottom: '0px'}}
               className={classes.image}
             />
           </Grid>
-          <Grid item style={{margin: 'auto'}}>
-            <Typography variant="subtitle1">
-              {friend.name}
-            </Typography>
-            <Typography variant="body2">
-              {friend.username}
-            </Typography>
+          <Grid item>
+            <Grid container direction='column' alignItems='center'>
+              <Grid item>
+                <Typography variant="subtitle1">
+                  {friend.name}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body2">
+                  {friend.username}
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>

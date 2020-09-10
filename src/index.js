@@ -22,7 +22,10 @@ const theme = createMuiTheme({
     primary: {
       main: '#2196f3'
       // main: '#43a047'
-    }
+    },
+    // secondary: {
+    //   main: '#10D92E'
+    // }
   },
   // typography: {
   //   fontFamily: 'Arial',

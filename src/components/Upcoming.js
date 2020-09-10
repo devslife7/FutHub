@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import MatchCard from './MatchCard'
-// import DatePickerMatches from './DatePickerMatches'
 import { fetchMatches, setDatePickerDate } from '../actions/matches'
 import DatePicker from './DatePicker'
 import MatchInfo from './MatchInfo'
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     minHeight: '70vh',
-    // height: '74vh',
   },
   divider: {
     width: '50vh',

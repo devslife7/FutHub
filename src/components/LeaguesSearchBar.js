@@ -12,9 +12,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import LanguageIcon from '@material-ui/icons/Language';
 import BlurCircularIcon from '@material-ui/icons/BlurCircular';
-import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
+// import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
+// import EventNoteIcon from '@material-ui/icons/EventNote';
+// import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 // import InputLabel from '@material-ui/core/InputLabel';
 // import MenuItem from '@material-ui/core/MenuItem';
@@ -100,7 +100,7 @@ function LeagueSearchBar() {
         </Select>
       </FormControl> */}
         {/* <Divider className={classes.divider} /> */}
-        <ListItem button key='Active'>
+        {/* <ListItem button key='Active'>
           <ListItemIcon> <DoneAllIcon /> </ListItemIcon>
           <ListItemText primary='Active' />
         </ListItem>
@@ -111,7 +111,7 @@ function LeagueSearchBar() {
         <ListItem button key='Date'>
           <ListItemIcon> <EventNoteIcon /> </ListItemIcon>
           <ListItemText primary='Date' />
-        </ListItem>
+        </ListItem> */}
         <Typography noWrap style={{marginTop: '10px'}}>
           Results: { displayLeagues.length }
         </Typography>

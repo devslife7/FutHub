@@ -1,5 +1,10 @@
 body {
   margin: 0;
+  background-image: url('./soccer_background.jpeg');
+
+  background-repeat: no-repeat;
+  background-size: 100%;
+
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

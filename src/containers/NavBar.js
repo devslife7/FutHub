@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button'
 import Badge from '@material-ui/core/Badge'
 import Grid from '@material-ui/core/Grid'
 import { logOutCurrentUser } from '../actions/user';
+import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,10 +100,11 @@ function NavBar() {
   }
 
   return (
-    <div className={classes.root}>
+    <div>
       <AppBar position="static" color='primary'>
         <Container>
           <Toolbar className={classes.navBarPadding}>
+            <SportsSoccerIcon style={{paddingRight: '6px', fontSize: '2.6em'}}/>
             <Typography variant="h1" className={classes.title}>
               FutFriends
             </Typography>
@@ -175,34 +177,33 @@ function NavBar() {
         }}
       >
         <Paper elevation={0} style={{ padding: '20px'}}>
-          { loggedIn
-          &&
-          <>
-            <Grid container direction='column' alignItems='center'>
-              <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
-                {currentUser.name}
-              </Typography>
-              <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
-                {currentUser.username}
-              </Typography>
-              {/* <Grid container direction='column' spacing={3}> */}
-                <Link
-                  style={{margin: '8px 0px', padding: '10px 70px', fontSize: '0.95em'}}
-                  onClick={handleClose}
-                  className={classes.button}
-                  to="/profile"
-                  >PROFILE
+          { loggedIn &&
+            <>
+              <Grid container direction='column' alignItems='center'>
+                <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
+                  {currentUser.name}
+                </Typography>
+                { currentUser.invitations.length > 0 ?
+                    <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
+                      {currentUser.invitations.length} new invite(s)
+                    </Typography>
+                    : null
+                }
+                <Typography variant="h1" gutterBottom style={{fontSize: '1.2em', margin: '10px'}} >
+                  {currentUser.username}
+                </Typography>
+                <Link to="/profile" onClick={handleClose} style={{textDecoration: 'none'}}>
+                  <Button variant='contained' color='primary' style={{padding: '5px 100px', margin: '20px 0px'}}>
+                    Profile
+                  </Button>
                 </Link>
-                <Link
-                  style={{margin: '8px 0px 0px 0px', padding: '10px 70px', fontSize: '0.9em'}}
-                  onClick={handleLogOut}
-                  className={classes.button}
-                  to="/"
-                  >LOG OUT
+                <Link style={{ textDecoration: 'none'}} onClick={handleLogOut} to="/">
+                  <Button variant='outlined' color='primary' style={{padding: '5px 98px'}}>
+                    Log Out
+                  </Button>
                 </Link>
-              {/* </Grid> */}
-            </Grid>
-          </>
+              </Grid>
+            </>
           }
         </Paper>
       </Popover>

@@ -4,7 +4,7 @@ const initialState = {
   loading: false
 }
 export default (state = initialState, action) => {
-  console.log(action)
+  console.log('Action: ', action)
 
   switch (action.type) {
     case "LOADING_LEAGUES":

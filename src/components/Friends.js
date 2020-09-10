@@ -11,17 +11,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import GroupAddIcon from '@material-ui/icons/GroupAdd';
 // import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
-// import GoogleMaps from './GoogleMaps';
-
-import Autocomplete from '@material-ui/lab/Autocomplete';
-
 
 const baseURL = 'http://localhost:3000/'
 const userURL = baseURL + 'users/'
