@@ -12,7 +12,7 @@ export default ( state = initialState, action ) => {
   let idx
   switch (action.type) {
     case "SET_CURRENT_USER":
-      const { id, name, username, profile_img, friends, user_leagues, watchparties, invitations  } = action.payload
+      const { id, name, username, profile_img, friends, user_leagues, watchparties, invitations } = action.payload
 
       const parsedUserLeagues = user_leagues.map( user_league => {
         return {

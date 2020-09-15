@@ -85,7 +85,6 @@ function Profile({ history}) {
   }
 
   const renderFavLeagues = () => {
-    console.log('renders leagues')
     return currentUser.favLeagues.map( (league, idx) => 
         <Grid key={idx} item xs={4}>
           <LeagueCardSmall currentLeague={league}/>
@@ -117,8 +116,6 @@ function Profile({ history}) {
 
   // file upload state
   const [avatar, setAvatar] = useState('')
-  // const [fileName, setFileName] = useState('Choose File')
-  // const [uploadedFile, setUploadedFile] = useState({})
 
   const onChange = e => {
     // console.log(e.target.files)
@@ -128,19 +125,28 @@ function Profile({ history}) {
 
   const handleUploadAvatar = () => {
     const formData = new FormData()
+
+    console.log('formdata one: ', formData)
     formData.append('avatar', avatar)
+
+    console.log('formdata.append(avatar, avatar): ', formData)
+    console.log('formData valid?', !!avatar)
 
     const uploadURL = 'http://localhost:3000/uploadAvatar/'
 
-    fetch(uploadURL + currentUser.id, {
-      method: "PATCH",
-      body: formData
-    })
-      .then(res => res.json())
-      .then(user => {
-       console.log(user)
-       dispatch(setCurrentUser(user))
-      });
+    if (!!avatar){
+      fetch(uploadURL + currentUser.id, {
+        method: "PATCH",
+        body: formData
+      })
+        .then(res => res.json())
+        .then(user => {
+         console.log(user)
+         dispatch(setCurrentUser(user))
+         setAvatar('')
+        })
+    }
+
   }
 
   return (
@@ -241,7 +247,7 @@ function Profile({ history}) {
               onChange={ e => setNewUserName( e.target.value )}
           />
           <InputLabel htmlFor="my-input" style={{margin: '20px 0px'}}>Upload Avatar Image</InputLabel>
-            <input id='customFile' type='file' placeholder='hello' onChange={onChange}/>
+            <input id='customFile' type='file' placeholder='hello' onChange={ e => setAvatar(e.target.files[0]) }/>
         </form>
         </DialogContent>
         <DialogActions>

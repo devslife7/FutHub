@@ -99,8 +99,9 @@ function LogIn({ history }) {
         else {
           localStorage.token = data.token
           localStorage.userId = data.user.id
+          console.log('this is the data.user from fetch: ', data.user)
           dispatch(setCurrentUser(data.user))
-          history.push("/")
+          history.push("/profile")
         }
       })
   }

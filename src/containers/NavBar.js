@@ -73,7 +73,7 @@ function NavBar() {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.user.currentUser)
   const loggedIn = useSelector(state => state.user.loggedIn)
-  const [ linkClicked, setLinkClicked ] = useState('Leagues')
+  const [ linkClicked, setLinkClicked ] = useState('')
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -90,6 +90,7 @@ function NavBar() {
   }
 
   const handleProfileOptions = (event) => {
+    setLinkClicked('profile')
     handleClick(event)
   }
 

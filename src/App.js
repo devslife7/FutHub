@@ -1,6 +1,5 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react'
+import { connect, useDispatch } from 'react-redux'
 import { setCurrentUser } from './actions/user'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
@@ -17,24 +16,22 @@ import Upcoming from './components/Upcoming'
 
 const usersURL = "http://localhost:3000/users/"
 
-function App({ setCurrentUser, setLeagues }) {
+function App() {
   console.log('renders App')
+  const dispatch = useDispatch()
 
   useEffect( () => {
     console.log('renders App on mount')
-    console.log('fetches leagues')
-
 
     if (!!localStorage.userId){
       fetch( usersURL + localStorage.userId )
       .then( resp => resp.json() )
       .then( user => {
           // console.log('this is the return of the server: ', user)
-          setCurrentUser(user)
+          dispatch(setCurrentUser(user))
         })
     }
-
-  }, [setCurrentUser])
+  }, [dispatch])
 
   return (
     <Router>
@@ -55,12 +52,4 @@ function App({ setCurrentUser, setLeagues }) {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentUser: user => {
-      dispatch(setCurrentUser(user))
-    }
-  }
-}
-
-export default connect(null, mapDispatchToProps)(App)
+export default App
