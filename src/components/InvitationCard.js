@@ -1,41 +1,40 @@
-import React from 'react';
-import Moment from 'react-moment';
-import { useSelector, useDispatch } from 'react-redux';
-import { addWatchParty, removeInvitation, fetchRemoveInv } from '../actions/user'
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import React from "react"
+import Moment from "react-moment"
+import { useSelector, useDispatch } from "react-redux"
+import { addWatchParty, removeInvitation, fetchRemoveInv } from "../actions/user"
+import { makeStyles } from "@material-ui/core/styles"
+import Grid from "@material-ui/core/Grid"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
 // import ButtonBase from '@material-ui/core/ButtonBase';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DoneIcon from '@material-ui/icons/Done';
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+import MoreVertIcon from "@material-ui/icons/MoreVert"
+import DoneIcon from "@material-ui/icons/Done"
+import NotInterestedIcon from "@material-ui/icons/NotInterested"
 
-import { IconButton } from '@material-ui/core';
+import { IconButton } from "@material-ui/core"
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing(1),
-    width: '180px',
-    height: '195px'
+    width: "180px",
+    height: "195px"
   },
   image: {
     width: 40,
-    height: 40,
+    height: 40
   },
   img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },
-}));
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%"
+  }
+}))
 
 function InvitationCard({ invitation }) {
   const classes = useStyles()
@@ -46,11 +45,11 @@ function InvitationCard({ invitation }) {
   const handleConfirm = () => {
     dispatch(fetchRemoveInv(invitation.id))
 
-    const user_watchpartyURL = 'http://localhost:3000/user_watchparties'
+    const user_watchpartyURL = "http://localhost:3000/user_watchparties"
     const postRequest = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         user_watchparty: {
@@ -61,59 +60,56 @@ function InvitationCard({ invitation }) {
     }
 
     fetch(user_watchpartyURL, postRequest)
-      .then( resp => resp.json() )
-      .then( data => dispatch(addWatchParty(data.watchparty)) )
+      .then(resp => resp.json())
+      .then(data => dispatch(addWatchParty(data.watchparty)))
   }
 
   const removeInvitation = () => {
-    console.log('trigger remove invitatiton func')
+    console.log("trigger remove invitatiton func")
     dispatch(fetchRemoveInv(invitation.id))
   }
-
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container direction='column'>
-          <Typography variant="subtitle1">
-            From: {invitation.sender}
-          </Typography>
-          <Typography variant="subtitle1">
-            Where: {invitation.location}
-          </Typography>
-          <Grid container style={{marginTop: '10px'}}>
-            <Avatar src={invitation.home_team_logo} style={{margin: 'auto', marginBottom: '0px'}}
+          <Typography variant='subtitle1'>From: {invitation.sender}</Typography>
+          <Typography variant='subtitle1'>Where: {invitation.location}</Typography>
+          <Grid container style={{ marginTop: "10px" }}>
+            <Avatar
+              src={invitation.home_team_logo}
+              style={{ margin: "auto", marginBottom: "0px" }}
               className={classes.image}
             />
-            <Moment
-              style={{marginTop: '10px', fontSize:'1em'}}
-              unix
-              format="hh:mmA"
-              >{invitation.timestamp}
+            <Moment style={{ marginTop: "10px", fontSize: "1em" }} unix format='hh:mmA'>
+              {invitation.timestamp}
             </Moment>
 
-            <Avatar src={invitation.away_team_logo} style={{margin: 'auto', marginBottom: '0px'}}
+            <Avatar
+              src={invitation.away_team_logo}
+              style={{ margin: "auto", marginBottom: "0px" }}
               className={classes.image}
             />
           </Grid>
           <Moment
-            style={{margin: 'auto', marginTop: '15px', marginBottom: '10px'}}
+            style={{ margin: "auto", marginTop: "15px", marginBottom: "10px" }}
             interval={0}
-            format="ddd, MMMM D"
+            format='ddd, MMMM D'
             unix
-          >{invitation.timestamp}
+          >
+            {invitation.timestamp}
           </Moment>
 
-          <Grid item style={{margin: 'auto'}}>
+          <Grid item style={{ margin: "auto" }}>
             <Grid container>
               <Grid item>
                 <IconButton onClick={handleConfirm}>
-                  <DoneIcon style={{color: '#2196f3', fontSize: '1.2em'}}/>
+                  <DoneIcon style={{ color: "#2196f3", fontSize: "1.2em" }} />
                 </IconButton>
               </Grid>
               <Grid item>
                 <IconButton onClick={removeInvitation}>
-                  <NotInterestedIcon style={{color: 'red', fontSize: '1.2em'}}/>
+                  <NotInterestedIcon style={{ color: "red", fontSize: "1.2em" }} />
                 </IconButton>
               </Grid>
               <Grid item>
@@ -126,7 +122,7 @@ function InvitationCard({ invitation }) {
         </Grid>
       </Paper>
     </div>
-  );
+  )
 }
 
 export default InvitationCard
