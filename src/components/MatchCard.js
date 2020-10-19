@@ -33,7 +33,7 @@ function MatchCard({ match }) {
     <ListItem button onClick={handleCurrentMatch}>
       <Grid container justify='center' style={{height: '30px', padding: '0px 0px 0px 0px'}}>
         <Grid item xs={5}
-          // style={{ backgroundColor: 'yellow '}}
+          // style={{ backgroundColor: 'yenllow '}}
         >
           <Grid container alignItems='center' justify='flex-end' >
             <span className={`${classes.margin} ${classes.fontSize}`} >{match.homeTeam.team_name}</span>
