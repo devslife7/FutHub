@@ -107,7 +107,7 @@ function NavBar() {
           <Toolbar className={classes.navBarPadding}>
             <SportsSoccerIcon style={{ paddingRight: "6px", fontSize: "2.6em" }} />
             <Typography variant='h1' className={classes.title}>
-              FutHub
+              FutFriends
             </Typography>
             <Link
               to='/'

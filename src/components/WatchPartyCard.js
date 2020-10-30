@@ -24,7 +24,8 @@ import DialogActions from "@material-ui/core/DialogActions"
 import InputLabel from "@material-ui/core/InputLabel"
 import Button from "@material-ui/core/Button"
 
-const watchPartyURL = "http://localhost:3000/watchparties/"
+const serverURL = process.env.REACT_APP_SERVER_URL
+const watchPartyURL = serverURL + "/watchparties/"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,7 +77,8 @@ function WatchPartyCard({ party }) {
   const handleEditSubmit = () => {
     handleClose()
 
-    const watchpartyURL = "http://localhost:3000/watchparties/"
+    const serverURL = process.env.REACT_APP_SERVER_URL
+    const watchpartyURL = serverURL + "/watchparties/"
 
     const patchRequest = {
       method: "PATCH",
@@ -109,6 +111,7 @@ function WatchPartyCard({ party }) {
           <Grid item>
             <Grid container style={{ marginTop: "10px" }}>
               <Avatar
+                variant='square'
                 src={party.home_team_logo}
                 style={{ margin: "auto", marginBottom: "0px" }}
                 className={classes.image}
@@ -116,6 +119,7 @@ function WatchPartyCard({ party }) {
               <Typography variant='subtitle1'>{party.time}</Typography>
 
               <Avatar
+                variant='square'
                 src={party.away_team_logo}
                 style={{ margin: "auto", marginBottom: "0px" }}
                 className={classes.image}

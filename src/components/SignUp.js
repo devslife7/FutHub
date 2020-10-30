@@ -14,8 +14,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
 
-
-const signUpURL = 'http://localhost:3000/signup'
+const serverURL = process.env.REACT_APP_SERVER_URL
+const signUpURL = serverURL + "/signup"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

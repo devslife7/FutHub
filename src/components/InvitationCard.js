@@ -45,7 +45,8 @@ function InvitationCard({ invitation }) {
   const handleConfirm = () => {
     dispatch(fetchRemoveInv(invitation.id))
 
-    const user_watchpartyURL = "http://localhost:3000/user_watchparties"
+    const serverURL = process.env.REACT_APP_SERVER_URL
+    const user_watchpartyURL = serverURL + "/user_watchparties"
     const postRequest = {
       method: "POST",
       headers: {

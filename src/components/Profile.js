@@ -19,7 +19,8 @@ import TextField from "@material-ui/core/TextField"
 import DialogActions from "@material-ui/core/DialogActions"
 import InputLabel from "@material-ui/core/InputLabel"
 
-const usersURL = "http://localhost:3000/users/"
+const serverURL = process.env.REACT_APP_SERVER_URL
+const usersURL = serverURL + "/users/"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,7 +124,8 @@ function Profile({ history }) {
     console.log("formdata.append(avatar, avatar): ", formData)
     console.log("formData valid?", !!avatar)
 
-    const uploadURL = "http://localhost:3000/uploadAvatar/"
+    const serverURL = process.env.REACT_APP_SERVER_URL
+    const uploadURL = serverURL + "/uploadAvatar/"
 
     if (!!avatar) {
       fetch(uploadURL + currentUser.id, {

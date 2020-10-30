@@ -14,7 +14,8 @@ import Snackbar from "@material-ui/core/Snackbar"
 import MuiAlert from "@material-ui/lab/Alert"
 import Paper from "@material-ui/core/Paper"
 
-const logInURL = "http://localhost:3000/login"
+const serverURL = process.env.REACT_APP_SERVER_URL
+const logInURL = serverURL + "/login"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />

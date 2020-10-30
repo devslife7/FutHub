@@ -36,7 +36,8 @@ import CancelScheduleSendIcon from "@material-ui/icons/CancelScheduleSend"
 import TelegramIcon from "@material-ui/icons/Telegram"
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
 
-const watchpartiesURL = "http://localhost:3000/watchparties"
+const serverURL = process.env.REACT_APP_SERVER_URL
+const watchpartiesURL = serverURL + "/watchparties"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />

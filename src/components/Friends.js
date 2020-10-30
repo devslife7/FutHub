@@ -20,10 +20,10 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import FriendCard from './FriendCard';
 
 
-const baseURL = 'http://localhost:3000/'
-const userURL = baseURL + 'users/'
-const friendshipsURL = baseURL + 'friendships/'
-const removeFriendshipURL = friendshipsURL + 'remove/'
+const serverURL = process.env.REACT_APP_SERVER_URL
+const userURL = serverURL + '/users/'
+const friendshipsURL = serverURL + '/friendships/'
+const removeFriendshipURL = friendshipsURL + '/remove/'
 
 const useStyles = makeStyles((theme) => ({
   root: {

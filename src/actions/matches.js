@@ -1,4 +1,5 @@
-const matchesURL = 'http://localhost:3000/fixtures/date'
+const serverURL = process.env.REACT_APP_SERVER_URL
+const matchesURL = serverURL + "/fixtures/date"
 
 export const setCurrentMatch = match => {
   return {

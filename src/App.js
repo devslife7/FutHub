@@ -14,7 +14,8 @@ import Profile from "./components/Profile"
 import Standings from "./components/Standings"
 import Upcoming from "./components/Upcoming"
 
-const usersURL = "http://localhost:3000/users/"
+const serverURL = process.env.REACT_APP_SERVER_URL
+const usersURL = serverURL + "/users/"
 
 function App() {
   console.log("renders App")
