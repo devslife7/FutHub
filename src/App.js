@@ -41,11 +41,11 @@ function App() {
         <Route exact path='/leagues' component={Leagues} />
         <Route exact path='/login' component={LogIn} />
         <Route exact path='/signup' component={SignUp} />
-        {/* <Route exact path='/friends' component={Friends} />
+        <Route exact path='/friends' component={Friends} />
         <Route exact path='/favorites' component={Favorites} />
         <Route exact path='/profile' component={Profile} />
         <Route exact path='/standings' component={Standings} />
-        <Route exact path='/upcoming' component={Upcoming} /> */}
+        <Route exact path='/upcoming' component={Upcoming} />
       </Container>
       <StickyFooter />
     </Router>
