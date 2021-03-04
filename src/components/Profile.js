@@ -25,7 +25,7 @@ const usersURL = serverURL + "/users/"
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginTop: "5.6vh"
+    marginTop: "10px"
   },
   small: {
     width: theme.spacing(4),
@@ -145,7 +145,7 @@ function Profile({ history }) {
     <>
       <Grid item xs={12} container spacing={4} className={classes.root}>
         <Grid item xs={3}>
-          <Paper elevation={3} style={{ textAlign: "center", padding: "30px" }}>
+          <Paper elevation={3} style={{ textAlign: "center", padding: "30px", backgroundColor: '#f1f1f1' }}>
             <Avatar
               src={currentUser.profile_img}
               style={{ margin: "auto" }}
@@ -207,7 +207,7 @@ function Profile({ history }) {
         </Grid>
 
         <Grid item xs={9}>
-          <Paper elevation={3} style={{ padding: "30px" }}>
+          <Paper elevation={3} style={{ padding: "30px", backgroundColor: '#f1f1f1' }}>
             <Typography variant='h1' gutterBottom style={{ fontSize: "1.2em", marginTop: "0px" }}>
               Favorite Leagues:
             </Typography>

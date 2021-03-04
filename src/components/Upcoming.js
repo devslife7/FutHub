@@ -54,7 +54,7 @@ function Upcoming() {
       {/* <Typography variant="h2" align="center" color="textPrimary" className={classes.title}>
         Upcoming Matches
       </Typography> */}
-      <Grid container spacing={2} alignItems="center" justify="center" style={{ marginTop: '4.5vh'}}>
+      <Grid container spacing={2} alignItems="center" justify="center" style={{ marginTop: '10px'}}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
             <h2 style={{ textAlign: 'center', paddingTop: '20px', fontWeight: 400}}>Matches</h2>
