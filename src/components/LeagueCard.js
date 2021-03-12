@@ -1,18 +1,18 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
+import React from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
+import { addFavoriteLeague, removeFavoriteLeague } from "../actions/user"
+import { makeStyles } from "@material-ui/core/styles"
+import Grid from "@material-ui/core/Grid"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
+// import ButtonBase from "@material-ui/core/ButtonBase"
+import StarBorderIcon from "@material-ui/icons/StarBorder"
+import StarIcon from "@material-ui/icons/Star"
+import IconButton from "@material-ui/core/IconButton"
+import Button from "@material-ui/core/Button"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     // margin: '30pxpx'
@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     // margin: 'auto',
-    maxWidth: '17vh',
-    height: '24vh'
+    maxWidth: "17vh",
+    height: "24vh",
   },
   image: {
     width: 128,
@@ -29,15 +29,15 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     // margin: 'auto',
-    display: 'block',
-    maxWidth: '6vh',
-    maxHeight: '6vh',
+    display: "block",
+    maxWidth: "6vh",
+    maxHeight: "6vh",
   },
   links: {
-    textDecoration: 'none',
-    color: 'inherit',
-  }
-}));
+    textDecoration: "none",
+    color: "inherit",
+  },
+}))
 
 function LeagueCard({ currentLeague }) {
   const classes = useStyles()
@@ -48,9 +48,9 @@ function LeagueCard({ currentLeague }) {
 
   const handleFavourite = () => {
     console.log("USERrelationship: ", currentLeague)
-    !isFavorite() ?
-    dispatch(addFavoriteLeague(currentLeague, currentUserId)) :
-    dispatch(removeFavoriteLeague(currentLeague.userRelationshipId))
+    !isFavorite()
+      ? dispatch(addFavoriteLeague(currentLeague, currentUserId))
+      : dispatch(removeFavoriteLeague(currentLeague.userRelationshipId))
   }
 
   const isFavorite = () => favLeagues.find(league => league.id === currentLeague.id)
@@ -62,24 +62,29 @@ function LeagueCard({ currentLeague }) {
           <Grid item>
             <div>
               <img className={classes.img} src={currentLeague.logo} alt='league logo' />
-
             </div>
           </Grid>
           <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs container direction='column' spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" style={{fontSize: '0.9em'}}>
+                <Typography gutterBottom variant='subtitle1' style={{ fontSize: "0.9em" }}>
                   {currentLeague.name}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
-                  { currentLeague.flag && <img style={{width: '23px', marginRight: '10px'}} src={currentLeague.flag} alt='league logo'/> }
+                <Typography variant='body2' gutterBottom>
+                  {currentLeague.flag && (
+                    <img
+                      style={{ width: "23px", marginRight: "10px" }}
+                      src={currentLeague.flag}
+                      alt='league logo'
+                    />
+                  )}
                   {currentLeague.country === "World" ? "International" : currentLeague.country}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant='body2' gutterBottom>
                   {currentLeague.league_type}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Active: {currentLeague.is_current === 1 ? 'Yes' : 'No'}
+                <Typography variant='body2' color='textSecondary'>
+                  Active: {currentLeague.is_current === 1 ? "Yes" : "No"}
                 </Typography>
                 {/* <Typography variant="body2" color="textSecondary">
                   leagueId: {currentLeague.id}
@@ -87,15 +92,15 @@ function LeagueCard({ currentLeague }) {
               </Grid>
               <Grid item>
                 {/* { currentLeague.standings === 1 ? */}
-                 <Button
-                    // onClick={ () => handleStandings() }
-                    variant='outlined'
-                    color='primary'
-                    >
-                      <Link to="/standings" className={classes.links}>
-                        Standings
-                      </Link>
-                  </Button>
+                <Button
+                  // onClick={ () => handleStandings() }
+                  variant='outlined'
+                  color='primary'
+                >
+                  <Link to='/standings' className={classes.links}>
+                    Standings
+                  </Link>
+                </Button>
                 {/* <Button
                 //     variant='outlined' 
                 //     color='primary'
@@ -106,18 +111,17 @@ function LeagueCard({ currentLeague }) {
               </Grid>
             </Grid>
             <Grid item>
-              { loggedIn
-              ? <IconButton onClick={ handleFavourite }>
-                  { isFavorite() ? <StarIcon color='primary' /> : <StarBorderIcon/> }
+              {loggedIn ? (
+                <IconButton onClick={handleFavourite}>
+                  {isFavorite() ? <StarIcon color='primary' /> : <StarBorderIcon />}
                 </IconButton>
-              : null
-              }
+              ) : null}
             </Grid>
           </Grid>
         </Grid>
       </Paper>
     </div>
-  );
+  )
 }
 
 export default LeagueCard

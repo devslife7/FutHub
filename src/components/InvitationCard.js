@@ -1,15 +1,15 @@
 import React from "react"
 import Moment from "react-moment"
 import { useSelector, useDispatch } from "react-redux"
-import { addWatchParty, removeInvitation, fetchRemoveInv } from "../actions/user"
+import { addWatchParty, fetchRemoveInv } from "../actions/user"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 // import ButtonBase from '@material-ui/core/ButtonBase';
 import Avatar from "@material-ui/core/Avatar"
-import Button from "@material-ui/core/Button"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
+// import Button from "@material-ui/core/Button"
+// import MoreVertIcon from "@material-ui/icons/MoreVert"
 import DoneIcon from "@material-ui/icons/Done"
 import NotInterestedIcon from "@material-ui/icons/NotInterested"
 
