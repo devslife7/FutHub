@@ -1,17 +1,22 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSearchTermLeagues, fetchPopularLeagues, fetchInternationalLeagues, fetchAllLeagues } from '../actions/leagues'
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  setSearchTermLeagues,
+  fetchPopularLeagues,
+  fetchInternationalLeagues,
+  fetchAllLeagues,
+} from '../../../actions/leagues'
+import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
-import LanguageIcon from '@material-ui/icons/Language';
-import BlurCircularIcon from '@material-ui/icons/BlurCircular';
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import SportsSoccerIcon from '@material-ui/icons/SportsSoccer'
+import LanguageIcon from '@material-ui/icons/Language'
+import BlurCircularIcon from '@material-ui/icons/BlurCircular'
 // import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 // import EventNoteIcon from '@material-ui/icons/EventNote';
 // import DoneAllIcon from '@material-ui/icons/DoneAll';
@@ -21,9 +26,9 @@ import BlurCircularIcon from '@material-ui/icons/BlurCircular';
 // import Select from '@material-ui/core/Select';
 // import FormControl from '@material-ui/core/FormControl';
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     // display: 'flex',
   },
@@ -42,18 +47,18 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   divider: {
-    margin: '0px 0px 20px 0px'
+    margin: '0px 0px 20px 0px',
   },
   searchInput: {
-    margin: '0px 0px 20px 0px'
+    margin: '0px 0px 20px 0px',
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 250,
   },
-}));
+}))
 
-function LeagueSearchBar() {
+export default function LeagueSearchBar() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const displayLeagues = useSelector(state => state.leagues.display)
@@ -63,22 +68,31 @@ function LeagueSearchBar() {
     <>
       <List>
         <TextField
-          value={ searchTerm }
-          onChange={ (event) => dispatch(setSearchTermLeagues( event.target.value )) }
+          value={searchTerm}
+          onChange={event => dispatch(setSearchTermLeagues(event.target.value))}
           className={classes.searchInput}
-          label="Search Leagues..."
-          />
+          label='Search Leagues...'
+        />
         <Divider />
-        <ListItem button key='Popular' onClick={ () => dispatch(fetchPopularLeagues()) }>
-          <ListItemIcon> <SportsSoccerIcon /> </ListItemIcon>
-          <ListItemText primary='Popular'/>
+        <ListItem button key='Popular' onClick={() => dispatch(fetchPopularLeagues())}>
+          <ListItemIcon>
+            {' '}
+            <SportsSoccerIcon />{' '}
+          </ListItemIcon>
+          <ListItemText primary='Popular' />
         </ListItem>
-        <ListItem button key='International' onClick={ () => dispatch(fetchInternationalLeagues()) } >
-          <ListItemIcon> <LanguageIcon /> </ListItemIcon>
+        <ListItem button key='International' onClick={() => dispatch(fetchInternationalLeagues())}>
+          <ListItemIcon>
+            {' '}
+            <LanguageIcon />{' '}
+          </ListItemIcon>
           <ListItemText primary='International' />
         </ListItem>
-        <ListItem button key='All'  onClick={ () => dispatch(fetchAllLeagues()) } >
-          <ListItemIcon> <BlurCircularIcon /> </ListItemIcon>
+        <ListItem button key='All' onClick={() => dispatch(fetchAllLeagues())}>
+          <ListItemIcon>
+            {' '}
+            <BlurCircularIcon />{' '}
+          </ListItemIcon>
           <ListItemText primary='All' />
         </ListItem>
         <Divider className={classes.divider} />
@@ -112,12 +126,10 @@ function LeagueSearchBar() {
           <ListItemIcon> <EventNoteIcon /> </ListItemIcon>
           <ListItemText primary='Date' />
         </ListItem> */}
-        <Typography noWrap style={{marginTop: '10px'}}>
-          Results: { displayLeagues.length }
+        <Typography noWrap style={{ marginTop: '10px' }}>
+          Results: {displayLeagues.length}
         </Typography>
       </List>
     </>
-  );
+  )
 }
-
-export default LeagueSearchBar

@@ -4,14 +4,14 @@ import { setCurrentUser } from './actions/user'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import NavBar from './containers/NavBar'
-import Leagues from './containers/Leagues'
+// import Leagues from './containers/Leagues'
 import StickyFooter from './components/StickyFooter'
-import Friends from './components/Friends'
+// import Friends from './components/Friends'
 // import Favorites from './views/Favorites/Favorites'
 import Standings from './components/Standings'
 import Upcoming from './components/Upcoming'
 
-import { Login, Signup, Profile, Favorites } from './views'
+import { Login, Signup, Profile, Favorites, Friends, Leagues } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'

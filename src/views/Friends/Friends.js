@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addFriend, removeFriend } from '../actions/user'
+import { addFriend, removeFriend } from '../../actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Button } from '@material-ui/core'
+import FriendCard from '../../components/FriendCard'
+
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-// import DeleteIcon from '@material-ui/icons/Delete';
-// import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import ButtonBase from '@material-ui/core/ButtonBase'
-import FriendCard from './FriendCard'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const userURL = serverURL + 'users/'

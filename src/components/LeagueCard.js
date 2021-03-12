@@ -1,16 +1,16 @@
-import React from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
-import { addFavoriteLeague, removeFavoriteLeague } from "../actions/user"
-import { makeStyles } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
-import Typography from "@material-ui/core/Typography"
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 // import ButtonBase from "@material-ui/core/ButtonBase"
-import StarBorderIcon from "@material-ui/icons/StarBorder"
-import StarIcon from "@material-ui/icons/Star"
-import IconButton from "@material-ui/core/IconButton"
-import Button from "@material-ui/core/Button"
+import StarBorderIcon from '@material-ui/icons/StarBorder'
+import StarIcon from '@material-ui/icons/Star'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,8 +20,8 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     // margin: 'auto',
-    maxWidth: "17vh",
-    height: "24vh",
+    maxWidth: '17vh',
+    height: '24vh',
   },
   image: {
     width: 128,
@@ -29,13 +29,13 @@ const useStyles = makeStyles(theme => ({
   },
   img: {
     // margin: 'auto',
-    display: "block",
-    maxWidth: "6vh",
-    maxHeight: "6vh",
+    display: 'block',
+    maxWidth: '6vh',
+    maxHeight: '6vh',
   },
   links: {
-    textDecoration: "none",
-    color: "inherit",
+    textDecoration: 'none',
+    color: 'inherit',
   },
 }))
 
@@ -47,7 +47,7 @@ function LeagueCard({ currentLeague }) {
   const loggedIn = useSelector(state => state.user.loggedIn)
 
   const handleFavourite = () => {
-    console.log("USERrelationship: ", currentLeague)
+    console.log('USERrelationship: ', currentLeague)
     !isFavorite()
       ? dispatch(addFavoriteLeague(currentLeague, currentUserId))
       : dispatch(removeFavoriteLeague(currentLeague.userRelationshipId))
@@ -67,24 +67,24 @@ function LeagueCard({ currentLeague }) {
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column' spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant='subtitle1' style={{ fontSize: "0.9em" }}>
+                <Typography gutterBottom variant='subtitle1' style={{ fontSize: '0.9em' }}>
                   {currentLeague.name}
                 </Typography>
                 <Typography variant='body2' gutterBottom>
                   {currentLeague.flag && (
                     <img
-                      style={{ width: "23px", marginRight: "10px" }}
+                      style={{ width: '23px', marginRight: '10px' }}
                       src={currentLeague.flag}
                       alt='league logo'
                     />
                   )}
-                  {currentLeague.country === "World" ? "International" : currentLeague.country}
+                  {currentLeague.country === 'World' ? 'International' : currentLeague.country}
                 </Typography>
                 <Typography variant='body2' gutterBottom>
                   {currentLeague.league_type}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
-                  Active: {currentLeague.is_current === 1 ? "Yes" : "No"}
+                  Active: {currentLeague.is_current === 1 ? 'Yes' : 'No'}
                 </Typography>
                 {/* <Typography variant="body2" color="textSecondary">
                   leagueId: {currentLeague.id}

@@ -1,28 +1,30 @@
-import React, { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import LeagueCard from "../components/LeagueCard"
-import LeagueSearchBar from "../components/LeaguesSearchBar"
-// import Pagination from '../components/Pagination'
-import { makeStyles } from "@material-ui/core/styles"
-import Paper from "@material-ui/core/Paper"
-import Grid from "@material-ui/core/Grid"
-import { fetchPopularLeagues } from "../actions/leagues"
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+// import LeagueSearchBar from '../../components/LeaguesSearchBar'
+import { fetchPopularLeagues } from '../../actions/leagues'
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 // import CircularProgress from '@material-ui/core/CircularProgress';
+
+// import Pagination from '../../components/Pagination'
+import LeagueCard from '../../components/LeagueCard'
+import { LeagueSearchBar } from './components'
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginTop: "30px",
+    marginTop: '30px',
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: "center",
+    textAlign: 'center',
     color: theme.palette.text.secondary,
   },
 }))
 
-function Leagues() {
-  console.log("renders Leagues")
+export default function Leagues() {
+  console.log('renders Leagues')
   const classes = useStyles()
   const dispatch = useDispatch()
   const displayLeagues = useSelector(state => state.leagues.display)
@@ -66,12 +68,12 @@ function Leagues() {
         </Grid>
         <Grid item xs={9} container spacing={3} style={{ marginLeft: 10 }}>
           {loading ? (
-            <div style={{ marginTop: "20vh", marginLeft: "40vh", fontSize: "22px" }}> Loading... </div>
+            <div style={{ marginTop: '20vh', marginLeft: '40vh', fontSize: '22px' }}> Loading... </div>
           ) : (
             renderLeagues()
           )}
           {/* <Pagination count={5} page={1} onChange={paginate} shape="rounded"/> */}
-          <Grid item xs={12} style={{ justifyContent: "center" }}>
+          <Grid item xs={12} style={{ justifyContent: 'center' }}>
             {/* <Pagination
                 leaguesPerPage={leaguesPerPage}
                 totalLeagues={ props.leagues.display.length }
@@ -83,5 +85,3 @@ function Leagues() {
     </div>
   )
 }
-
-export default Leagues
