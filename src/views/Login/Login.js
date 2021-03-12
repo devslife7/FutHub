@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function Signin({ history }) {
+export default function Login({ history }) {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

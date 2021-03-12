@@ -5,8 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import NavBar from './containers/NavBar'
 import Leagues from './containers/Leagues'
-import LogIn from './components/LogIn'
-import SignUp from './components/SignUp'
+// import SignUp from './components/SignUp'
 import StickyFooter from './components/StickyFooter'
 import Friends from './components/Friends'
 import Favorites from './components/Favorites'
@@ -14,7 +13,7 @@ import Profile from './components/Profile'
 import Standings from './components/Standings'
 import Upcoming from './components/Upcoming'
 
-import { Signin } from './views'
+import { Login, Signup } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
@@ -41,11 +40,8 @@ function App() {
       <Container>
         <Route exact path='/' component={Leagues} />
         <Route exact path='/leagues' component={Leagues} />
-
-        <Route exact path='/signin' component={Signin} />
-
-        <Route exact path='/login' component={LogIn} />
-        <Route exact path='/signup' component={SignUp} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={Signup} />
         <Route exact path='/friends' component={Friends} />
         <Route exact path='/favorites' component={Favorites} />
         <Route exact path='/profile' component={Profile} />
