@@ -1,43 +1,43 @@
-import React, { useState } from "react"
-import Moment from "react-moment"
-import moment from "moment"
-import { useSelector, useDispatch } from "react-redux"
-import { addWatchParty } from "../actions/user"
-import { makeStyles } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import Avatar from "@material-ui/core/Avatar"
-import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
+import React, { useState } from 'react'
+import Moment from 'react-moment'
+import moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux'
+import { addWatchParty } from '../../../actions/user'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 // import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
 // import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from "@material-ui/core/DialogTitle"
-import Slide from "@material-ui/core/Slide"
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Slide from '@material-ui/core/Slide'
 
-import Stepper from "@material-ui/core/Stepper"
-import Step from "@material-ui/core/Step"
-import StepLabel from "@material-ui/core/StepLabel"
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
 // import Paper from "@material-ui/core/Paper"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemAvatar from "@material-ui/core/ListItemAvatar"
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
-import ListItemText from "@material-ui/core/ListItemText"
-import IconButton from "@material-ui/core/IconButton"
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import ListItemText from '@material-ui/core/ListItemText'
+import IconButton from '@material-ui/core/IconButton'
 
-import Snackbar from "@material-ui/core/Snackbar"
-import MuiAlert from "@material-ui/lab/Alert"
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert'
 // import SendIcon from "@material-ui/icons/Send"
-import CancelScheduleSendIcon from "@material-ui/icons/CancelScheduleSend"
-import TelegramIcon from "@material-ui/icons/Telegram"
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
+import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend'
+import TelegramIcon from '@material-ui/icons/Telegram'
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const watchpartiesURL = serverURL + "watchparties/"
+const watchpartiesURL = serverURL + 'watchparties/'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
@@ -45,14 +45,14 @@ function Alert(props) {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: "100%",
-    "& > * + *": {
+    width: '100%',
+    '& > * + *': {
       marginTop: theme.spacing(2),
     },
   },
   paper: {
-    minHeight: "70vh",
-    borderRadius: "0px",
+    minHeight: '70vh',
+    borderRadius: '0px',
   },
   logo: {
     width: theme.spacing(13),
@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function getSteps() {
-  return ["Set Party Settings", "Invite Friends"]
+  return ['Set Party Settings', 'Invite Friends']
 }
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -83,15 +83,15 @@ function MatchInfo() {
   const [open, setOpen] = useState(false)
   const [openSnack, setOpenSnack] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
-  const [partyName, setPartyName] = useState("")
-  const [partyTime, setPartyTime] = useState("")
-  const [partyLocation, setPartyLocation] = useState("My House yoo")
+  const [partyName, setPartyName] = useState('')
+  const [partyTime, setPartyTime] = useState('')
+  const [partyLocation, setPartyLocation] = useState('My House yoo')
   const [friendIds, setFriendIds] = useState([])
 
   const handleClick = () => setOpenSnack(true)
 
   const handleSnackClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return
     }
     setOpenSnack(false)
@@ -99,10 +99,10 @@ function MatchInfo() {
 
   const handleClickOpen = () => {
     setPartyName(`${currentMatch.homeTeam.team_name} VS ${currentMatch.awayTeam.team_name}`)
-    setPartyTime(moment.unix(currentMatch.event_timestamp).format("LT"))
+    setPartyTime(moment.unix(currentMatch.event_timestamp).format('LT'))
     setOpen(true)
 
-    console.log("PARTYTIME", partyTime)
+    console.log('PARTYTIME', partyTime)
   }
 
   const handleClose = () => setOpen(false)
@@ -115,9 +115,9 @@ function MatchInfo() {
     handleReset()
 
     const postRequest = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         watchparty: {
@@ -155,7 +155,7 @@ function MatchInfo() {
 
   const generateFriends = () => {
     return friendList.map((friend, idx) => (
-      <ListItem key={idx} style={{ paddingLeft: "0px", marginRight: "0px", paddingRight: "20px" }}>
+      <ListItem key={idx} style={{ paddingLeft: '0px', marginRight: '0px', paddingRight: '20px' }}>
         <ListItemAvatar>
           <Avatar src={friend.profile_img} />
         </ListItemAvatar>
@@ -166,7 +166,7 @@ function MatchInfo() {
               edge='end'
               aria-label='delete'
               onClick={() => setFriendIds([...friendIds, friend.id])}
-              style={{ marginLeft: "20px" }}
+              style={{ marginLeft: '20px' }}
             >
               <TelegramIcon color='primary' />
             </IconButton>
@@ -192,13 +192,13 @@ function MatchInfo() {
     }
   }
 
-  const vertical = "top"
-  const horizontal = "center"
+  const vertical = 'top'
+  const horizontal = 'center'
   return (
     <>
       {currentMatch.fixture_id ? (
         <>
-          <Grid container style={{ margin: "40px 0px" }} spacing={2} justify='center' alignItems='center'>
+          <Grid container style={{ margin: '40px 0px' }} spacing={2} justify='center' alignItems='center'>
             <Grid item xs={5}>
               <Grid container justify='center' alignItems='center' direction='column'>
                 <Avatar variant='square' src={currentMatch.homeTeam.logo} className={classes.logo} />
@@ -206,7 +206,7 @@ function MatchInfo() {
                   variant='h1'
                   align='center'
                   color='textPrimary'
-                  style={{ fontSize: "1.9em", marginTop: "10px" }}
+                  style={{ fontSize: '1.9em', marginTop: '10px' }}
                 >
                   {currentMatch.homeTeam.team_name}
                 </Typography>
@@ -215,10 +215,10 @@ function MatchInfo() {
             <Grid item xs={2}>
               <Grid container justify='center'>
                 <Grid container direction='column' alignItems='center'>
-                  <span style={{ fontSize: "2.2em" }}>
+                  <span style={{ fontSize: '2.2em' }}>
                     {currentMatch.goalsHomeTeam} - {currentMatch.goalsAwayTeam}
                   </span>
-                  <span style={{ fontSize: "1.3em" }}>{currentMatch.statusShort}</span>
+                  <span style={{ fontSize: '1.3em' }}>{currentMatch.statusShort}</span>
                 </Grid>
               </Grid>
             </Grid>
@@ -229,14 +229,14 @@ function MatchInfo() {
                   variant='h1'
                   align='center'
                   color='textPrimary'
-                  style={{ fontSize: "1.9em", marginTop: "10px" }}
+                  style={{ fontSize: '1.9em', marginTop: '10px' }}
                 >
                   {currentMatch.awayTeam.team_name}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container style={{ margin: "30px 0px" }}>
+          <Grid container style={{ margin: '30px 0px' }}>
             <Grid item xs={6}>
               <Grid container spacing={3} justify='center' alignItems='center' direction='column'>
                 <Grid item>Match League</Grid>
@@ -251,7 +251,7 @@ function MatchInfo() {
                         className={classes.countryLogo}
                         src={currentMatch.league.flag}
                         alt='country logo'
-                        style={{ height: "20px" }}
+                        style={{ height: '20px' }}
                       />
                     </Grid>
                     <Grid item>{currentMatch.league.country}</Grid>
@@ -263,28 +263,28 @@ function MatchInfo() {
               <Grid container justify='center' alignItems='flex-start' direction='column' spacing={2}>
                 <Grid item>
                   Date:
-                  <Moment style={{ marginLeft: "36px" }} interval={0} format='MMM D, YYYY' unix>
+                  <Moment style={{ marginLeft: '36px' }} interval={0} format='MMM D, YYYY' unix>
                     {currentMatch.event_timestamp}
                   </Moment>
                 </Grid>
                 <Grid item>
                   Time:
-                  <Moment style={{ marginLeft: "36px" }} unix format='hh:mm A'>
+                  <Moment style={{ marginLeft: '36px' }} unix format='hh:mm A'>
                     {currentMatch.event_timestamp}
                   </Moment>
                 </Grid>
                 <Grid item>
-                  Status: <span style={{ marginLeft: "22px" }}>{currentMatch.status}</span>
+                  Status: <span style={{ marginLeft: '22px' }}>{currentMatch.status}</span>
                 </Grid>
                 <Grid item>
-                  Round: <span style={{ marginLeft: "24px" }}>{currentMatch.round}</span>
+                  Round: <span style={{ marginLeft: '24px' }}>{currentMatch.round}</span>
                 </Grid>
                 <Grid item>
-                  Stadium: <span style={{ marginLeft: "10px" }}>{currentMatch.venue}</span>
+                  Stadium: <span style={{ marginLeft: '10px' }}>{currentMatch.venue}</span>
                 </Grid>
                 {currentMatch.referee && (
                   <Grid item>
-                    Referee: <span style={{ marginLeft: "14px" }}>{currentMatch.referee}</span>
+                    Referee: <span style={{ marginLeft: '14px' }}>{currentMatch.referee}</span>
                   </Grid>
                 )}
               </Grid>
@@ -292,17 +292,17 @@ function MatchInfo() {
           </Grid>
           {loggedIn && (
             <>
-              {currentMatch.statusShort === "NS" ? (
+              {currentMatch.statusShort === 'NS' ? (
                 <Button
                   variant='contained'
                   color='primary'
                   onClick={handleClickOpen}
-                  style={{ marginTop: "30px" }}
+                  style={{ marginTop: '30px' }}
                 >
                   create watch party
                 </Button>
               ) : (
-                <Button disabled variant='contained' color='primary' style={{ marginTop: "30px" }}>
+                <Button disabled variant='contained' color='primary' style={{ marginTop: '30px' }}>
                   create watch party
                 </Button>
               )}
@@ -310,7 +310,7 @@ function MatchInfo() {
           )}
         </>
       ) : (
-        <Typography variant='h1' gutterBottom style={{ fontSize: "1.4em", marginTop: "120px" }}>
+        <Typography variant='h1' gutterBottom style={{ fontSize: '1.4em', marginTop: '120px' }}>
           Select a Match to see more info...
         </Typography>
       )}
@@ -366,24 +366,24 @@ function MatchInfo() {
         ) : (
           <DialogContent>
             <Grid container justify='space-evenly' alignItems='center'>
-              <Grid item xs={4} style={{ width: "900px" }}>
+              <Grid item xs={4} style={{ width: '900px' }}>
                 <Grid container>
-                  <Grid item style={{ maxWidth: "100%", flexBasis: "100%" }}>
+                  <Grid item style={{ maxWidth: '100%', flexBasis: '100%' }}>
                     <Grid container alignItems='center'>
-                      <Typography variant='h5' style={{ textAlign: "center" }}>
+                      <Typography variant='h5' style={{ textAlign: 'center' }}>
                         Friends
                       </Typography>
                       <IconButton
                         edge='end'
                         aria-label='delete'
-                        style={{ paddingBotton: "20px" }}
+                        style={{ paddingBotton: '20px' }}
                         onClick={() => toggleSendAllFriends()}
                       >
                         <PeopleAltIcon color='primary' />
                       </IconButton>
                     </Grid>
                     {/* <Paper style={{width: '300px'}} > */}
-                    <List style={{ height: "400px", overflow: "auto" }}>{generateFriends()}</List>
+                    <List style={{ height: '400px', overflow: 'auto' }}>{generateFriends()}</List>
                     {/* </Paper> */}
                   </Grid>
                 </Grid>

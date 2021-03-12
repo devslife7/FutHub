@@ -9,9 +9,9 @@ import StickyFooter from './components/StickyFooter'
 // import Friends from './components/Friends'
 // import Favorites from './views/Favorites/Favorites'
 import Standings from './components/Standings'
-import Upcoming from './components/Upcoming'
+// import Upcoming from './views/Games/Games'
 
-import { Login, Signup, Profile, Favorites, Friends, Leagues } from './views'
+import { Login, Signup, Profile, Favorites, Friends, Leagues, Games } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
@@ -44,7 +44,7 @@ function App() {
         <Route exact path='/favorites' component={Favorites} />
         <Route exact path='/profile' component={Profile} />
         <Route exact path='/standings' component={Standings} />
-        <Route exact path='/upcoming' component={Upcoming} />
+        <Route exact path='/games' component={Games} />
       </Container>
       <StickyFooter />
     </Router>
