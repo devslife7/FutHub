@@ -3,20 +3,18 @@ import { useDispatch } from 'react-redux'
 import { setCurrentUser } from './actions/user'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
-import NavBar from './containers/NavBar'
-// import Leagues from './containers/Leagues'
-import StickyFooter from './components/StickyFooter'
-// import Friends from './components/Friends'
-// import Favorites from './views/Favorites/Favorites'
+
+import { NavBar, Footer } from './layouts'
+// import NavBar from './layouts/NavBar'
+// import Footer from './layouts/Footer'
 import Standings from './components/Standings'
-// import Upcoming from './views/Games/Games'
 
 import { Login, Signup, Profile, Favorites, Friends, Leagues, Games } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
 
-function App() {
+export default function App() {
   console.log('renders App')
   const dispatch = useDispatch()
 
@@ -46,9 +44,7 @@ function App() {
         <Route exact path='/standings' component={Standings} />
         <Route exact path='/games' component={Games} />
       </Container>
-      <StickyFooter />
+      <Footer />
     </Router>
   )
 }
-
-export default App
