@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser, logOutCurrentUser } from '../../actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 
-// import LeagueCardSmall from './components/LeagueCardSmall'
 import FriendCard from '../../components/FriendCard'
-// import WatchPartyCard from '../../components/WatchPartyCard'
-// import InvitationCard from './components/InvitationCard'
-
 import { InvitationCard, LeagueCardSmall, WatchPartyCard } from './components'
 
 import Grid from '@material-ui/core/Grid'

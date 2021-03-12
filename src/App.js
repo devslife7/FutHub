@@ -5,15 +5,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import NavBar from './containers/NavBar'
 import Leagues from './containers/Leagues'
-// import SignUp from './components/SignUp'
 import StickyFooter from './components/StickyFooter'
 import Friends from './components/Friends'
-import Favorites from './components/Favorites'
-// import Profile from './views/Profile/Profile'
+// import Favorites from './views/Favorites/Favorites'
 import Standings from './components/Standings'
 import Upcoming from './components/Upcoming'
 
-import { Login, Signup, Profile } from './views'
+import { Login, Signup, Profile, Favorites } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
