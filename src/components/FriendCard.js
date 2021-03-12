@@ -1,19 +1,19 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 // import ButtonBase from '@material-ui/core/ButtonBase';
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@material-ui/core/Avatar'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(1),
     width: '85px',
-    height: '95px'
+    height: '95px',
   },
   image: {
     width: 40,
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
-}));
+}))
 
-function FriendCard({ friend }) {
+export default function FriendCard({ friend }) {
   const classes = useStyles()
 
   return (
@@ -35,28 +35,24 @@ function FriendCard({ friend }) {
       <Paper className={classes.paper}>
         <Grid container direction='column' spacing={1} alignItems='center'>
           <Grid item>
-            <Avatar src={friend.profile_img} style={{margin: 'auto', marginBottom: '0px'}}
+            <Avatar
+              src={friend.profile_img}
+              style={{ margin: 'auto', marginBottom: '0px' }}
               className={classes.image}
             />
           </Grid>
           <Grid item>
             <Grid container direction='column' alignItems='center'>
               <Grid item>
-                <Typography variant="subtitle1">
-                  {friend.name}
-                </Typography>
+                <Typography variant='subtitle1'>{friend.name}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body2">
-                  {friend.username}
-                </Typography>
+                <Typography variant='body2'>{friend.username}</Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Paper>
     </div>
-  );
+  )
 }
-
-export default FriendCard

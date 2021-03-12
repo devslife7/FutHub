@@ -2,16 +2,19 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser, logOutCurrentUser } from '../../actions/user'
 import { makeStyles } from '@material-ui/core/styles'
-import LeagueCardSmall from '../../components/LeagueCardSmall'
+
+// import LeagueCardSmall from './components/LeagueCardSmall'
 import FriendCard from '../../components/FriendCard'
-import WatchPartyCard from '../../components/WatchPartyCard'
-import InvitationCard from '../../components/InvitationCard'
+// import WatchPartyCard from '../../components/WatchPartyCard'
+// import InvitationCard from './components/InvitationCard'
+
+import { InvitationCard, LeagueCardSmall, WatchPartyCard } from './components'
+
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
