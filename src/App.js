@@ -9,11 +9,11 @@ import Leagues from './containers/Leagues'
 import StickyFooter from './components/StickyFooter'
 import Friends from './components/Friends'
 import Favorites from './components/Favorites'
-import Profile from './components/Profile'
+// import Profile from './views/Profile/Profile'
 import Standings from './components/Standings'
 import Upcoming from './components/Upcoming'
 
-import { Login, Signup } from './views'
+import { Login, Signup, Profile } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
