@@ -1,28 +1,30 @@
-import React, { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { setCurrentUser } from "./actions/user"
-import { BrowserRouter as Router, Route } from "react-router-dom"
-import Container from "@material-ui/core/Container"
-import NavBar from "./containers/NavBar"
-import Leagues from "./containers/Leagues"
-import LogIn from "./components/LogIn"
-import SignUp from "./components/SignUp"
-import StickyFooter from "./components/StickyFooter"
-import Friends from "./components/Friends"
-import Favorites from "./components/Favorites"
-import Profile from "./components/Profile"
-import Standings from "./components/Standings"
-import Upcoming from "./components/Upcoming"
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from './actions/user'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Container from '@material-ui/core/Container'
+import NavBar from './containers/NavBar'
+import Leagues from './containers/Leagues'
+import LogIn from './components/LogIn'
+import SignUp from './components/SignUp'
+import StickyFooter from './components/StickyFooter'
+import Friends from './components/Friends'
+import Favorites from './components/Favorites'
+import Profile from './components/Profile'
+import Standings from './components/Standings'
+import Upcoming from './components/Upcoming'
+
+import { Signin } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + "users/"
+const usersURL = serverURL + 'users/'
 
 function App() {
-  console.log("renders App")
+  console.log('renders App')
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("renders App on mount")
+    console.log('renders App on mount')
 
     if (!!localStorage.userId) {
       fetch(usersURL + localStorage.userId)
@@ -39,6 +41,9 @@ function App() {
       <Container>
         <Route exact path='/' component={Leagues} />
         <Route exact path='/leagues' component={Leagues} />
+
+        <Route exact path='/signin' component={Signin} />
+
         <Route exact path='/login' component={LogIn} />
         <Route exact path='/signup' component={SignUp} />
         <Route exact path='/friends' component={Friends} />
