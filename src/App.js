@@ -5,11 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 
 import { NavBar, Footer } from './layouts'
-// import NavBar from './layouts/NavBar'
-// import Footer from './layouts/Footer'
-import Standings from './components/Standings'
-
-import { Login, Signup, Profile, Favorites, Friends, Leagues, Games } from './views'
+import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
