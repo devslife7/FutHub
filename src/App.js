@@ -15,7 +15,7 @@ import Standings from "./components/Standings"
 import Upcoming from "./components/Upcoming"
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + "/users/"
+const usersURL = serverURL + "users/"
 
 function App() {
   console.log("renders App")

@@ -17,23 +17,23 @@ import { IconButton } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(1),
     width: "180px",
-    height: "195px"
+    height: "195px",
   },
   image: {
     width: 40,
-    height: 40
+    height: 40,
   },
   img: {
     margin: "auto",
     display: "block",
     maxWidth: "100%",
-    maxHeight: "100%"
-  }
+    maxHeight: "100%",
+  },
 }))
 
 function InvitationCard({ invitation }) {
@@ -46,18 +46,18 @@ function InvitationCard({ invitation }) {
     dispatch(fetchRemoveInv(invitation.id))
 
     const serverURL = process.env.REACT_APP_SERVER_URL
-    const user_watchpartyURL = serverURL + "/user_watchparties"
+    const user_watchpartyURL = serverURL + "user_watchparties/"
     const postRequest = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user_watchparty: {
           user_id: currentUserId,
-          watchparty_id: invitation.watchparty_id
-        }
-      })
+          watchparty_id: invitation.watchparty_id,
+        },
+      }),
     }
 
     fetch(user_watchpartyURL, postRequest)

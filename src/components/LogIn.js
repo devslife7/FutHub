@@ -15,7 +15,7 @@ import MuiAlert from "@material-ui/lab/Alert"
 import Paper from "@material-ui/core/Paper"
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const logInURL = serverURL + "/login"
+const logInURL = serverURL + "login/"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
@@ -36,19 +36,19 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }))
 
 function LogIn({ history }) {
@@ -78,15 +78,15 @@ function LogIn({ history }) {
     let user = {
       user: {
         username: username,
-        password: password
-      }
+        password: password,
+      },
     }
     let postRequest = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     }
 
     fetch(logInURL, postRequest)
@@ -142,22 +142,12 @@ function LogIn({ history }) {
               setPassword(e.target.value)
             }}
           />
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
+          <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             Log In
           </Button>
           <Grid container>
             <Grid item>
-              <Link
-                to='/signup'
-                variant='body2'
-                style={{ textDecoration: "none", color: "#2196f3" }}
-              >
+              <Link to='/signup' variant='body2' style={{ textDecoration: "none", color: "#2196f3" }}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

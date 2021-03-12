@@ -1,37 +1,36 @@
 const serverURL = process.env.REACT_APP_SERVER_URL
-const matchesURL = serverURL + "/fixtures/date"
+const matchesURL = serverURL + "fixtures/date/"
 
 export const setCurrentMatch = match => {
   return {
     type: "SET_CURRENT_MATCH",
-    payload: match
+    payload: match,
   }
 }
 export const setDatePickerDate = date => {
   return {
     type: "SET_DATEPICKER_DATE",
-    payload: date
+    payload: date,
   }
 }
 export const fetchMatches = () => {
-  
   return (dispatch, getState) => {
     const datePickerDate = getState().matches.datePickerDate
     dispatch({ type: "LOADING_MATCHES" })
-    
+
     const postRequest = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-type': 'application/json'
+        "Content-type": "application/json",
       },
       body: JSON.stringify({
-        fetchDate: datePickerDate
-      })
+        fetchDate: datePickerDate,
+      }),
     }
 
     fetch(matchesURL, postRequest)
-      .then(resp => resp.json() )
-      .then( matches => {
+      .then(resp => resp.json())
+      .then(matches => {
         dispatch({ type: "SET_DISPLAY_MATCHES", payload: matches })
       })
 
@@ -266,8 +265,5 @@ export const fetchMatches = () => {
     // }
     // ]
     // dispatch({ type: "SET_DISPLAY_MATCHES", payload: matches })
-
-
-
   }
 }

@@ -20,21 +20,21 @@ import DialogActions from "@material-ui/core/DialogActions"
 import InputLabel from "@material-ui/core/InputLabel"
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + "/users/"
+const usersURL = serverURL + "users/"
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginTop: "10px"
+    marginTop: "10px",
   },
   small: {
     width: theme.spacing(4),
-    height: theme.spacing(4)
+    height: theme.spacing(4),
   },
   large: {
     width: theme.spacing(17),
-    height: theme.spacing(17)
-  }
+    height: theme.spacing(17),
+  },
 }))
 
 function Profile({ history }) {
@@ -63,12 +63,12 @@ function Profile({ history }) {
     const patchRequest = {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: newName,
-        username: newUserName
-      })
+        username: newUserName,
+      }),
     }
 
     fetch(usersURL + currentUser.id, patchRequest)
@@ -125,12 +125,12 @@ function Profile({ history }) {
     console.log("formData valid?", !!avatar)
 
     const serverURL = process.env.REACT_APP_SERVER_URL
-    const uploadURL = serverURL + "/uploadAvatar/"
+    const uploadURL = serverURL + "uploadAvatar/"
 
     if (!!avatar) {
       fetch(uploadURL + currentUser.id, {
         method: "PATCH",
-        body: formData
+        body: formData,
       })
         .then(res => res.json())
         .then(user => {
@@ -145,44 +145,24 @@ function Profile({ history }) {
     <>
       <Grid item xs={12} container spacing={4} className={classes.root}>
         <Grid item xs={3}>
-          <Paper elevation={3} style={{ textAlign: "center", padding: "30px", backgroundColor: '#f1f1f1' }}>
-            <Avatar
-              src={currentUser.profile_img}
-              style={{ margin: "auto" }}
-              className={classes.large}
-            />
+          <Paper elevation={3} style={{ textAlign: "center", padding: "30px", backgroundColor: "#f1f1f1" }}>
+            <Avatar src={currentUser.profile_img} style={{ margin: "auto" }} className={classes.large} />
             <Typography variant='h1' gutterBottom style={{ fontSize: "1.2em", marginTop: "20px" }}>
               {currentUser.name}
             </Typography>
             <Typography variant='h1' gutterBottom style={{ fontSize: "1.2em", margin: "20px 0px" }}>
               {currentUser.username}
             </Typography>
-            <Typography
-              color='textSecondary'
-              gutterBottom
-              style={{ fontSize: "1em", marginTop: "10px" }}
-            >
+            <Typography color='textSecondary' gutterBottom style={{ fontSize: "1em", marginTop: "10px" }}>
               Parties: {currentUser.watchparties.length}
             </Typography>
-            <Typography
-              color='textSecondary'
-              gutterBottom
-              style={{ fontSize: "1em", marginTop: "10px" }}
-            >
+            <Typography color='textSecondary' gutterBottom style={{ fontSize: "1em", marginTop: "10px" }}>
               Friends: {friends.length}
             </Typography>
-            <Typography
-              color='textSecondary'
-              gutterBottom
-              style={{ fontSize: "1em", marginTop: "10px" }}
-            >
+            <Typography color='textSecondary' gutterBottom style={{ fontSize: "1em", marginTop: "10px" }}>
               Leagues: {currentUser.favLeagues.length}
             </Typography>
-            <Typography
-              color='textSecondary'
-              gutterBottom
-              style={{ fontSize: "1em", marginTop: "10px" }}
-            >
+            <Typography color='textSecondary' gutterBottom style={{ fontSize: "1em", marginTop: "10px" }}>
               Invitations: {currentUser.invitations.length}
             </Typography>
             <Grid container direction='column' spacing={3}>
@@ -207,7 +187,7 @@ function Profile({ history }) {
         </Grid>
 
         <Grid item xs={9}>
-          <Paper elevation={3} style={{ padding: "30px", backgroundColor: '#f1f1f1' }}>
+          <Paper elevation={3} style={{ padding: "30px", backgroundColor: "#f1f1f1" }}>
             <Typography variant='h1' gutterBottom style={{ fontSize: "1.2em", marginTop: "0px" }}>
               Favorite Leagues:
             </Typography>

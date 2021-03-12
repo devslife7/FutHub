@@ -37,7 +37,7 @@ import TelegramIcon from "@material-ui/icons/Telegram"
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const watchpartiesURL = serverURL + "/watchparties"
+const watchpartiesURL = serverURL + "watchparties/"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
@@ -47,21 +47,21 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
     "& > * + *": {
-      marginTop: theme.spacing(2)
-    }
+      marginTop: theme.spacing(2),
+    },
   },
   paper: {
     minHeight: "70vh",
-    borderRadius: "0px"
+    borderRadius: "0px",
   },
   logo: {
     width: theme.spacing(13),
-    height: theme.spacing(13)
+    height: theme.spacing(13),
   },
   logoSmall: {
     width: theme.spacing(3),
-    height: theme.spacing(3)
-  }
+    height: theme.spacing(3),
+  },
 }))
 
 function getSteps() {
@@ -117,7 +117,7 @@ function MatchInfo() {
     const postRequest = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         watchparty: {
@@ -131,11 +131,11 @@ function MatchInfo() {
           home_team_name: currentMatch.homeTeam.team_name,
           home_team_logo: currentMatch.homeTeam.logo,
           away_team_name: currentMatch.awayTeam.team_name,
-          away_team_logo: currentMatch.awayTeam.logo
+          away_team_logo: currentMatch.awayTeam.logo,
         },
         user_id: currentUser.id,
-        friend_ids: friendIds
-      })
+        friend_ids: friendIds,
+      }),
     }
     fetch(watchpartiesURL, postRequest)
       .then(resp => resp.json())
@@ -198,20 +198,10 @@ function MatchInfo() {
     <>
       {currentMatch.fixture_id ? (
         <>
-          <Grid
-            container
-            style={{ margin: "40px 0px" }}
-            spacing={2}
-            justify='center'
-            alignItems='center'
-          >
+          <Grid container style={{ margin: "40px 0px" }} spacing={2} justify='center' alignItems='center'>
             <Grid item xs={5}>
               <Grid container justify='center' alignItems='center' direction='column'>
-                <Avatar
-                  variant='square'
-                  src={currentMatch.homeTeam.logo}
-                  className={classes.logo}
-                />
+                <Avatar variant='square' src={currentMatch.homeTeam.logo} className={classes.logo} />
                 <Typography
                   variant='h1'
                   align='center'
@@ -234,11 +224,7 @@ function MatchInfo() {
             </Grid>
             <Grid item xs={5}>
               <Grid container justify='center' alignItems='center' direction='column'>
-                <Avatar
-                  variant='square'
-                  src={currentMatch.awayTeam.logo}
-                  className={classes.logo}
-                />
+                <Avatar variant='square' src={currentMatch.awayTeam.logo} className={classes.logo} />
                 <Typography
                   variant='h1'
                   align='center'
@@ -274,13 +260,7 @@ function MatchInfo() {
               </Grid>
             </Grid>
             <Grid item xs={6}>
-              <Grid
-                container
-                justify='center'
-                alignItems='flex-start'
-                direction='column'
-                spacing={2}
-              >
+              <Grid container justify='center' alignItems='flex-start' direction='column' spacing={2}>
                 <Grid item>
                   Date:
                   <Moment style={{ marginLeft: "36px" }} interval={0} format='MMM D, YYYY' unix>

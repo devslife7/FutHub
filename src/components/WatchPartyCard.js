@@ -25,27 +25,27 @@ import InputLabel from "@material-ui/core/InputLabel"
 import Button from "@material-ui/core/Button"
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const watchPartyURL = serverURL + "/watchparties/"
+const watchPartyURL = serverURL + "watchparties/"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(1),
     width: "180px",
-    height: "200px"
+    height: "200px",
   },
   image: {
     width: 40,
-    height: 40
+    height: 40,
   },
   img: {
     margin: "auto",
     display: "block",
     maxWidth: "100%",
-    maxHeight: "100%"
-  }
+    maxHeight: "100%",
+  },
 }))
 
 function WatchPartyCard({ party }) {
@@ -78,20 +78,20 @@ function WatchPartyCard({ party }) {
     handleClose()
 
     const serverURL = process.env.REACT_APP_SERVER_URL
-    const watchpartyURL = serverURL + "/watchparties/"
+    const watchpartyURL = serverURL + "watchparties/"
 
     const patchRequest = {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         watchparty: {
           name: newName,
           time: newTime,
-          location: newLocation
-        }
-      })
+          location: newLocation,
+        },
+      }),
     }
 
     fetch(watchpartyURL + party.id, patchRequest)
