@@ -102,7 +102,7 @@ function NavBar() {
 
   return (
     <div>
-      <AppBar position='static' color='primary'>
+      <AppBar position='sticky' color='primary'>
         <Container>
           <Toolbar className={classes.navBarPadding}>
             <SportsSoccerIcon style={{ paddingRight: '6px', fontSize: '2.6em' }} />
