@@ -49,6 +49,7 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     margin: '0px 0px',
     padding: '14px 20px 14px 20px',
+    transition: 'all 0.3s ease',
   },
   typography: {
     padding: theme.spacing(2),

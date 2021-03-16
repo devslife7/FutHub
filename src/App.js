@@ -40,7 +40,7 @@ export default function App() {
         <Route exact path='/standings' component={Standings} />
         <Route exact path='/games' component={Games} />
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   )
 }
