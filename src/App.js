@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 
 import { NavBar, Footer } from './layouts'
-import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings } from './views'
+import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings, Home } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const usersURL = serverURL + 'users/'
@@ -30,7 +30,7 @@ export default function App() {
     <Router>
       <NavBar />
       <Container>
-        <Route exact path='/' component={Leagues} />
+        <Route exact path='/' component={Home} />
         <Route exact path='/leagues' component={Leagues} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/signup' component={Signup} />
