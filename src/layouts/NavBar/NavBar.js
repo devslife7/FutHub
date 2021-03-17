@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   navBarPadding: {
     padding: '0px',
+    minHeight: '0px',
   },
   small: {
     width: theme.spacing(5),
@@ -101,8 +102,59 @@ export default function NavBar() {
     dispatch(logOutCurrentUser())
   }
 
+  const popoverDisplay = currentUser => {
+    return (
+      <>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Paper elevation={0} style={{ padding: '20px' }}>
+            <Grid container direction='column' alignItems='center'>
+              <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '10px' }}>
+                {currentUser.name}
+              </Typography>
+              {currentUser.invitations.length > 0 ? (
+                <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '10px' }}>
+                  {currentUser.invitations.length} new invite(s)
+                </Typography>
+              ) : null}
+              <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '10px' }}>
+                {currentUser.username}
+              </Typography>
+              <Link to='/profile' onClick={handleClose} style={{ textDecoration: 'none' }}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  style={{ padding: '5px 100px', margin: '20px 0px' }}
+                >
+                  Profile
+                </Button>
+              </Link>
+              <Link style={{ textDecoration: 'none' }} onClick={handleLogOut} to='/'>
+                <Button variant='outlined' color='primary' style={{ padding: '5px 98px' }}>
+                  Log Out
+                </Button>
+              </Link>
+            </Grid>
+          </Paper>
+        </Popover>
+      </>
+    )
+  }
+
   return (
-    <div>
+    <>
       <AppBar position='sticky' color='primary'>
         <Container>
           <Toolbar className={classes.navBarPadding}>
@@ -115,6 +167,7 @@ export default function NavBar() {
               to='/leagues'
               onClick={() => setLinkClicked('Leagues')}
               className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`}
+              // style={{ backgroundColor: 'yellow' }}
             >
               Leagues
             </Link>
@@ -126,7 +179,7 @@ export default function NavBar() {
               Games
             </Link>
             {loggedIn ? (
-              <div>
+              <>
                 <Link
                   onClick={() => setLinkClicked('Favorites')}
                   className={`${isMenuLinkClicked('Favorites')} ${classes.links} ${classes.onHover}`}
@@ -142,10 +195,6 @@ export default function NavBar() {
                   {' '}
                   Friends
                 </Link>
-              </div>
-            ) : null}
-            {loggedIn ? (
-              <>
                 <Divider orientation='vertical' style={{ height: '36px' }} />
                 <Link
                   to='#'
@@ -168,7 +217,7 @@ export default function NavBar() {
               <Link
                 onClick={() => setLinkClicked('Login')}
                 className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
-                style={{ display: 'flex', alignItems: 'center' }}
+                // style={{ display: 'flex', alignItems: 'center' }}
                 to='/login'
               >
                 Login
@@ -178,54 +227,7 @@ export default function NavBar() {
         </Container>
       </AppBar>
 
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Paper elevation={0} style={{ padding: '20px' }}>
-          {loggedIn && (
-            <>
-              <Grid container direction='column' alignItems='center'>
-                <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '10px' }}>
-                  {currentUser.name}
-                </Typography>
-                {currentUser.invitations.length > 0 ? (
-                  <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '10px' }}>
-                    {currentUser.invitations.length} new invite(s)
-                  </Typography>
-                ) : null}
-                <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '10px' }}>
-                  {currentUser.username}
-                </Typography>
-                <Link to='/profile' onClick={handleClose} style={{ textDecoration: 'none' }}>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    style={{ padding: '5px 100px', margin: '20px 0px' }}
-                  >
-                    Profile
-                  </Button>
-                </Link>
-                <Link style={{ textDecoration: 'none' }} onClick={handleLogOut} to='/'>
-                  <Button variant='outlined' color='primary' style={{ padding: '5px 98px' }}>
-                    Log Out
-                  </Button>
-                </Link>
-              </Grid>
-            </>
-          )}
-        </Paper>
-      </Popover>
-    </div>
+      {loggedIn && popoverDisplay(currentUser)}
+    </>
   )
 }
