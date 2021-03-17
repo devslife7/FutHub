@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function NavBar() {
+export default function NavBar() {
   console.log('--------------------')
   console.log('renders NavBar')
   const classes = useStyles()
@@ -110,8 +110,9 @@ function NavBar() {
             <Typography variant='h1' className={classes.title}>
               FutFriends
             </Typography>
+
             <Link
-              to='/'
+              to='/leagues'
               onClick={() => setLinkClicked('Leagues')}
               className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`}
             >
@@ -228,5 +229,3 @@ function NavBar() {
     </div>
   )
 }
-
-export default NavBar
