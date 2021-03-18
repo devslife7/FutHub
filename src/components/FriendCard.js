@@ -7,23 +7,13 @@ import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
   paper: {
     padding: theme.spacing(1),
     width: '85px',
-    height: '95px',
-  },
-  image: {
-    width: 40,
-    height: 40,
   },
   img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    width: 40,
+    height: 40,
   },
 }))
 
@@ -31,15 +21,11 @@ export default function FriendCard({ friend }) {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <>
       <Paper className={classes.paper}>
         <Grid container direction='column' spacing={1} alignItems='center'>
           <Grid item>
-            <Avatar
-              src={friend.profile_img}
-              style={{ margin: 'auto', marginBottom: '0px' }}
-              className={classes.image}
-            />
+            <Avatar src={friend.profile_img} />
           </Grid>
           <Grid item>
             <Grid container direction='column' alignItems='center'>
@@ -53,6 +39,6 @@ export default function FriendCard({ friend }) {
           </Grid>
         </Grid>
       </Paper>
-    </div>
+    </>
   )
 }

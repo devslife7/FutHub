@@ -141,7 +141,7 @@ export default function NavBar() {
                   Profile
                 </Button>
               </Link>
-              <Link style={{ textDecoration: 'none' }} onClick={handleLogOut} to='/'>
+              <Link style={{ textDecoration: 'none' }} onClick={handleLogOut} to='/login'>
                 <Button variant='outlined' color='primary' style={{ padding: '5px 98px' }}>
                   Log Out
                 </Button>

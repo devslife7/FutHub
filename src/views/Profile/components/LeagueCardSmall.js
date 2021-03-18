@@ -10,10 +10,15 @@ import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(1),
+    height: 80,
   },
   img: {
     width: 40,
-    height: 40,
+    maxHeight: 60,
+  },
+  imgFlag: {
+    width: '23px',
+    marginRight: '10px',
   },
   links: {
     textDecoration: 'none',
@@ -31,22 +36,18 @@ function LeagueCardSmall({ currentLeague }) {
     <>
       <Paper className={classes.paper}>
         <Grid container spacing={2} direction='row' alignItems='center'>
-          <Grid item style={{ backgroundColor: 'red' }}>
+          <Grid item>
             <img className={classes.img} src={currentLeague.logo} alt='league logo' />
           </Grid>
-          <Grid item xs={12} container style={{ backgroundColor: 'red' }}>
-            <Grid item xs container direction='column' spacing={2}>
-              <Grid item xs>
+          <Grid item container xs>
+            <Grid item xs container direction='column' justify='center' spacing={2}>
+              <Grid item>
                 <Typography gutterBottom variant='subtitle1'>
                   {currentLeague.name}
                 </Typography>
                 <Typography variant='body2' gutterBottom>
                   {currentLeague.flag && (
-                    <img
-                      style={{ width: '23px', marginRight: '10px' }}
-                      src={currentLeague.flag}
-                      alt='league logo'
-                    />
+                    <img className={classes.imgFlag} src={currentLeague.flag} alt='league logo' />
                   )}
                   {currentLeague.country === 'World' ? 'International' : currentLeague.country}
                 </Typography>
