@@ -13,33 +13,23 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    // margin: '30pxpx'
-  },
   paper: {
     padding: theme.spacing(2),
     // margin: 'auto',
-    maxWidth: '17vh',
-    height: '24vh',
-  },
-  image: {
-    width: 128,
-    height: 128,
+    // maxWidth: '17vh',
+    // minHeight: '300px',
   },
   img: {
-    // margin: 'auto',
+    margin: 'auto',
     display: 'block',
-    maxWidth: '6vh',
-    maxHeight: '6vh',
+    width: '60px',
   },
   links: {
-    textDecoration: 'none',
     color: 'inherit',
   },
 }))
 
-function LeagueCard({ currentLeague }) {
+export default function LeagueCard({ currentLeague }) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const currentUserId = useSelector(state => state.user.currentUser.id)
@@ -56,7 +46,7 @@ function LeagueCard({ currentLeague }) {
   const isFavorite = () => favLeagues.find(league => league.id === currentLeague.id)
 
   return (
-    <div className={classes.root}>
+    <>
       <Paper className={classes.paper}>
         <Grid container spacing={2} direction='column'>
           <Grid item>
@@ -120,8 +110,6 @@ function LeagueCard({ currentLeague }) {
           </Grid>
         </Grid>
       </Paper>
-    </div>
+    </>
   )
 }
-
-export default LeagueCard
