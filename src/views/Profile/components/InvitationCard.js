@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-// import ButtonBase from '@material-ui/core/ButtonBase';
+// import ButtonBase from '@material-ui/core/ButtonBase'
 import Avatar from '@material-ui/core/Avatar'
 // import Button from "@material-ui/core/Button"
 // import MoreVertIcon from "@material-ui/icons/MoreVert"
@@ -16,23 +16,13 @@ import NotInterestedIcon from '@material-ui/icons/NotInterested'
 import { IconButton } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
   paper: {
     padding: theme.spacing(1),
     width: '180px',
-    height: '195px',
   },
   image: {
     width: 40,
     height: 40,
-  },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
   },
 }))
 
@@ -71,7 +61,7 @@ export default function InvitationCard({ invitation }) {
   }
 
   return (
-    <div className={classes.root}>
+    <>
       <Paper className={classes.paper}>
         <Grid container direction='column'>
           <Typography variant='subtitle1'>From: {invitation.sender}</Typography>
@@ -122,6 +112,6 @@ export default function InvitationCard({ invitation }) {
           </Grid>
         </Grid>
       </Paper>
-    </div>
+    </>
   )
 }

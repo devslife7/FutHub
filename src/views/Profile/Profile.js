@@ -34,6 +34,11 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(17),
     height: theme.spacing(17),
   },
+  paperProfile: {
+    textAlign: 'center',
+    padding: '30px',
+    backgroundColor: '#fff',
+  },
 }))
 
 export default function Profile({ history }) {
@@ -144,7 +149,7 @@ export default function Profile({ history }) {
     <>
       <Grid item xs={12} container spacing={4} className={classes.root}>
         <Grid item xs={3}>
-          <Paper elevation={3} style={{ textAlign: 'center', padding: '30px', backgroundColor: '#fff' }}>
+          <Paper elevation={3} className={classes.paperProfile}>
             <Avatar src={currentUser.profile_img} style={{ margin: 'auto' }} className={classes.large} />
             <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '20px' }}>
               {currentUser.name}
