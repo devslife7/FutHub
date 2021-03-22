@@ -33,8 +33,6 @@ function MatchCard({ match }) {
     dispatch(setCurrentMatch(match))
   }
 
-  console.log(format(new Date(), 'yyyy-MM-dd'))
-
   return (
     <ListItem button onClick={handleCurrentMatch}>
       <Grid container justify='center' style={{ height: '30px', padding: '0px' }}>
@@ -54,8 +52,6 @@ function MatchCard({ match }) {
           // style={{ backgroundColor: 'pink'}}
         >
           <Grid container direction='column' alignItems='center'>
-            {console.log(match.event_timestamp)}
-
             {match.statusShort === 'NS' ? (
               <div className={classes.matchTime}>{format(fromUnixTime(match.event_timestamp), 'HH:mm')}</div>
             ) : (

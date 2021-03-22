@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import Moment from 'react-moment'
-import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
 import { addWatchParty } from '../../../actions/user'
 import { makeStyles } from '@material-ui/core/styles'
@@ -35,6 +33,7 @@ import MuiAlert from '@material-ui/lab/Alert'
 import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend'
 import TelegramIcon from '@material-ui/icons/Telegram'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
+import { fromUnixTime, format } from 'date-fns'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const watchpartiesURL = serverURL + 'watchparties/'
@@ -99,7 +98,7 @@ function MatchInfo() {
 
   const handleClickOpen = () => {
     setPartyName(`${currentMatch.homeTeam.team_name} VS ${currentMatch.awayTeam.team_name}`)
-    setPartyTime(moment.unix(currentMatch.event_timestamp).format('LT'))
+    setPartyTime(format(fromUnixTime(currentMatch.event_timestamp), 'p'))
     setOpen(true)
 
     console.log('PARTYTIME', partyTime)
@@ -263,15 +262,15 @@ function MatchInfo() {
               <Grid container justify='center' alignItems='flex-start' direction='column' spacing={2}>
                 <Grid item>
                   Date:
-                  <Moment style={{ marginLeft: '36px' }} interval={0} format='MMM D, YYYY' unix>
-                    {currentMatch.event_timestamp}
-                  </Moment>
+                  <div style={{ marginLeft: '36px', display: 'inline' }}>
+                    {format(fromUnixTime(currentMatch.event_timestamp), 'PP')}
+                  </div>
                 </Grid>
                 <Grid item>
                   Time:
-                  <Moment style={{ marginLeft: '36px' }} unix format='hh:mm A'>
-                    {currentMatch.event_timestamp}
-                  </Moment>
+                  <div style={{ marginLeft: '36px', display: 'inline' }}>
+                    {format(fromUnixTime(currentMatch.event_timestamp), 'p')}
+                  </div>
                 </Grid>
                 <Grid item>
                   Status: <span style={{ marginLeft: '22px' }}>{currentMatch.status}</span>
@@ -345,7 +344,6 @@ function MatchInfo() {
               value={partyName}
               onChange={e => setPartyName(e.target.value)}
             />
-            {/* <TextField margin="dense" label="Time" type="text" fullWidth value={moment(partyTime)} onChange={e => setPartyTime(e.target.value)}/> */}
             <TextField
               margin='dense'
               label='Time'
