@@ -77,15 +77,13 @@ export default function NavBar() {
   const loggedIn = useSelector(state => state.user.loggedIn)
   const [linkClicked, setLinkClicked] = useState('')
 
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const open = Boolean(anchorEl)
-  const id = open ? 'simple-popover' : undefined
 
   const isMenuLinkClicked = linkName => {
     return linkClicked === linkName ? classes.linkClicked : classes.linkNotClicked
@@ -103,6 +101,9 @@ export default function NavBar() {
   }
 
   const popoverDisplay = currentUser => {
+    const open = Boolean(anchorEl)
+    const id = open ? 'simple-popover' : undefined
+
     return (
       <>
         <Popover
@@ -212,6 +213,7 @@ export default function NavBar() {
                     />
                   </Badge>
                 </Link>
+                {popoverDisplay(currentUser)}
               </>
             ) : (
               <Link
@@ -226,8 +228,6 @@ export default function NavBar() {
           </Toolbar>
         </Container>
       </AppBar>
-
-      {loggedIn && popoverDisplay(currentUser)}
     </>
   )
 }
