@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addWatchParty } from '../../../actions/user'
+import { fromUnixTime, format } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -33,7 +34,6 @@ import MuiAlert from '@material-ui/lab/Alert'
 import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend'
 import TelegramIcon from '@material-ui/icons/Telegram'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
-import { fromUnixTime, format } from 'date-fns'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const watchpartiesURL = serverURL + 'watchparties/'
@@ -100,8 +100,6 @@ function MatchInfo() {
     setPartyName(`${currentMatch.homeTeam.team_name} VS ${currentMatch.awayTeam.team_name}`)
     setPartyTime(format(fromUnixTime(currentMatch.event_timestamp), 'p'))
     setOpen(true)
-
-    console.log('PARTYTIME', partyTime)
   }
 
   const handleClose = () => setOpen(false)

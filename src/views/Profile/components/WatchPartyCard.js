@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { replaceWatchParty } from '../../../actions/user'
-import Moment from 'react-moment'
+import { fromUnixTime, format } from 'date-fns'
 // import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
 import { removeWatchParty } from '../../../actions/user'
 import { makeStyles } from '@material-ui/core/styles'
@@ -126,11 +126,9 @@ export default function WatchPartyCard({ party }) {
               />
             </Grid>
           </Grid>
-          <Grid item style={{ margin: 'auto' }}>
+          <Grid item container direction='column' alignItems='center'>
             <Typography variant='subtitle1'>
-              <Moment style={{ marginLeft: '40px' }} interval={0} format='MMM D, YYYY' unix>
-                {party.timestamp}
-              </Moment>
+              <div style={{ margin: 'auto' }}>{format(fromUnixTime(party.timestamp), 'PP')}</div>
             </Typography>
             <Typography variant='subtitle1'>Where: {party.location}</Typography>
 

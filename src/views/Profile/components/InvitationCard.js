@@ -1,8 +1,8 @@
 import React from 'react'
-import Moment from 'react-moment'
 import { useSelector, useDispatch } from 'react-redux'
 import { addWatchParty, fetchRemoveInv } from '../../../actions/user'
 import { makeStyles } from '@material-ui/core/styles'
+import { fromUnixTime, format } from 'date-fns'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -72,9 +72,9 @@ export default function InvitationCard({ invitation }) {
               style={{ margin: 'auto', marginBottom: '0px' }}
               className={classes.image}
             />
-            <Moment style={{ marginTop: '10px', fontSize: '1em' }} unix format='hh:mmA'>
-              {invitation.timestamp}
-            </Moment>
+            <div style={{ marginTop: '10px', fontSize: '1em' }}>
+              {format(fromUnixTime(invitation.timestamp), 'p')}
+            </div>
 
             <Avatar
               src={invitation.away_team_logo}
@@ -82,14 +82,10 @@ export default function InvitationCard({ invitation }) {
               className={classes.image}
             />
           </Grid>
-          <Moment
-            style={{ margin: 'auto', marginTop: '15px', marginBottom: '10px' }}
-            interval={0}
-            format='ddd, MMMM D'
-            unix
-          >
-            {invitation.timestamp}
-          </Moment>
+
+          <div style={{ margin: 'auto', marginTop: '15px', marginBottom: '10px' }}>
+            {format(fromUnixTime(invitation.timestamp), 'PP')}
+          </div>
 
           <Grid item style={{ margin: 'auto' }}>
             <Grid container>
