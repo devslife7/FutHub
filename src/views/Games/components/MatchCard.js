@@ -1,11 +1,11 @@
 import React from 'react'
-import Moment from 'react-moment'
 import { useDispatch } from 'react-redux'
 import { setCurrentMatch } from '../../../actions/matches'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import ListItem from '@material-ui/core/ListItem'
+import { fromUnixTime, format } from 'date-fns'
 // import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
@@ -19,6 +19,10 @@ const useStyles = makeStyles(theme => ({
   fontSize: {
     fontSize: '0.9em',
   },
+  matchTime: {
+    marginTop: '5px',
+    fontSize: '0.9em',
+  },
 }))
 
 function MatchCard({ match }) {
@@ -29,9 +33,11 @@ function MatchCard({ match }) {
     dispatch(setCurrentMatch(match))
   }
 
+  console.log(format(new Date(), 'yyyy-MM-dd'))
+
   return (
     <ListItem button onClick={handleCurrentMatch}>
-      <Grid container justify='center' style={{ height: '30px', padding: '0px 0px 0px 0px' }}>
+      <Grid container justify='center' style={{ height: '30px', padding: '0px' }}>
         <Grid
           item
           xs={5}
@@ -48,10 +54,10 @@ function MatchCard({ match }) {
           // style={{ backgroundColor: 'pink'}}
         >
           <Grid container direction='column' alignItems='center'>
+            {console.log(match.event_timestamp)}
+
             {match.statusShort === 'NS' ? (
-              <Moment style={{ marginTop: '5px', fontSize: '0.9em' }} unix format='HH:mm'>
-                {match.event_timestamp}
-              </Moment>
+              <div className={classes.matchTime}>{format(fromUnixTime(match.event_timestamp), 'HH:mm')}</div>
             ) : (
               <>
                 <span className={classes.fontSize}>
