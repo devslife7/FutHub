@@ -2,16 +2,15 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMatches, setDatePickerDate } from '../../actions/matches'
 import { makeStyles } from '@material-ui/core/styles'
+import { format } from 'date-fns'
+import DateFnsUtils from '@date-io/date-fns'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider'
 
-// import MatchCard from '../../components/MatchCard'
-// import DatePicker from './components/DatePicker'
-// import MatchInfo from '../../components/MatchInfo'
-
-import { MatchCard, DatePicker, MatchInfo } from './components'
+import { MatchCard, MatchInfo } from './components'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -48,21 +47,33 @@ export default function Games() {
   }
 
   const setDateFromDatePicker = date => {
-    dispatch(setDatePickerDate(date))
+    dispatch(setDatePickerDate(format(date, 'yyyy-MM-dd')))
   }
 
   return (
     <>
-      {/* <Typography variant="h2" align="center" color="textPrimary" className={classes.title}>
-        Upcoming Matches
-      </Typography> */}
       <Grid container spacing={2} alignItems='center' justify='center' style={{ marginTop: '10px' }}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
             <h2 style={{ textAlign: 'center', paddingTop: '20px', fontWeight: 400 }}>Matches</h2>
             <Grid container justify='center' alignItems='center' direction='column'>
               <Grid item style={{ margin: '15px 0px' }}>
-                <DatePicker setDateFromDatePicker={setDateFromDatePicker} datePickerDate={datePickerDate} />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    autoOk
+                    disableToolbar
+                    variant='inline'
+                    format='MM/dd/yyyy'
+                    margin='normal'
+                    id='date-picker-inline'
+                    label='Date picker inline'
+                    value={datePickerDate}
+                    onChange={setDateFromDatePicker}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
               </Grid>
               {loading ? (
                 <Grid item>

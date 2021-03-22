@@ -39,8 +39,8 @@ const initialState = {
     },
   },
   display: [],
-  // datePickerDate: `${format(new Date(), 'yyyy-MM-dd')}`,
-  datePickerDate: '2021-04-05',
+  datePickerDate: `${format(new Date(), 'yyyy-MM-dd')}`,
+  // datePickerDate: '2021-04-05',
   loading: false,
 }
 export default (state = initialState, action) => {
