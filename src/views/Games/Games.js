@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchMatches, setDatePickerDate } from '../../actions/matches'
 import { makeStyles } from '@material-ui/core/styles'
 import { format } from 'date-fns'
+import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -22,6 +23,11 @@ const useStyles = makeStyles(theme => ({
   },
   divider: {
     width: '50vh',
+  },
+  title: {
+    textAlign: 'center',
+    paddingTop: '20px',
+    fontWeight: 400,
   },
 }))
 
@@ -55,7 +61,7 @@ export default function Games() {
       <Grid container spacing={2} alignItems='center' justify='center' style={{ marginTop: '10px' }}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <h2 style={{ textAlign: 'center', paddingTop: '20px', fontWeight: 400 }}>Matches</h2>
+            <h2 className={classes.title}>Matches</h2>
             <Grid container justify='center' alignItems='center' direction='column'>
               <Grid item style={{ margin: '15px 0px' }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -74,6 +80,7 @@ export default function Games() {
                     }}
                   />
                 </MuiPickersUtilsProvider>
+                {console.log(datePickerDate)}
               </Grid>
               {loading ? (
                 <Grid item>
@@ -89,7 +96,7 @@ export default function Games() {
         </Grid>
         <Grid item xs={6}>
           <Paper style={{ minHeight: '65vh' }}>
-            <h2 style={{ textAlign: 'center', paddingTop: '20px', fontWeight: 400 }}>More Info</h2>
+            <h2 className={classes.title}>More Info</h2>
             <Grid container spacing={2} justify='center' alignItems='center'>
               <MatchInfo />
             </Grid>

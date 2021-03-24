@@ -4,7 +4,7 @@ import { setCurrentUser } from './actions/user'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 
-import { NavBar, Footer } from './layouts'
+import { NavBar } from './layouts'
 import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings, Home } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL

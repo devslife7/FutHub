@@ -51,6 +51,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     padding: '5px',
   },
+  tipographySpacing: {
+    fontSize: '1em',
+    marginTop: '10px',
+  },
 }))
 
 const initialUser = {
@@ -268,25 +272,13 @@ function Friends() {
                     <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', margin: '20px 0px' }}>
                       {currentFriend.username}
                     </Typography>
-                    <Typography
-                      color='textSecondary'
-                      gutterBottom
-                      style={{ fontSize: '1em', marginTop: '10px' }}
-                    >
+                    <Typography color='textSecondary' gutterBottom className={classes.tipographySpacing}>
                       Attending Parties: {currentFriend.watchparties.length}
                     </Typography>
-                    <Typography
-                      color='textSecondary'
-                      gutterBottom
-                      style={{ fontSize: '1em', marginTop: '10px' }}
-                    >
+                    <Typography color='textSecondary' gutterBottom className={classes.tipographySpacing}>
                       Friends: {currentFriend.friends.length}
                     </Typography>
-                    <Typography
-                      color='textSecondary'
-                      gutterBottom
-                      style={{ fontSize: '1em', marginTop: '10px' }}
-                    >
+                    <Typography color='textSecondary' gutterBottom className={classes.tipographySpacing}>
                       Favorite Leagues: {currentFriend.user_leagues.length}
                     </Typography>
                   </Grid>
