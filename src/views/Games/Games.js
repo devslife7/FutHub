@@ -14,10 +14,6 @@ import { MatchCard, MatchInfo } from './components'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
 const useStyles = makeStyles(theme => ({
-  title: {
-    fontSize: '3em',
-    margin: '40px 0px',
-  },
   paper: {
     minHeight: '65vh',
   },
