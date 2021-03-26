@@ -17,12 +17,22 @@ import Grid from '@material-ui/core/Grid'
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
+  logoContainer: {
+    flexGrow: '1',
+    display: 'flex',
   },
-  title: {
-    flexGrow: 1,
-    fontSize: '1.55em',
+  logoLink: {
+    display: 'flex',
+    padding: '5px',
+    cursor: 'pointer',
+    color: '#fff',
+  },
+  logoIcon: {
+    paddingRight: '5px',
+    fontSize: '2.6em',
+  },
+  logoText: {
+    fontSize: '1.8em',
     fontWeight: '400',
   },
   navBarPadding: {
@@ -159,16 +169,17 @@ export default function NavBar() {
       <AppBar position='sticky' color='primary'>
         <Container>
           <Toolbar className={classes.navBarPadding}>
-            <SportsSoccerIcon style={{ paddingRight: '6px', fontSize: '2.6em' }} />
-            <Typography variant='h1' className={classes.title}>
-              FutFriends
-            </Typography>
+            <div className={classes.logoContainer}>
+              <Link to='/' className={classes.logoLink}>
+                <SportsSoccerIcon className={classes.logoIcon} />
+                <Typography className={classes.logoText}>FutFriends</Typography>
+              </Link>
+            </div>
 
             <Link
               to='/leagues'
               onClick={() => setLinkClicked('Leagues')}
               className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`}
-              // style={{ backgroundColor: 'yellow' }}
             >
               Leagues
             </Link>
