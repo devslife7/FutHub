@@ -170,7 +170,7 @@ export default function NavBar() {
         <Container>
           <Toolbar className={classes.navBarPadding}>
             <div className={classes.logoContainer}>
-              <Link to='/' className={classes.logoLink}>
+              <Link to='/' className={classes.logoLink} onClick={() => setLinkClicked('Home')}>
                 <SportsSoccerIcon className={classes.logoIcon} />
                 <Typography className={classes.logoText}>FutFriends</Typography>
               </Link>
