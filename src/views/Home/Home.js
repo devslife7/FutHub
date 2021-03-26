@@ -12,18 +12,18 @@ const useStyles = makeStyles(theme => ({
     fontSize: '3.5rem',
     fontWeight: '300',
     textAlign: 'center',
-    margin: '50px 0',
+    margin: '80px 0',
   },
   description: {
-    fontSize: '1.5rem',
+    fontSize: '1.6rem',
     textAlign: 'center',
     color: 'gray',
-    margin: '50px 100px',
+    margin: '0 100px',
   },
   button: {
     display: 'block',
-    margin: '50px auto',
-    fontSize: '1.2rem',
+    margin: '140px auto',
+    fontSize: '1.3rem',
   },
 }))
 
@@ -42,8 +42,9 @@ export default function Home() {
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Welcome to FutFriends</Typography>
         <Typography className={classes.description}>
-          FutFriends is an app for soccer fanatics to browse leagues, upcoming games and setup watch parties
-          with your friends.
+          FutFriends is an app for soccer fanatics who enjoy watching soccer games with their friends but
+          coordinating a watch party is not always that easy. Here you can browse leagues, upcoming games and
+          setup watch parties with your friends.
         </Typography>
         <Button variant='contained' color='primary' className={classes.button} onClick={handleGetStarted}>
           Get Started
