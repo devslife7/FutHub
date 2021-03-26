@@ -1,5 +1,7 @@
 import { Button, makeStyles, Paper, Typography } from '@material-ui/core'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -19,12 +21,21 @@ const useStyles = makeStyles(theme => ({
     margin: '50px 100px',
   },
   button: {
-    margin: '50px 0',
+    display: 'block',
+    margin: '50px auto',
+    fontSize: '1.2rem',
   },
 }))
 
 export default function Home() {
+  console.log('renders Home')
   const classes = useStyles()
+  const history = useHistory()
+  const loggedIn = useSelector(state => state.user.loggedIn)
+
+  const handleGetStarted = () => {
+    loggedIn ? history.push('/games') : history.push('/login')
+  }
 
   return (
     <>
@@ -34,12 +45,7 @@ export default function Home() {
           FutFriends is an app for soccer fanatics to browse leagues, upcoming games and setup watch parties
           with your friends.
         </Typography>
-        <Button
-          variant='contained'
-          color='primary'
-          className={classes.button}
-          style={{ backgroundColor: 'red' }}
-        >
+        <Button variant='contained' color='primary' className={classes.button} onClick={handleGetStarted}>
           Get Started
         </Button>
       </Paper>
