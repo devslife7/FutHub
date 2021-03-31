@@ -85,7 +85,15 @@ export default function Games() {
                   </Typography>
                 </Grid>
               ) : (
-                <Paper style={{ height: '50vh', overflow: 'auto' }}>{renderMatches()}</Paper>
+                <>
+                  {displayMatches.length === 0 ? (
+                    <Typography variant='h1' style={{ fontSize: '1.3em', marginTop: '90px' }}>
+                      No Matches found for this date
+                    </Typography>
+                  ) : (
+                    <Paper style={{ height: '50vh', overflow: 'auto' }}>{renderMatches()}</Paper>
+                  )}
+                </>
               )}
             </Grid>
           </Paper>
