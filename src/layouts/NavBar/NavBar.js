@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     borderBottom: '2px solid',
   },
   links: {
-    textDecoration: 'none',
+    // textDecoration: 'none',
     fontSize: '1.14em',
     color: 'white',
     margin: '0px 0px',
@@ -230,10 +230,9 @@ export default function NavBar() {
               <Link
                 onClick={() => setLinkClicked('Login')}
                 className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
-                // style={{ display: 'flex', alignItems: 'center' }}
                 to='/login'
               >
-                Login
+                LoginLogin
               </Link>
             )}
           </Toolbar>

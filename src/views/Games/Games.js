@@ -87,7 +87,7 @@ export default function Games() {
               ) : (
                 <>
                   {displayMatches.length === 0 ? (
-                    <Typography variant='h1' style={{ fontSize: '1.3em', marginTop: '90px' }}>
+                    <Typography variant='h1' style={{ fontSize: '1.4em', marginTop: '90px' }}>
                       No Matches found for this date
                     </Typography>
                   ) : (
