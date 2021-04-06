@@ -35,9 +35,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.8em',
     fontWeight: '400',
   },
-  navBarPadding: {
+  navBar: {
     padding: '0px',
-    minHeight: '0px',
+    minHeight: '70px',
   },
   small: {
     width: theme.spacing(5),
@@ -47,20 +47,20 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
+  links: {
+    fontSize: '1.14em',
+    color: '#fff',
+    margin: '0px 0px',
+    padding: '14px 20px 14px 20px',
+    transition: 'all 0.3s ease',
+    border: '2px solid transparent',
+    backgroundColor: 'red',
+  },
   linkNotClicked: {
     borderRadius: '0px',
   },
   linkClicked: {
-    borderRadius: '0px',
     borderBottom: '2px solid',
-  },
-  links: {
-    // textDecoration: 'none',
-    fontSize: '1.14em',
-    color: 'white',
-    margin: '0px 0px',
-    padding: '14px 20px 14px 20px',
-    transition: 'all 0.3s ease',
   },
   typography: {
     padding: theme.spacing(2),
@@ -168,7 +168,7 @@ export default function NavBar() {
     <>
       <AppBar position='sticky' color='primary'>
         <Container>
-          <Toolbar className={classes.navBarPadding}>
+          <Toolbar className={classes.navBar}>
             <div className={classes.logoContainer}>
               <Link to='/' className={classes.logoLink} onClick={() => setLinkClicked('Home')}>
                 <SportsSoccerIcon className={classes.logoIcon} />
@@ -207,7 +207,7 @@ export default function NavBar() {
                   {' '}
                   Friends
                 </Link>
-                <Divider orientation='vertical' style={{ height: '36px' }} />
+                {/* <Divider orientation='vertical' style={{ height: '36px' }} /> */}
                 <Link
                   to='#'
                   onClick={handleProfileOptions}
