@@ -31,9 +31,10 @@ export default function App() {
       <NavBar />
       <Container>
         <Route exact path='/' component={Home} />
-        <Route exact path='/leagues' component={Leagues} />
+        <Route exact path='/home' component={Home} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/signup' component={Signup} />
+        <Route exact path='/leagues' component={Leagues} />
         <Route exact path='/friends' component={Friends} />
         <Route exact path='/favorites' component={Favorites} />
         <Route exact path='/profile' component={Profile} />

@@ -114,7 +114,6 @@ export default function Signup({ history }) {
   const horizontal = 'center'
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <Paper style={{ padding: '38px', marginTop: '30px' }}>
         <Typography component='h1' style={{ fontSize: '1.9em', color: '#2196f3' }}>
           Sign up

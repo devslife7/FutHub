@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
   navBar: {
     padding: '0px',
     minHeight: '70px',
+    transition: 'all 0.3s ease',
   },
   small: {
     width: theme.spacing(5),
@@ -199,7 +200,7 @@ export default function NavBar() {
                   {' '}
                   Friends
                 </Link>
-                {/* <Divider orientation='vertical' style={{ height: '36px' }} /> */}
+                <Divider orientation='vertical' style={{ height: '45px' }} />
                 <Link
                   to='#'
                   onClick={handleProfileOptions}

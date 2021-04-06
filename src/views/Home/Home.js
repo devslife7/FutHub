@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '3.5rem',
-    fontWeight: '300',
+    fontWeight: '600',
     textAlign: 'center',
     margin: '80px 0',
   },

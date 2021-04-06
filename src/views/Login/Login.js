@@ -107,66 +107,67 @@ export default function Login({ history }) {
   const vertical = 'top'
   const horizontal = 'center'
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
-      <Paper style={{ padding: '38px', marginTop: '30px' }}>
-        <Typography component='h1' variant='h5' style={{ color: '#2196f3' }}>
-          Login
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={e => handleLogin(e)}>
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='username'
-            label='Username'
-            name='username'
-            autoComplete='username'
-            autoFocus
-            onChange={e => {
-              setUsername(e.target.value)
-            }}
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            onChange={e => {
-              setPassword(e.target.value)
-            }}
-          />
-          <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
-            Log In
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link to='/signup' variant='body2' style={{ textDecoration: 'none', color: '#2196f3' }}>
-                {"Don't have an account? Sign Up"}
-              </Link>
+    <>
+      <Container component='main' maxWidth='xs'>
+        <Paper style={{ padding: '38px', marginTop: '30px' }}>
+          <Typography component='h1' variant='h5' style={{ color: '#2196f3' }}>
+            Login
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={e => handleLogin(e)}>
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              id='username'
+              label='Username'
+              name='username'
+              autoComplete='username'
+              autoFocus
+              onChange={e => {
+                setUsername(e.target.value)
+              }}
+            />
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
+              onChange={e => {
+                setPassword(e.target.value)
+              }}
+            />
+            <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
+              Log In
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link to='/signup' variant='body2' style={{ textDecoration: 'none', color: '#2196f3' }}>
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </Paper>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical, horizontal }}
-      >
-        <Alert onClose={handleClose} severity='error'>
-          Invalid Username or Password
-        </Alert>
-      </Snackbar>
-    </Container>
+          </form>
+        </Paper>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert onClose={handleClose} severity='error'>
+            Invalid Username or Password
+          </Alert>
+        </Snackbar>
+      </Container>
+    </>
   )
 }
