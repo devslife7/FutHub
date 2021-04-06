@@ -59,8 +59,8 @@ export default function Leagues() {
   // const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
+    <>
+      <Grid container spacing={3} style={{ marginTop: '5px' }}>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <LeagueSearchBar />
@@ -82,6 +82,6 @@ export default function Leagues() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </>
   )
 }

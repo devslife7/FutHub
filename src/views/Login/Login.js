@@ -109,7 +109,7 @@ export default function Login({ history }) {
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
-      <Paper style={{ padding: '38px', marginTop: '10vh' }}>
+      <Paper style={{ padding: '38px', marginTop: '30px' }}>
         <Typography component='h1' variant='h5' style={{ color: '#2196f3' }}>
           Login
         </Typography>

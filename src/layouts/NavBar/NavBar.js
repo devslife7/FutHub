@@ -54,27 +54,19 @@ const useStyles = makeStyles(theme => ({
     padding: '14px 20px 14px 20px',
     transition: 'all 0.3s ease',
     border: '2px solid transparent',
-    backgroundColor: 'red',
-  },
-  linkNotClicked: {
-    borderRadius: '0px',
+
+    '&:hover': {
+      color: 'rgb(255, 255, 255, 0.6)',
+    },
   },
   linkClicked: {
     borderBottom: '2px solid',
-  },
-  typography: {
-    padding: theme.spacing(2),
   },
   button: {
     backgroundColor: '#2196f3',
     color: 'white',
     textDecoration: 'none',
     borderRadius: '4px',
-  },
-  onHover: {
-    '&:hover': {
-      color: 'rgb(255, 255, 255, 0.6)',
-    },
   },
 }))
 
@@ -96,7 +88,7 @@ export default function NavBar() {
   }
 
   const isMenuLinkClicked = linkName => {
-    return linkClicked === linkName ? classes.linkClicked : classes.linkNotClicked
+    return linkClicked === linkName && classes.linkClicked
   }
 
   const handleProfileOptions = event => {
@@ -228,11 +220,11 @@ export default function NavBar() {
               </>
             ) : (
               <Link
+                to='/login'
                 onClick={() => setLinkClicked('Login')}
                 className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
-                to='/login'
               >
-                LoginLogin
+                Login
               </Link>
             )}
           </Toolbar>
