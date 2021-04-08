@@ -51,8 +51,7 @@ const useStyles = makeStyles(theme => ({
   links: {
     fontSize: '1.14em',
     color: '#fff',
-    margin: '0px 0px',
-    padding: '14px 20px 14px 20px',
+    padding: '30px 20px',
     transition: 'all 0.3s ease',
     border: '2px solid transparent',
 
@@ -172,14 +171,14 @@ export default function NavBar() {
             <Link
               to='/leagues'
               onClick={() => setLinkClicked('Leagues')}
-              className={`${isMenuLinkClicked('Leagues')} ${classes.links} ${classes.onHover}`}
+              className={`${isMenuLinkClicked('Leagues')} ${classes.links}`}
             >
               Leagues
             </Link>
             <Link
               to='/games'
               onClick={() => setLinkClicked('Games')}
-              className={`${isMenuLinkClicked('Games')} ${classes.links} ${classes.onHover}`}
+              className={`${isMenuLinkClicked('Games')} ${classes.links}`}
             >
               Games
             </Link>
@@ -187,14 +186,14 @@ export default function NavBar() {
               <>
                 <Link
                   onClick={() => setLinkClicked('Favorites')}
-                  className={`${isMenuLinkClicked('Favorites')} ${classes.links} ${classes.onHover}`}
+                  className={`${isMenuLinkClicked('Favorites')} ${classes.links}`}
                   to='/favorites'
                 >
                   Favorites
                 </Link>
                 <Link
                   onClick={() => setLinkClicked('Friends')}
-                  className={`${isMenuLinkClicked('Friends')} ${classes.links} ${classes.onHover}`}
+                  className={`${isMenuLinkClicked('Friends')} ${classes.links}`}
                   to='/friends'
                 >
                   {' '}
@@ -204,10 +203,9 @@ export default function NavBar() {
                 <Link
                   to='#'
                   onClick={handleProfileOptions}
-                  className={`${isMenuLinkClicked('profile')} ${classes.links} ${classes.onHover}`}
-                  style={{ display: 'flex', alignItems: 'center' }}
+                  className={`${isMenuLinkClicked('profile')} ${classes.links}`}
+                  style={{ display: 'flex', alignItems: 'center', padding: '0px 0px 0px 20px' }}
                 >
-                  {' '}
                   {currentUser.name}
                   <Badge badgeContent={currentUser.invitations.length} color='secondary'>
                     <Avatar
@@ -223,7 +221,7 @@ export default function NavBar() {
               <Link
                 to='/login'
                 onClick={() => setLinkClicked('Login')}
-                className={`${isMenuLinkClicked('Login')} ${classes.links} ${classes.onHover}`}
+                className={`${isMenuLinkClicked('Login')} ${classes.links}`}
               >
                 Login
               </Link>
