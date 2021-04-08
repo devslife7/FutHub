@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider'
 
 import { MatchCard, MatchInfo } from './components'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -25,6 +26,15 @@ const useStyles = makeStyles(theme => ({
     paddingTop: '20px',
     fontWeight: 400,
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
 }))
 
 export default function Games() {
@@ -37,7 +47,7 @@ export default function Games() {
 
   useEffect(() => {
     dispatch(fetchMatches())
-  }, [datePickerDate, dispatch])
+  }, [dispatch])
 
   const renderMatches = () => {
     return displayMatches.map((match, idx) => (
@@ -70,13 +80,26 @@ export default function Games() {
                     id='date-picker-inline'
                     label='Date picker inline'
                     value={datePickerDate}
-                    onChange={setDateFromDatePicker}
+                    // onChange={setDateFromDatePicker}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
                   />
                 </MuiPickersUtilsProvider>
                 {console.log(datePickerDate)}
+
+                <form className={classes.container} noValidate>
+                  <TextField
+                    id='date'
+                    label='Birthday'
+                    type='date'
+                    defaultValue='2017-05-24'
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </form>
               </Grid>
               {loading ? (
                 <Grid item>

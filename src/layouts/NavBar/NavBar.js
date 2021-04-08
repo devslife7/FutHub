@@ -62,6 +62,11 @@ const useStyles = makeStyles(theme => ({
   linkClicked: {
     borderBottom: '2px solid',
   },
+  profileLink: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '12px 20px 12px 20px',
+  },
   button: {
     backgroundColor: '#2196f3',
     color: 'white',
@@ -203,8 +208,7 @@ export default function NavBar() {
                 <Link
                   to='#'
                   onClick={handleProfileOptions}
-                  className={`${isMenuLinkClicked('profile')} ${classes.links}`}
-                  style={{ display: 'flex', alignItems: 'center', padding: '12px 20px 12px 20px' }}
+                  className={`${isMenuLinkClicked('profile')} ${classes.links} ${classes.profileLink}`}
                 >
                   {currentUser.name}
                   <Badge badgeContent={currentUser.invitations.length} color='secondary'>
