@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   links: {
     fontSize: '1.14em',
     color: '#fff',
-    padding: '30px 20px',
+    padding: '22px 20px',
     transition: 'all 0.3s ease',
     border: '2px solid transparent',
 
@@ -204,7 +204,7 @@ export default function NavBar() {
                   to='#'
                   onClick={handleProfileOptions}
                   className={`${isMenuLinkClicked('profile')} ${classes.links}`}
-                  style={{ display: 'flex', alignItems: 'center', padding: '0px 0px 0px 20px' }}
+                  style={{ display: 'flex', alignItems: 'center', padding: '12px 20px 12px 20px' }}
                 >
                   {currentUser.name}
                   <Badge badgeContent={currentUser.invitations.length} color='secondary'>
