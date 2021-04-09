@@ -47,7 +47,7 @@ export default function Games() {
 
   useEffect(() => {
     dispatch(fetchMatches())
-  }, [dispatch])
+  }, [datePickerDate, dispatch])
 
   const renderMatches = () => {
     return displayMatches.map((match, idx) => (
@@ -59,7 +59,7 @@ export default function Games() {
   }
 
   const setDateFromDatePicker = date => {
-    dispatch(setDatePickerDate(format(date, 'yyyy-MM-dd')))
+    dispatch(setDatePickerDate(format(date, 'yyyy-M-d')))
   }
 
   return (
@@ -70,7 +70,7 @@ export default function Games() {
             <h2 className={classes.title}>Matches</h2>
             <Grid container justify='center' alignItems='center' direction='column'>
               <Grid item style={{ margin: '15px 0px' }}>
-                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
                     autoOk
                     disableToolbar
@@ -80,43 +80,13 @@ export default function Games() {
                     id='date-picker-inline'
                     label='Choose Date'
                     value={datePickerDate}
-                    // onChange={setDateFromDatePicker}
+                    onChange={setDateFromDatePicker}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
                   />
                 </MuiPickersUtilsProvider>
-                {console.log(datePickerDate)} */}
-
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    autoOk
-                    // disableToolbar
-                    variant='inline'
-                    format='MM/dd/yyyy'
-                    margin='normal'
-                    id='date-picker-inline'
-                    label='Choose Date'
-                    value={'2021-04-20'}
-                    // onChange={setDateFromDatePicker}
-                    // KeyboardButtonProps={{
-                    //   'aria-label': 'change date',
-                    // }}
-                  />
-                </MuiPickersUtilsProvider>
-
-                <form className={classes.container} noValidate>
-                  <TextField
-                    id='date'
-                    label='Birthday'
-                    type='date'
-                    defaultValue='2017-05-24'
-                    className={classes.textField}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </form>
+                {console.log(datePickerDate)}
               </Grid>
               {loading ? (
                 <Grid item>

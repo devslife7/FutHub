@@ -39,7 +39,7 @@ const initialState = {
     },
   },
   display: [],
-  datePickerDate: `${format(new Date(), 'yyyy-MM-dd')}`,
+  datePickerDate: `${format(new Date(), 'yyyy-M-d')}`,
   // datePickerDate: '2021-04-05',
   loading: false,
 }
