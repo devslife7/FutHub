@@ -70,7 +70,7 @@ export default function Games() {
             <h2 className={classes.title}>Matches</h2>
             <Grid container justify='center' alignItems='center' direction='column'>
               <Grid item style={{ margin: '15px 0px' }}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
                     autoOk
                     disableToolbar
@@ -78,7 +78,7 @@ export default function Games() {
                     format='MM/dd/yyyy'
                     margin='normal'
                     id='date-picker-inline'
-                    label='Date picker inline'
+                    label='Choose Date'
                     value={datePickerDate}
                     // onChange={setDateFromDatePicker}
                     KeyboardButtonProps={{
@@ -86,7 +86,24 @@ export default function Games() {
                     }}
                   />
                 </MuiPickersUtilsProvider>
-                {console.log(datePickerDate)}
+                {console.log(datePickerDate)} */}
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    autoOk
+                    // disableToolbar
+                    variant='inline'
+                    format='MM/dd/yyyy'
+                    margin='normal'
+                    id='date-picker-inline'
+                    label='Choose Date'
+                    value={'2021-04-20'}
+                    // onChange={setDateFromDatePicker}
+                    // KeyboardButtonProps={{
+                    //   'aria-label': 'change date',
+                    // }}
+                  />
+                </MuiPickersUtilsProvider>
 
                 <form className={classes.container} noValidate>
                   <TextField
