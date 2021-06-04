@@ -12,7 +12,6 @@ import Divider from '@material-ui/core/Divider'
 
 import { MatchCard, MatchInfo } from './components'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
-import { TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   paper: {
