@@ -71,7 +71,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='down' ref={ref} {...props} />
 })
 
-function MatchInfo() {
+export default function MatchInfo() {
   const classes = useStyles()
   const steps = getSteps()
   const dispatch = useDispatch()
@@ -420,5 +420,3 @@ function MatchInfo() {
     </>
   )
 }
-
-export default MatchInfo

@@ -77,7 +77,7 @@ export default function Games() {
                     margin='normal'
                     id='date-picker-inline'
                     label='Choose Date'
-                    value={new Date()}
+                    value={datePickerDate}
                     onChange={setDateFromDatePicker}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
