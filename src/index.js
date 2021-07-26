@@ -1,12 +1,12 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import "./index.css"
-import App from "./App"
-import { Provider } from "react-redux"
-import { createStore, applyMiddleware, compose } from "redux"
-import thunk from "redux-thunk"
-import rootReducer from "./reducers/index"
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import rootReducer from './redux/reducers/index'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -20,14 +20,14 @@ let store = createStore(
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#2196f3"
+      main: '#2196f3',
       // main: '#43a047'
       // main: "#f57c00
-    }
+    },
     // secondary: {
     //   main: '#10D92E'
     // }
-  }
+  },
   // typography: {
   //   fontFamily: 'Arial',
   //   h1: {
@@ -43,5 +43,5 @@ ReactDOM.render(
       <App />
     </ThemeProvider>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root')
 )
