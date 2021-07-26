@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import ListItem from '@material-ui/core/ListItem'
 import { fromUnixTime, format } from 'date-fns'
-// import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function MatchCard({ match }) {
+export default function MatchCard({ match }) {
   const classes = useStyles()
   const dispatch = useDispatch()
 
@@ -36,45 +35,35 @@ function MatchCard({ match }) {
   return (
     <ListItem button onClick={handleCurrentMatch}>
       <Grid container justify='center' style={{ height: '30px', padding: '0px' }}>
-        <Grid
-          item
-          xs={5}
-          // style={{ backgroundColor: 'yenllow '}}
-        >
+        <Grid item xs={5}>
           <Grid container alignItems='center' justify='flex-end'>
-            <span className={`${classes.margin} ${classes.fontSize}`}>{match.homeTeam.team_name}</span>
-            <Avatar src={match.homeTeam.logo} className={`${classes.margin} ${classes.logoSize}`} />
+            <span className={`${classes.margin} ${classes.fontSize}`}>{match.teams.home.name}</span>
+            <Avatar src={match.teams.home.logo} className={`${classes.margin} ${classes.logoSize}`} />
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={1}
-          // style={{ backgroundColor: 'pink'}}
-        >
+        <Grid item xs={1}>
           <Grid container direction='column' alignItems='center'>
-            {match.statusShort === 'NS' ? (
-              <div className={classes.matchTime}>{format(fromUnixTime(match.event_timestamp), 'HH:mm')}</div>
+            {match.fixture.status.short === 'NS' ? (
+              <div className={classes.matchTime}>
+                {format(fromUnixTime(match.fixture.timestamp), 'HH:mm')}
+              </div>
             ) : (
               <>
                 <span className={classes.fontSize}>
-                  {match.goalsHomeTeam} - {match.goalsAwayTeam}
+                  {match.goals.home} - {match.goals.away}
                 </span>
-                <span style={{ fontSize: '0.7em' }}>{match.statusShort}</span>
+                <span style={{ fontSize: '0.7em' }}>{match.fixture.status.short}</span>
               </>
             )}
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={5}
-          // style={{ backgroundColor: 'green '}}
-        >
+        <Grid item xs={5}>
           <Grid container alignItems='center' direction='row'>
             <Grid item>
-              <Avatar src={match.awayTeam.logo} className={`${classes.margin} ${classes.logoSize}`} />
+              <Avatar src={match.teams.away.logo} className={`${classes.margin} ${classes.logoSize}`} />
             </Grid>
             <Grid item>
-              <p className={`${classes.margin} ${classes.fontSize}`}>{match.awayTeam.team_name}</p>
+              <p className={`${classes.margin} ${classes.fontSize}`}>{match.teams.away.name}</p>
             </Grid>
           </Grid>
         </Grid>
@@ -82,5 +71,3 @@ function MatchCard({ match }) {
     </ListItem>
   )
 }
-
-export default MatchCard

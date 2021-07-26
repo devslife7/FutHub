@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMatches, setDatePickerDate } from '../../redux/actions/matches'
 import { makeStyles } from '@material-ui/core/styles'
-import { format } from 'date-fns'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import Typography from '@material-ui/core/Typography'
@@ -58,7 +57,7 @@ export default function Games() {
   }
 
   const setDateFromDatePicker = date => {
-    dispatch(setDatePickerDate(format(date, 'yyyy-M-d')))
+    dispatch(setDatePickerDate(date))
   }
 
   return (
@@ -78,14 +77,13 @@ export default function Games() {
                     margin='normal'
                     id='date-picker-inline'
                     label='Choose Date'
-                    value={datePickerDate}
+                    value={new Date()}
                     onChange={setDateFromDatePicker}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
                   />
                 </MuiPickersUtilsProvider>
-                {console.log(datePickerDate)}
               </Grid>
               {loading ? (
                 <Grid item>

@@ -1,6 +1,6 @@
 import React from 'react'
 import 'date-fns'
-import { Button, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Button, makeStyles, Typography } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 
@@ -42,7 +42,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <Paper className={classes.paper}> */}
       <Typography className={classes.title}>Welcome to FutFriends</Typography>
       <Typography className={classes.description}>
         FutFriends is an app for soccer fanatics who enjoy watching soccer games with their friends but
@@ -52,7 +51,6 @@ export default function Home() {
       <Button variant='contained' color='primary' className={classes.button} onClick={handleGetStarted}>
         Get Started
       </Button>
-      {/* </Paper> */}
     </>
   )
 }
