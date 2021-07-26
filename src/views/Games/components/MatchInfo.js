@@ -97,8 +97,8 @@ function MatchInfo() {
   }
 
   const handleClickOpen = () => {
-    setPartyName(`${currentMatch.homeTeam.team_name} VS ${currentMatch.awayTeam.team_name}`)
-    setPartyTime(format(fromUnixTime(currentMatch.event_timestamp), 'p'))
+    setPartyName(`${currentMatch.teams.home.name} VS ${currentMatch.teams.away.name}`)
+    setPartyTime(format(fromUnixTime(currentMatch.fixture.timestamp), 'p'))
     setOpen(true)
   }
 
@@ -121,14 +121,14 @@ function MatchInfo() {
           name: partyName,
           time: partyTime,
           location: partyLocation,
-          timestamp: currentMatch.event_timestamp,
+          timestamp: currentMatch.fixture.timestamp,
           creator_name: currentUser.name,
           league_name: currentMatch.league.name,
           league_logo: currentMatch.league.logo,
-          home_team_name: currentMatch.homeTeam.team_name,
-          home_team_logo: currentMatch.homeTeam.logo,
-          away_team_name: currentMatch.awayTeam.team_name,
-          away_team_logo: currentMatch.awayTeam.logo,
+          home_team_name: currentMatch.teams.home.name,
+          home_team_logo: currentMatch.teams.home.logo,
+          away_team_name: currentMatch.teams.away.name,
+          away_team_logo: currentMatch.teams.away.logo,
         },
         user_id: currentUser.id,
         friend_ids: friendIds,
@@ -193,19 +193,19 @@ function MatchInfo() {
   const horizontal = 'center'
   return (
     <>
-      {currentMatch.fixture_id ? (
+      {currentMatch.fixture.id ? (
         <>
           <Grid container style={{ margin: '40px 0px' }} spacing={2} justify='center' alignItems='center'>
             <Grid item xs={5}>
               <Grid container justify='center' alignItems='center' direction='column'>
-                <Avatar variant='square' src={currentMatch.homeTeam.logo} className={classes.logo} />
+                <Avatar variant='square' src={currentMatch.teams.home.logo} className={classes.logo} />
                 <Typography
                   variant='h1'
                   align='center'
                   color='textPrimary'
                   style={{ fontSize: '1.9em', marginTop: '10px' }}
                 >
-                  {currentMatch.homeTeam.team_name}
+                  {currentMatch.teams.home.name}
                 </Typography>
               </Grid>
             </Grid>
@@ -213,22 +213,22 @@ function MatchInfo() {
               <Grid container justify='center'>
                 <Grid container direction='column' alignItems='center'>
                   <span style={{ fontSize: '2.2em' }}>
-                    {currentMatch.goalsHomeTeam} - {currentMatch.goalsAwayTeam}
+                    {currentMatch.goals.home} - {currentMatch.goals.away}
                   </span>
-                  <span style={{ fontSize: '1.3em' }}>{currentMatch.statusShort}</span>
+                  <span style={{ fontSize: '1.3em' }}>{currentMatch.fixture.status.short}</span>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={5}>
               <Grid container justify='center' alignItems='center' direction='column'>
-                <Avatar variant='square' src={currentMatch.awayTeam.logo} className={classes.logo} />
+                <Avatar variant='square' src={currentMatch.teams.away.logo} className={classes.logo} />
                 <Typography
                   variant='h1'
                   align='center'
                   color='textPrimary'
                   style={{ fontSize: '1.9em', marginTop: '10px' }}
                 >
-                  {currentMatch.awayTeam.team_name}
+                  {currentMatch.teams.away.name}
                 </Typography>
               </Grid>
             </Grid>
@@ -243,14 +243,16 @@ function MatchInfo() {
                 <Grid item>{currentMatch.league.name}</Grid>
                 <Grid item>
                   <Grid container justify='center' alignItems='center' spacing={1}>
-                    <Grid item>
-                      <img
-                        className={classes.countryLogo}
-                        src={currentMatch.league.flag}
-                        alt='country logo'
-                        style={{ height: '20px' }}
-                      />
-                    </Grid>
+                    {currentMatch.league.flag && (
+                      <Grid item>
+                        <img
+                          className={classes.countryLogo}
+                          src={currentMatch.league.flag}
+                          alt='country logo'
+                          style={{ height: '20px' }}
+                        />
+                      </Grid>
+                    )}
                     <Grid item>{currentMatch.league.country}</Grid>
                   </Grid>
                 </Grid>
@@ -261,27 +263,27 @@ function MatchInfo() {
                 <Grid item>
                   Date:
                   <div style={{ marginLeft: '36px', display: 'inline' }}>
-                    {format(fromUnixTime(currentMatch.event_timestamp), 'PP')}
+                    {format(fromUnixTime(currentMatch.fixture.timestamp), 'PP')}
                   </div>
                 </Grid>
                 <Grid item>
                   Time:
                   <div style={{ marginLeft: '36px', display: 'inline' }}>
-                    {format(fromUnixTime(currentMatch.event_timestamp), 'p')}
+                    {format(fromUnixTime(currentMatch.fixture.timestamp), 'p')}
                   </div>
                 </Grid>
                 <Grid item>
-                  Status: <span style={{ marginLeft: '22px' }}>{currentMatch.status}</span>
+                  Status: <span style={{ marginLeft: '22px' }}>{currentMatch.fixture.status.long}</span>
                 </Grid>
                 <Grid item>
-                  Round: <span style={{ marginLeft: '24px' }}>{currentMatch.round}</span>
+                  City: <span style={{ marginLeft: '39px' }}>{currentMatch.fixture.venue.city}</span>
                 </Grid>
                 <Grid item>
-                  Stadium: <span style={{ marginLeft: '10px' }}>{currentMatch.venue}</span>
+                  Stadium: <span style={{ marginLeft: '10px' }}>{currentMatch.fixture.venue.name}</span>
                 </Grid>
-                {currentMatch.referee && (
+                {currentMatch.fixture.referee && (
                   <Grid item>
-                    Referee: <span style={{ marginLeft: '14px' }}>{currentMatch.referee}</span>
+                    Referee: <span style={{ marginLeft: '14px' }}>{currentMatch.fixture.referee}</span>
                   </Grid>
                 )}
               </Grid>
@@ -289,7 +291,7 @@ function MatchInfo() {
           </Grid>
           {loggedIn && (
             <>
-              {currentMatch.statusShort === 'NS' ? (
+              {currentMatch.fixture.status.short === 'NS' ? (
                 <Button
                   variant='contained'
                   color='primary'
