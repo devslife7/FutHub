@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 // import LeagueSearchBar from '../../components/LeaguesSearchBar'
-import { fetchPopularLeagues } from '../../actions/leagues'
+import { fetchPopularLeagues } from '../../redux/actions/leagues'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'

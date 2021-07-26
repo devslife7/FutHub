@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addWatchParty, fetchRemoveInv } from '../../../actions/user'
+import { addWatchParty, fetchRemoveInv } from '../../../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 import { fromUnixTime, format } from 'date-fns'
 import Grid from '@material-ui/core/Grid'

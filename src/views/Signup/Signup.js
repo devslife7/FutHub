@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setCurrentUser } from '../../actions/user'
+import { setCurrentUser } from '../../redux/actions/user'
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'

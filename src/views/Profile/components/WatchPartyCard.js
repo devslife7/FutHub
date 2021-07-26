@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { replaceWatchParty } from '../../../actions/user'
+import { replaceWatchParty } from '../../../redux/actions/user'
 import { fromUnixTime, format } from 'date-fns'
 // import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
-import { removeWatchParty } from '../../../actions/user'
+import { removeWatchParty } from '../../../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'

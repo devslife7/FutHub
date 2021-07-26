@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchMatches, setDatePickerDate } from '../../actions/matches'
+import { fetchMatches, setDatePickerDate } from '../../redux/actions/matches'
 import { makeStyles } from '@material-ui/core/styles'
 import { format } from 'date-fns'
 import 'date-fns'

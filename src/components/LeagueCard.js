@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user'
+import { addFavoriteLeague, removeFavoriteLeague } from '../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'

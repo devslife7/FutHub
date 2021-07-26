@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addFriend, removeFriend } from '../../actions/user'
+import { addFriend, removeFriend } from '../../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Button } from '@material-ui/core'
 import FriendCard from '../../components/FriendCard'

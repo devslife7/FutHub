@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentUser, logOutCurrentUser } from '../../actions/user'
+import { setCurrentUser, logOutCurrentUser } from '../../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
 
 import FriendCard from '../../components/FriendCard'
