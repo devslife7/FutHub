@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-const serverURL = process.env.BACKEND_SERVER_URL
+const serverURL = process.env.REACT_APP_SERVER_URL
 const matchesURL = serverURL + 'fixtures/date/'
 
 export const setCurrentMatch = match => {

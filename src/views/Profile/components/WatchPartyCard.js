@@ -24,7 +24,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 // import InputLabel from "@material-ui/core/InputLabel"
 import Button from '@material-ui/core/Button'
 
-const serverURL = process.env.BACKEND_SERVER_URL
+const serverURL = process.env.REACT_APP_SERVER_URL
 const watchPartyURL = serverURL + 'watchparties/'
 
 const useStyles = makeStyles(theme => ({
@@ -77,7 +77,7 @@ export default function WatchPartyCard({ party }) {
   const handleEditSubmit = () => {
     handleClose()
 
-    const serverURL = process.env.BACKEND_SERVER_URL
+    const serverURL = process.env.REACT_APP_SERVER_URL
     const watchpartyURL = serverURL + 'watchparties/'
 
     const patchRequest = {

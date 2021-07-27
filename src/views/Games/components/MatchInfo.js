@@ -34,7 +34,7 @@ import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend'
 import TelegramIcon from '@material-ui/icons/Telegram'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 
-const serverURL = process.env.BACKEND_SERVER_URL
+const serverURL = process.env.REACT_APP_SERVER_URL
 const watchpartiesURL = serverURL + 'watchparties/'
 
 function Alert(props) {

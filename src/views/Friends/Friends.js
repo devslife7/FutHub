@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
-const serverURL = process.env.BACKEND_SERVER_URL
+const serverURL = process.env.REACT_APP_SERVER_URL
 const userURL = serverURL + 'users/'
 const friendshipsURL = serverURL + 'friendships/'
 const removeFriendshipURL = friendshipsURL + 'remove/'
