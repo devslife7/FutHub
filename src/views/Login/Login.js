@@ -88,6 +88,7 @@ export default function Login({ history }) {
       body: JSON.stringify(requestBody),
     }
 
+    console.log('Login fetch to: ', logInURL)
     fetch(logInURL, postRequest)
       .then(resp => resp.json())
       .then(data => {
