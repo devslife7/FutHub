@@ -74,7 +74,7 @@ export default function Login({ history }) {
 
   const handleLogin = e => {
     e.preventDefault()
-    let user = {
+    let requestBody = {
       user: {
         username: username,
         password: password,
@@ -85,7 +85,7 @@ export default function Login({ history }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(requestBody),
     }
 
     fetch(logInURL, postRequest)
