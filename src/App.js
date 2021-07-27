@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container'
 import { NavBar } from './layouts'
 import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings, Home } from './views'
 
-const serverURL = process.env.REACT_APP_SERVER_URL
+const serverURL = process.env.BACKEND_SERVER_URL
 const usersURL = serverURL + 'users/'
 
 export default function App() {

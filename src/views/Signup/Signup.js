@@ -13,7 +13,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import Paper from '@material-ui/core/Paper'
 
-const serverURL = process.env.REACT_APP_SERVER_URL
+const serverURL = process.env.BACKEND_SERVER_URL
 const signUpURL = serverURL + 'signup/'
 
 function Alert(props) {
