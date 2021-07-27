@@ -36,8 +36,6 @@ const useStyles = makeStyles(theme => ({
   },
   gridStyle: {
     marginTop: '20px',
-    // backgroundColor: '#EAEAEA',
-    // borderRadius: '20px',
     padding: '0px 0px',
   },
   title: {
