@@ -20,16 +20,6 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
 }
 
-function Copyright() {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center' style={{ color: 'white' }}>
-      {'Copyright © '}
-      {' FutFriends '} {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -97,7 +87,6 @@ export default function Login({ history }) {
         } else {
           localStorage.token = data.token
           localStorage.userId = data.user.id
-          console.log('this is the data.user from fetch: ', data.user)
           dispatch(setCurrentUser(data.user))
           history.push('/profile')
         }
@@ -155,7 +144,9 @@ export default function Login({ history }) {
           </form>
         </Paper>
         <Box mt={8}>
-          <Copyright />
+          <Typography variant='body2' color='textSecondary' align='center' style={{ color: 'white' }}>
+            Copyright © FutFriends {new Date().getFullYear()}
+          </Typography>
         </Box>
         <Snackbar
           open={open}
