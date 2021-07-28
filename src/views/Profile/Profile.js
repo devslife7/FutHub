@@ -116,7 +116,7 @@ export default function Profile({ history }) {
     ))
   }
 
-  // file upload state
+  // avatar upload state
   const [avatar, setAvatar] = useState('')
 
   const handleUploadAvatar = () => {
@@ -191,7 +191,7 @@ export default function Profile({ history }) {
         </Grid>
 
         <Grid item xs={9}>
-          <Paper elevation={3} style={{ padding: '30px', backgroundColor: '#f1f1f1' }}>
+          <Paper elevation={3} style={{ padding: '30px' }}>
             <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '0px' }}>
               Favorite Leagues:
             </Typography>

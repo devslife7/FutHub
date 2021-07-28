@@ -275,6 +275,9 @@ export default function MatchInfo() {
                   Status: <span style={{ marginLeft: '22px' }}>{currentMatch.fixture.status.long}</span>
                 </Grid>
                 <Grid item>
+                  Round: <span style={{ marginLeft: '22px' }}>{currentMatch.league.round}</span>
+                </Grid>
+                <Grid item>
                   City: <span style={{ marginLeft: '39px' }}>{currentMatch.fixture.venue.city}</span>
                 </Grid>
                 <Grid item>

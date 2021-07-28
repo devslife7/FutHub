@@ -20,16 +20,6 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
 }
 
-function Copyright() {
-  return (
-    <Typography variant='body2' align='center' style={{ color: 'white' }}>
-      {'Copyright © '}
-      {' FutFriends '} {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -52,12 +42,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Signup({ history }) {
   const dispatch = useDispatch()
+  const classes = useStyles()
   const [username, setUsername] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
   const [error, setError] = useState('')
-  const classes = useStyles()
 
   const openSnackBar = message => {
     let errorMessage = ''
