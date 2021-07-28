@@ -144,7 +144,7 @@ export default function Login({ history }) {
           </form>
         </Paper>
         <Box mt={8}>
-          <Typography variant='body2' color='textSecondary' align='center' style={{ color: 'white' }}>
+          <Typography variant='body2' align='center' style={{ color: 'white' }}>
             Copyright © FutFriends {new Date().getFullYear()}
           </Typography>
         </Box>

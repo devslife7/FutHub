@@ -171,7 +171,9 @@ export default function Signup({ history }) {
         </form>
       </Paper>
       <Box mt={5}>
-        <Copyright />
+        <Typography variant='body2' align='center' style={{ color: 'white' }}>
+          Copyright © FutFriends {new Date().getFullYear()}
+        </Typography>
       </Box>
       <Snackbar
         open={open}
