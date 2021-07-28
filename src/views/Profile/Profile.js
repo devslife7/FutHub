@@ -39,6 +39,18 @@ const useStyles = makeStyles(theme => ({
     padding: '30px',
     backgroundColor: '#fff',
   },
+  placeholderMessage: {
+    width: '100%',
+    textAlign: 'center',
+    color: 'rgba(0,0,0,0.5)',
+    fontSize: '1.2rem',
+    padding: '0rem',
+  },
+  userDataTitle: {
+    fontSize: '1.3em',
+    marginLeft: '2rem',
+    fontWeight: 400,
+  },
 }))
 
 export default function Profile({ history }) {
@@ -87,33 +99,51 @@ export default function Profile({ history }) {
   }
 
   const renderFavLeagues = () => {
-    return currentUser.favLeagues.map((league, idx) => (
-      <Grid key={idx} item xs={4}>
-        <LeagueCardSmall currentLeague={league} />
-      </Grid>
-    ))
+    if (currentUser.favLeagues.length === 0) {
+      return (
+        <Typography className={classes.placeholderMessage}>No leagues selected as favorite...</Typography>
+      )
+    } else {
+      return currentUser.favLeagues.map((league, idx) => (
+        <Grid key={idx} item xs={4}>
+          <LeagueCardSmall currentLeague={league} />
+        </Grid>
+      ))
+    }
   }
   const renderFriends = () => {
-    return currentUser.friends.map((friend, idx) => (
-      <Grid key={idx} item xs={2}>
-        <FriendCard friend={friend} />
-      </Grid>
-    ))
+    if (currentUser.friends.length === 0) {
+      return <Typography className={classes.placeholderMessage}>You have no friends...</Typography>
+    } else {
+      return currentUser.friends.map((friend, idx) => (
+        <Grid key={idx} item xs={2}>
+          <FriendCard friend={friend} />
+        </Grid>
+      ))
+    }
   }
 
   const renderWatchParties = () => {
-    return currentUser.watchparties.map((party, idx) => (
-      <Grid key={idx} item xs={3}>
-        <WatchPartyCard party={party} />
-      </Grid>
-    ))
+    if (currentUser.watchparties.length === 0) {
+      return <Typography className={classes.placeholderMessage}>No upcoming watchparties...</Typography>
+    } else {
+      return currentUser.watchparties.map((party, idx) => (
+        <Grid key={idx} item xs={3}>
+          <WatchPartyCard party={party} />
+        </Grid>
+      ))
+    }
   }
   const renderInvitations = () => {
-    return currentUser.invitations.map((invitation, idx) => (
-      <Grid key={idx} item xs={3}>
-        <InvitationCard invitation={invitation} />
-      </Grid>
-    ))
+    if (currentUser.invitations.length === 0) {
+      return <Typography className={classes.placeholderMessage}>No invitations...</Typography>
+    } else {
+      return currentUser.invitations.map((invitation, idx) => (
+        <Grid key={idx} item xs={3}>
+          <InvitationCard invitation={invitation} />
+        </Grid>
+      ))
+    }
   }
 
   // avatar upload state
@@ -192,28 +222,28 @@ export default function Profile({ history }) {
 
         <Grid item xs={9}>
           <Paper elevation={3} style={{ padding: '30px' }}>
-            <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '0px' }}>
+            <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               Favorite Leagues:
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
               {renderFavLeagues()}
             </Grid>
-            <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '20px' }}>
+            <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               Friends:
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
               {renderFriends()}
             </Grid>
-            <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '20px' }}>
+            <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               WatchParties:
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
               {renderWatchParties()}
             </Grid>
-            <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '20px' }}>
+            <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               Invitations:
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
               {renderInvitations()}
             </Grid>
           </Paper>
