@@ -48,8 +48,8 @@ const useStyles = makeStyles(theme => ({
   },
   userDataTitle: {
     fontSize: '1.3em',
-    marginLeft: '2rem',
     fontWeight: 400,
+    marginLeft: '2rem',
   },
 }))
 

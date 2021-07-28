@@ -1,11 +1,8 @@
 import React from 'react'
-// import { useSelector, useDispatch } from 'react-redux';
-// import { addFavoriteLeague, removeFavoriteLeague } from '../actions/user';
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-// import ButtonBase from '@material-ui/core/ButtonBase'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -26,11 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function LeagueCardSmall({ currentLeague }) {
+export default function LeagueCardSmall({ currentLeague }) {
   const classes = useStyles()
-  // const dispatch = useDispatch()
-  // const currentUserId = useSelector(state => state.user.currentUser.id)
-  // const favLeagues = useSelector(state => state.user.currentUser.favLeagues)
 
   return (
     <>
@@ -42,7 +36,7 @@ function LeagueCardSmall({ currentLeague }) {
           <Grid item container xs>
             <Grid item xs container direction='column' justify='center' spacing={2}>
               <Grid item>
-                <Typography gutterBottom variant='subtitle1'>
+                <Typography gutterBottom variant='subtitle1' noWrap>
                   {currentLeague.name}
                 </Typography>
                 <Typography variant='body2' gutterBottom>
@@ -59,5 +53,3 @@ function LeagueCardSmall({ currentLeague }) {
     </>
   )
 }
-
-export default LeagueCardSmall
