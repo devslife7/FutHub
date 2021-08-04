@@ -47,9 +47,11 @@ const useStyles = makeStyles(theme => ({
     padding: '0rem',
   },
   userDataTitle: {
-    fontSize: '1.3em',
+    fontSize: '1.4em',
     fontWeight: 400,
-    marginLeft: '2rem',
+  },
+  userData: {
+    padding: '0.5rem 0 3rem 0',
   },
 }))
 
@@ -221,29 +223,29 @@ export default function Profile({ history }) {
         </Grid>
 
         <Grid item xs={9}>
-          <Paper elevation={3} style={{ padding: '30px' }}>
+          <Paper elevation={3} style={{ padding: '1.5rem 2rem' }}>
             <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               Favorite Leagues:
             </Typography>
-            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
+            <Grid container spacing={2} className={classes.userData}>
               {renderFavLeagues()}
             </Grid>
             <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               Friends:
             </Typography>
-            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
+            <Grid container spacing={2} className={classes.userData}>
               {renderFriends()}
             </Grid>
             <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               WatchParties:
             </Typography>
-            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
+            <Grid container spacing={2} className={classes.userData}>
               {renderWatchParties()}
             </Grid>
             <Typography variant='h1' gutterBottom className={classes.userDataTitle}>
               Invitations:
             </Typography>
-            <Grid container spacing={2} style={{ padding: '1.5rem 0' }}>
+            <Grid container spacing={2} className={classes.userData}>
               {renderInvitations()}
             </Grid>
           </Paper>
