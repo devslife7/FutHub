@@ -69,10 +69,7 @@ export default function WatchPartyCard({ party }) {
   const handleDelete = () => {
     fetch(watchPartyURL + party.id, { method: 'DELETE' })
       .then(resp => resp.json())
-      .then(data => {
-        console.log(data)
-        dispatch(removeWatchParty(party.id))
-      })
+      .then(data => dispatch(removeWatchParty(party.id)))
   }
   const handleEditSubmit = () => {
     handleClose()

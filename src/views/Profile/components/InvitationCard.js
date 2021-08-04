@@ -55,10 +55,7 @@ export default function InvitationCard({ invitation }) {
       .then(data => dispatch(addWatchParty(data.watchparty)))
   }
 
-  const removeInvitation = () => {
-    console.log('trigger remove invitatiton func')
-    dispatch(fetchRemoveInv(invitation.id))
-  }
+  const removeInvitation = () => dispatch(fetchRemoveInv(invitation.id))
 
   return (
     <>

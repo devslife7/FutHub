@@ -98,7 +98,6 @@ function Friends() {
     fetch(friendshipsURL, postRequest)
       .then(resp => resp.json())
       .then(friend => {
-        console.log(friend)
         dispatch(addFriend(friend))
       })
   }
@@ -118,10 +117,7 @@ function Friends() {
     }
     fetch(removeFriendshipURL, postRequest)
       .then(resp => resp.json())
-      .then(data => {
-        console.log(data)
-        dispatch(removeFriend(currentFriend.id))
-      })
+      .then(data => dispatch(removeFriend(currentFriend.id)))
   }
 
   const generateFriends = () => {
@@ -171,7 +167,6 @@ function Friends() {
   }
 
   const renderFriendFriends = () => {
-    console.log('FRIEND: ', currentFriend)
     return currentFriend.friends.map((f, idx) => (
       <Grid key={idx} item xs={2}>
         <FriendCard friend={f} />

@@ -38,6 +38,12 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  demoLogin: {
+    margin: '30px 0 15px 0',
+    borderRadius: '5px',
+    color: theme.palette.primary.main,
+    fontSize: '18px',
+  },
 }))
 
 export default function Login({ history }) {
@@ -102,6 +108,9 @@ export default function Login({ history }) {
           <Typography component='h1' variant='h5' style={{ color: '#2196f3' }}>
             Login
           </Typography>
+
+          <div className={classes.demoLogin}>Demo Login: demo/demo</div>
+
           <form className={classes.form} noValidate onSubmit={e => handleLogin(e)}>
             <TextField
               variant='outlined'

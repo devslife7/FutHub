@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400,
   },
   userData: {
-    padding: '0.5rem 0 3rem 0',
+    padding: '0.5rem 0 2rem 0',
   },
 }))
 
@@ -154,11 +154,11 @@ export default function Profile({ history }) {
   const handleUploadAvatar = () => {
     const formData = new FormData()
 
-    console.log('formdata one: ', formData)
+    // console.log('formdata one: ', formData)
     formData.append('avatar', avatar)
 
-    console.log('formdata.append(avatar, avatar): ', formData)
-    console.log('formData valid?', !!avatar)
+    // console.log('formdata.append(avatar, avatar): ', formData)
+    // console.log('formData valid?', !!avatar)
 
     const serverURL = process.env.REACT_APP_SERVER_URL
     const uploadURL = serverURL + 'uploadAvatar/'
@@ -170,7 +170,7 @@ export default function Profile({ history }) {
       })
         .then(res => res.json())
         .then(user => {
-          console.log(user)
+          // console.log(user)
           dispatch(setCurrentUser(user))
           setAvatar('')
         })

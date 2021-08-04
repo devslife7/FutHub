@@ -3,133 +3,132 @@ const initialState = {
     friends: [],
     favLeagues: [],
     invitations: [],
-    watchparties: []
+    watchparties: [],
   },
-  loggedIn: false
+  loggedIn: false,
 }
 
-export default ( state = initialState, action ) => {
+export default (state = initialState, action) => {
   let idx
   switch (action.type) {
-    case "SET_CURRENT_USER":
-      const { id, name, username, profile_img, friends, user_leagues, watchparties, invitations } = action.payload
+    case 'SET_CURRENT_USER':
+      const { id, name, username, profile_img, friends, user_leagues, watchparties, invitations } =
+        action.payload
 
-      const parsedUserLeagues = user_leagues.map( user_league => {
+      const parsedUserLeagues = user_leagues.map(user_league => {
         return {
           ...user_league.league,
-          userRelationshipId: user_league.id
+          userRelationshipId: user_league.id,
         }
       })
 
       const parsedCurrentUser = {
-        id, name, username, profile_img, friends, watchparties, invitations,
-        favLeagues: parsedUserLeagues
+        id,
+        name,
+        username,
+        profile_img,
+        friends,
+        watchparties,
+        invitations,
+        favLeagues: parsedUserLeagues,
       }
 
-      return  {
+      return {
         ...state,
         currentUser: parsedCurrentUser,
-        loggedIn: true
+        loggedIn: true,
       }
 
-    case "LOGOUT_CURRENT_USER":
-      return  {
+    case 'LOGOUT_CURRENT_USER':
+      return {
         ...state,
         currentUser: {},
-        loggedIn: false
+        loggedIn: false,
       }
 
-    case "ADD_TO_FAVORITES":
-      return  {
+    case 'ADD_TO_FAVORITES':
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          favLeagues: [...state.currentUser.favLeagues.concat(action.payload)]
-        }
+          favLeagues: [...state.currentUser.favLeagues.concat(action.payload)],
+        },
       }
 
-    case "REMOVE_FROM_FAVORITES":
-      idx = state.currentUser.favLeagues.findIndex( league => league.userRelationshipId === action.payload )
-      return  {
+    case 'REMOVE_FROM_FAVORITES':
+      idx = state.currentUser.favLeagues.findIndex(league => league.userRelationshipId === action.payload)
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
           favLeagues: [
             ...state.currentUser.favLeagues.slice(0, idx),
-            ...state.currentUser.favLeagues.slice(idx + 1)
-          ]
-        }
+            ...state.currentUser.favLeagues.slice(idx + 1),
+          ],
+        },
       }
-    case  "ADD_WATCHPARTY":
-      return  {
+    case 'ADD_WATCHPARTY':
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          watchparties: [...state.currentUser.watchparties.concat(action.payload)]
-        }
+          watchparties: [...state.currentUser.watchparties.concat(action.payload)],
+        },
       }
-    case  "REPLACE_WATCHPARTY":
-      idx = state.currentUser.watchparties.findIndex( wp => wp.id === action.payload.id )
-      return  {
+    case 'REPLACE_WATCHPARTY':
+      idx = state.currentUser.watchparties.findIndex(wp => wp.id === action.payload.id)
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
           watchparties: [
             ...state.currentUser.watchparties.slice(0, idx),
             action.payload,
-            ...state.currentUser.watchparties.slice(idx + 1)
-          ]
-        }
+            ...state.currentUser.watchparties.slice(idx + 1),
+          ],
+        },
       }
-    case  "REMOVE_WATCHPARTY":
-      idx = state.currentUser.watchparties.findIndex( party => party.id === action.payload )
-      console.log('found index', idx)
-      return  {
+    case 'REMOVE_WATCHPARTY':
+      idx = state.currentUser.watchparties.findIndex(party => party.id === action.payload)
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
           watchparties: [
             ...state.currentUser.watchparties.slice(0, idx),
-            ...state.currentUser.watchparties.slice(idx + 1)
-          ]
-        }
+            ...state.currentUser.watchparties.slice(idx + 1),
+          ],
+        },
       }
-    case  "ADD_FRIEND":
-      return  {
+    case 'ADD_FRIEND':
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          friends: [
-            ...state.currentUser.friends,
-            action.payload
-          ]
-        }
+          friends: [...state.currentUser.friends, action.payload],
+        },
       }
-    case  "REMOVE_FRIEND":
-      idx = state.currentUser.friends.findIndex( friend => friend.id === action.payload )
-      return  {
+    case 'REMOVE_FRIEND':
+      idx = state.currentUser.friends.findIndex(friend => friend.id === action.payload)
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          friends: [
-            ...state.currentUser.friends.slice(0, idx),
-            ...state.currentUser.friends.slice(idx + 1)
-          ]
-        }
+          friends: [...state.currentUser.friends.slice(0, idx), ...state.currentUser.friends.slice(idx + 1)],
+        },
       }
-    case  "REMOVE_INVITATION":
-      idx = state.currentUser.invitations.findIndex( inv => inv.id === action.payload )
-      return  {
+    case 'REMOVE_INVITATION':
+      idx = state.currentUser.invitations.findIndex(inv => inv.id === action.payload)
+      return {
         ...state,
         currentUser: {
           ...state.currentUser,
           invitations: [
             ...state.currentUser.invitations.slice(0, idx),
-            ...state.currentUser.invitations.slice(idx + 1)
-          ]
-        }
+            ...state.currentUser.invitations.slice(idx + 1),
+          ],
+        },
       }
-
 
     default:
       return state
