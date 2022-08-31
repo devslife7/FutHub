@@ -20,6 +20,7 @@ export default function App() {
     fetch(`${process.env.REACT_APP_SERVER_URL}/wakeup`)
       .then(resp => resp.json())
       .then(data => console.log(data.message))
+      .catch(err => console.log(err))
 
     if (!!localStorage.userId) {
       fetch(usersURL + localStorage.userId)
