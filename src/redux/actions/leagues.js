@@ -1,7 +1,7 @@
 const serverURL = process.env.REACT_APP_SERVER_URL
-const popularLeaguesURL = serverURL + 'leagues/popular/'
-const internationalLeaguesURL = serverURL + 'leagues/international/'
-const allLeaguesURL = serverURL + 'leagues/'
+const popularLeaguesURL = serverURL + '/leagues/popular/'
+const internationalLeaguesURL = serverURL + '/leagues/international/'
+const allLeaguesURL = serverURL + '/leagues/'
 
 export const fetchPopularLeagues = () => {
   return dispatch => {

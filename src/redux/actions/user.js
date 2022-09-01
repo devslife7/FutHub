@@ -1,7 +1,7 @@
 const serverURL = process.env.REACT_APP_SERVER_URL
 
-const favLeaguesAddURL = serverURL + 'favLeagues/add/'
-const favLeaguesRemoveURL = serverURL + 'favLeagues/remove/'
+const favLeaguesAddURL = serverURL + '/favLeagues/add/'
+const favLeaguesRemoveURL = serverURL + '/favLeagues/remove/'
 
 export const setCurrentUser = user => {
   return {
@@ -78,7 +78,7 @@ export const removeInvitation = invitationId => {
 }
 export const fetchRemoveInv = invitationId => {
   const serverURL = process.env.REACT_APP_SERVER_URL
-  const user_invitationURL = serverURL + 'user_invitations/remove/'
+  const user_invitationURL = serverURL + '/user_invitations/remove/'
 
   return (dispatch, getState) => {
     const userId = getState().user.currentUser.id

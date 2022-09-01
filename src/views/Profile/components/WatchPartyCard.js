@@ -25,7 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const watchPartyURL = serverURL + 'watchparties/'
+const watchPartyURL = serverURL + '/watchparties/'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -75,7 +75,7 @@ export default function WatchPartyCard({ party }) {
     handleClose()
 
     const serverURL = process.env.REACT_APP_SERVER_URL
-    const watchpartyURL = serverURL + 'watchparties/'
+    const watchpartyURL = serverURL + '/watchparties/'
 
     const patchRequest = {
       method: 'PATCH',

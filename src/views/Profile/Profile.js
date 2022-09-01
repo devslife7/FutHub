@@ -19,7 +19,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import InputLabel from '@material-ui/core/InputLabel'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + 'users/'
+const usersURL = serverURL + '/users/'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -161,7 +161,7 @@ export default function Profile({ history }) {
     // console.log('formData valid?', !!avatar)
 
     const serverURL = process.env.REACT_APP_SERVER_URL
-    const uploadURL = serverURL + 'uploadAvatar/'
+    const uploadURL = serverURL + '/uploadAvatar/'
 
     if (!!avatar) {
       fetch(uploadURL + currentUser.id, {

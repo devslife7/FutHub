@@ -8,7 +8,7 @@ import { NavBar } from './layouts'
 import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings, Home } from './views'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + 'users/'
+const usersURL = serverURL + '/users/'
 
 export default function App() {
   console.log('renders App')

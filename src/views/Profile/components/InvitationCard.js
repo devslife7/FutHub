@@ -36,7 +36,7 @@ export default function InvitationCard({ invitation }) {
     dispatch(fetchRemoveInv(invitation.id))
 
     const serverURL = process.env.REACT_APP_SERVER_URL
-    const user_watchpartyURL = serverURL + 'user_watchparties/'
+    const user_watchpartyURL = serverURL + '/user_watchparties/'
     const postRequest = {
       method: 'POST',
       headers: {

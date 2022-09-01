@@ -14,7 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert'
 import Paper from '@material-ui/core/Paper'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const signUpURL = serverURL + 'signup/'
+const signUpURL = serverURL + '/signup/'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />

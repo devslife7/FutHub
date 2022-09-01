@@ -18,9 +18,9 @@ import Typography from '@material-ui/core/Typography'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
-const userURL = serverURL + 'users/'
-const friendshipsURL = serverURL + 'friendships/'
-const removeFriendshipURL = friendshipsURL + 'remove/'
+const userURL = serverURL + '/users/'
+const friendshipsURL = serverURL + '/friendships/'
+const removeFriendshipURL = friendshipsURL + '/remove/'
 
 const useStyles = makeStyles(theme => ({
   root: {
