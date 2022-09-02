@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import Paper from '@material-ui/core/Paper'
+import axios from 'axios'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const logInURL = serverURL + '/login/'
@@ -68,7 +69,7 @@ export default function Login({ history }) {
     setOpen(false)
   }
 
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault()
     let requestBody = {
       user: {
@@ -76,27 +77,40 @@ export default function Login({ history }) {
         password: password,
       },
     }
-    let postRequest = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
+    // let postRequest = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(requestBody),
+    // }
+
+    const response = await axios.post(logInURL, requestBody)
+    const data = response.data
+    console.log('response: ', data)
+
+    if (data.error) {
+      console.log(data.error)
+      openSnackBar()
+    } else {
+      localStorage.token = data.token
+      localStorage.userId = data.user.id
+      dispatch(setCurrentUser(data.user))
+      history.push('/profile')
     }
 
-    console.log('Login fetch to: ', logInURL)
-    fetch(logInURL, postRequest)
-      .then(resp => resp.json())
-      .then(data => {
-        if (data.error) {
-          openSnackBar()
-        } else {
-          localStorage.token = data.token
-          localStorage.userId = data.user.id
-          dispatch(setCurrentUser(data.user))
-          history.push('/profile')
-        }
-      })
+    // fetch(logInURL, postRequest)
+    //   .then(resp => resp.json())
+    //   .then(data => {
+    //     if (data.error) {
+    //       openSnackBar()
+    //     } else {
+    //       localStorage.token = data.token
+    //       localStorage.userId = data.user.id
+    //       dispatch(setCurrentUser(data.user))
+    //       history.push('/profile')
+    //     }
+    //   })
   }
 
   const vertical = 'top'
@@ -164,7 +178,8 @@ export default function Login({ history }) {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert onClose={handleClose} severity='error'>
-            Invalid Username or Password
+            {/* Invalid Username or Password */}
+            testing
           </Alert>
         </Snackbar>
       </Container>
