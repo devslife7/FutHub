@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import Paper from '@material-ui/core/Paper'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import axios from 'axios'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
@@ -53,6 +54,7 @@ export default function Login({ history }) {
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState()
+  const [isLoading, setIsLoading] = useState(false)
 
   const classes = useStyles()
 
@@ -64,30 +66,25 @@ export default function Login({ history }) {
   const openSnackBar = () => setOpen(true)
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
+    if (reason === 'clickaway') return
     setOpen(false)
   }
 
   const handleLogin = async e => {
     e.preventDefault()
+    setIsLoading(true)
+
     let requestBody = {
       user: {
         username: username,
         password: password,
       },
     }
-    // let postRequest = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(requestBody),
-    // }
 
     const response = await axios.post(logInURL, requestBody)
     const data = response.data
+
+    setIsLoading(false)
 
     if (data.error) {
       console.log(data.error)
@@ -99,19 +96,6 @@ export default function Login({ history }) {
       dispatch(setCurrentUser(data.user))
       history.push('/profile')
     }
-
-    // fetch(logInURL, postRequest)
-    //   .then(resp => resp.json())
-    //   .then(data => {
-    //     if (data.error) {
-    //       openSnackBar()
-    //     } else {
-    //       localStorage.token = data.token
-    //       localStorage.userId = data.user.id
-    //       dispatch(setCurrentUser(data.user))
-    //       history.push('/profile')
-    //     }
-    //   })
   }
 
   const vertical = 'top'
@@ -156,7 +140,11 @@ export default function Login({ history }) {
               }}
             />
             <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
-              Log In
+              {isLoading ? (
+                <CircularProgress style={{ width: '30px', height: '30px', color: 'inherit' }} />
+              ) : (
+                'Log In'
+              )}
             </Button>
             <Grid container>
               <Grid item>
