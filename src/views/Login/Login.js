@@ -52,6 +52,7 @@ export default function Login({ history }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState()
 
   const classes = useStyles()
 
@@ -87,10 +88,10 @@ export default function Login({ history }) {
 
     const response = await axios.post(logInURL, requestBody)
     const data = response.data
-    console.log('response: ', data)
 
     if (data.error) {
       console.log(data.error)
+      setErrorMessage(data.error)
       openSnackBar()
     } else {
       localStorage.token = data.token
@@ -178,8 +179,7 @@ export default function Login({ history }) {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert onClose={handleClose} severity='error'>
-            {/* Invalid Username or Password */}
-            testing
+            {errorMessage}
           </Alert>
         </Snackbar>
       </Container>
