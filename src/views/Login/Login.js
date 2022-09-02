@@ -84,8 +84,6 @@ export default function Login({ history }) {
     const response = await axios.post(logInURL, requestBody)
     const data = response.data
 
-    setIsLoading(false)
-
     if (data.error) {
       console.log(data.error)
       setErrorMessage(data.error)
@@ -96,6 +94,7 @@ export default function Login({ history }) {
       dispatch(setCurrentUser(data.user))
       history.push('/profile')
     }
+    setIsLoading(false)
   }
 
   const vertical = 'top'
