@@ -81,20 +81,32 @@ export default function Login({ history }) {
       },
     }
 
-    const response = await axios.post(logInURL, requestBody)
-    const data = response.data
+    try {
+      const response = await axios.post(logInURL, requestBody)
+      const data = response.data
 
-    if (data.error) {
-      console.log(data.error)
-      setErrorMessage(data.error)
-      openSnackBar()
-    } else {
       localStorage.token = data.token
       localStorage.userId = data.user.id
       dispatch(setCurrentUser(data.user))
+      resetForm()
       history.push('/profile')
+    } catch (err) {
+      setErrorMessage(err.response.data.error)
+      openSnackBar()
+      resetForm()
+      return
     }
+  }
+
+  const resetForm = () => {
+    setUsername('')
+    setPassword('')
     setIsLoading(false)
+  }
+
+  const handleGuestLogin = () => {
+    setUsername('demo')
+    setPassword('demo')
   }
 
   const vertical = 'top'
@@ -150,6 +162,12 @@ export default function Login({ history }) {
                 <Link to='/signup' variant='body2' style={{ textDecoration: 'none', color: '#2196f3' }}>
                   {"Don't have an account? Sign Up"}
                 </Link>
+              </Grid>
+
+              <Grid item>
+                <button type='submit' onClick={handleGuestLogin}>
+                  Login as Guest
+                </button>
               </Grid>
             </Grid>
           </form>
