@@ -33,6 +33,8 @@ export default (state = initialState, action) => {
         favLeagues: parsedUserLeagues,
       }
 
+      localStorage.userId = id
+
       return {
         ...state,
         currentUser: parsedCurrentUser,

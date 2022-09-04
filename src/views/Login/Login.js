@@ -86,7 +86,6 @@ export default function Login({ history }) {
       const data = response.data
 
       localStorage.token = data.token
-      localStorage.userId = data.user.id
       dispatch(setCurrentUser(data.user))
       resetForm()
       history.push('/profile')
@@ -118,8 +117,6 @@ export default function Login({ history }) {
           <Typography component='h1' variant='h5' style={{ color: '#2196f3' }}>
             Login
           </Typography>
-
-          <div className={classes.demoLogin}>Demo Login: demo/demo</div>
 
           <form className={classes.form} noValidate onSubmit={e => handleLogin(e)}>
             <TextField
