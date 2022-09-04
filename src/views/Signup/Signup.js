@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import Paper from '@material-ui/core/Paper'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const serverURL = process.env.REACT_APP_SERVER_URL
 const signUpURL = serverURL + '/signup/'
@@ -47,6 +48,7 @@ export default function Signup({ history }) {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
   const openSnackBar = message => {
@@ -70,6 +72,8 @@ export default function Signup({ history }) {
 
   const handleSignup = e => {
     e.preventDefault()
+    setIsLoading(true)
+
     let user = {
       user: {
         name: name,
@@ -96,6 +100,7 @@ export default function Signup({ history }) {
           dispatch(setCurrentUser(data.user))
           history.push('/profile')
         }
+        setIsLoading(false)
       })
   }
 
@@ -149,7 +154,11 @@ export default function Signup({ history }) {
             </Grid>
           </Grid>
           <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
-            Sign Up
+            {isLoading ? (
+              <CircularProgress style={{ width: '30px', height: '30px', color: 'inherit' }} />
+            ) : (
+              'SignUp'
+            )}
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>

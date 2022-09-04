@@ -40,23 +40,39 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  demoLogin: {
-    margin: '30px 0 15px 0',
-    borderRadius: '5px',
+  signUpLink: {
     color: theme.palette.primary.main,
-    fontSize: '18px',
+    textDecoration: 'none',
+    fontFamily: 'Arial',
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+  guestLoginLink: {
+    border: 'none',
+    backgroundColor: 'white',
+    fontSize: '1rem',
+    padding: 0,
+    marginTop: '1rem',
+
+    cursor: 'pointer',
+    color: theme.palette.primary.main,
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
 }))
 
 export default function Login({ history }) {
   const dispatch = useDispatch()
+  const classes = useStyles()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState()
   const [isLoading, setIsLoading] = useState(false)
-
-  const classes = useStyles()
 
   useEffect(() => {
     localStorage.clear() // clears the localStorage data upon component mount
@@ -104,8 +120,8 @@ export default function Login({ history }) {
   }
 
   const handleGuestLogin = () => {
-    setUsername('demo')
-    setPassword('demo')
+    setUsername('Guest')
+    setPassword('guest')
   }
 
   const vertical = 'top'
@@ -156,13 +172,13 @@ export default function Login({ history }) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to='/signup' variant='body2' style={{ textDecoration: 'none', color: '#2196f3' }}>
+                <Link to='/signup' variant='body2' className={classes.signUpLink}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
 
               <Grid item>
-                <button type='submit' onClick={handleGuestLogin}>
+                <button type='submit' className={classes.guestLoginLink} onClick={handleGuestLogin}>
                   Login as Guest
                 </button>
               </Grid>
