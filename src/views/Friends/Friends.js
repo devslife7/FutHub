@@ -190,7 +190,7 @@ function Friends() {
                 <Typography variant='h5' className={classes.title} style={{ margin: '30px 0px 15px 0px' }}>
                   Friends: {currentUser.friends.length}
                 </Typography>
-                <Paper>
+                <Paper elevation='0'>
                   <List style={{ height: '50vh', overflow: 'auto' }}>{generateFriends()}</List>
                 </Paper>
               </Grid>
