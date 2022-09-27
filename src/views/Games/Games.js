@@ -33,6 +33,11 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: 200,
   },
+  renderMatchesPaper: {
+    height: '50vh',
+    width: '100%',
+    overflow: 'auto',
+  },
 }))
 
 export default function Games() {
@@ -98,7 +103,7 @@ export default function Games() {
                       No Matches found for this date
                     </Typography>
                   ) : (
-                    <Paper style={{ height: '50vh', width: '100%', overflow: 'auto' }}>
+                    <Paper elevation='0' className={classes.renderMatchesPaper}>
                       {renderMatches()}
                     </Paper>
                   )}
