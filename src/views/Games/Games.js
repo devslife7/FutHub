@@ -98,7 +98,9 @@ export default function Games() {
                       No Matches found for this date
                     </Typography>
                   ) : (
-                    <Paper style={{ height: '50vh', overflow: 'auto' }}>{renderMatches()}</Paper>
+                    <Paper style={{ height: '50vh', width: '100%', overflow: 'auto' }}>
+                      {renderMatches()}
+                    </Paper>
                   )}
                 </>
               )}
