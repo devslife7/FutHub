@@ -102,6 +102,7 @@ export default function Signup({ history }) {
         }
         setIsLoading(false)
       })
+      .catch(err => console.log('Sign Up fetch error: ', err))
   }
 
   const vertical = 'top'
