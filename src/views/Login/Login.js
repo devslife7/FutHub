@@ -120,8 +120,8 @@ export default function Login({ history }) {
   }
 
   const handleGuestLogin = () => {
-    setUsername('Guest')
-    setPassword('guest')
+    setUsername('guest123')
+    setPassword('password')
   }
 
   const vertical = 'top'

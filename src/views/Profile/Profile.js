@@ -160,7 +160,6 @@ export default function Profile({ history }) {
     // console.log('formdata.append(avatar, avatar): ', formData)
     // console.log('formData valid?', !!avatar)
 
-    const serverURL = process.env.REACT_APP_SERVER_URL
     const uploadURL = serverURL + '/uploadAvatar/'
 
     if (!!avatar) {
@@ -174,6 +173,7 @@ export default function Profile({ history }) {
           dispatch(setCurrentUser(user))
           setAvatar('')
         })
+        .catch(err => console.log('Avatar Fetch Error: ', err))
     }
   }
 
