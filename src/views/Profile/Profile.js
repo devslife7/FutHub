@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser, logOutCurrentUser } from '../../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
-
 import FriendCard from '../../components/FriendCard'
 import { InvitationCard, LeagueCardSmall, WatchPartyCard } from './components'
-
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
