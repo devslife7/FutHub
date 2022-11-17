@@ -17,11 +17,6 @@ export default function App() {
   useEffect(() => {
     console.log('renders App on mount')
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/wakeup`)
-      .then(resp => resp.json())
-      .then(data => console.log(data.message))
-      .catch(err => console.log(err))
-
     if (!!localStorage.userId) {
       fetch(usersURL + localStorage.userId)
         .then(resp => resp.json())
