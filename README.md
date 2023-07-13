@@ -11,10 +11,10 @@ futFriends is a web application that allows friends to schedule watch parties fo
 
 ## Technologies Used
 
-- **Front-end**: The application's front-end is built using HTML, CSS, and JavaScript. It utilizes a modern JavaScript framework (e.g., React, Angular, Vue.js) for creating a dynamic and interactive user interface.
-- **Back-end**: The back-end is implemented using a server-side technology such as Node.js, Ruby on Rails, or Django. It handles user authentication, database operations, and API integrations.
-- **Database**: A relational database management system (e.g., MySQL, PostgreSQL) is used to store user information, watch party details, and game data.
-- **API Integrations**: The application may integrate with external APIs (e.g., sports data APIs) to fetch upcoming game information and other relevant data.
+- **Front-end**: The application's front-end is built using HTML, CSS, and JavaScript. It utilizes React, a modern JavaScript framework for creating a dynamic and interactive user interface.
+- **Back-end**: The back-end is implemented using Ruby on Rails, a server-side technology. It handles user authentication, database operations, and API integrations.
+- **Database**: PostgreSQL, a relational database management system is used to store user information, watch party details, game data, and user details.
+- **API Integrations**: The application may integrate with API-FOOTBALL, an external API to fetch upcoming game information and fixture details.
 
 ## Setup and Installation
 
@@ -35,10 +35,10 @@ The futFriends project is licensed under the [MIT License](https://opensource.or
 
 ## Acknowledgments
 
-- [List any libraries, frameworks, or resources you used and want to acknowledge]
+- React JS, Redux, Ruby on Rails, Postgresql, Material UI, Railway, AWS
 
 ## Contact
 
-If you have any questions, suggestions, or feedback, please contact [your-name] at [your-email].
+If you have any questions, suggestions, or feedback, please contact Marcos Velasco at velascoma7@gmail.com.
 
 Enjoy scheduling watch parties with your friends using futFriends!
