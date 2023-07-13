@@ -18,7 +18,7 @@ futFriends is a web application that allows friends to schedule watch parties fo
 
 ## Setup and Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/futFriends.git`
+1. Clone the repository: `git clone https://github.com/devslife7/FutHub.git`
 2. Install the required dependencies using a package manager like npm or yarn: `npm install` or `yarn install`
 3. Set up the back-end server by following the instructions in the server's README file.
 4. Configure the front-end to connect to the back-end API endpoint by updating the necessary environment variables or configuration files.
