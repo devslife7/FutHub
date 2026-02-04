@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
-const serverURL = process.env.REACT_APP_SERVER_URL
-const matchesURL = serverURL + '/fixtures/date/'
+import { mockAPI } from '../../mockData'
 
 export const setCurrentMatch = match => {
   return {
@@ -19,18 +18,9 @@ export const fetchMatches = () => {
     const datePickerDate = getState().matches.datePickerDate
     dispatch({ type: 'LOADING_MATCHES' })
 
-    const postRequest = {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        fetchDate: format(datePickerDate, 'yyyy-MM-dd'),
-      }),
-    }
+    const dateString = format(datePickerDate, 'yyyy-MM-dd')
 
-    fetch(matchesURL, postRequest)
-      .then(resp => resp.json())
+    mockAPI.getMatchesByDate(dateString)
       .then(matches => {
         dispatch({ type: 'SET_DISPLAY_MATCHES', payload: matches })
       })

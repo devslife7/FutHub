@@ -135,21 +135,17 @@ function Friends() {
   }
 
   const renderUsersList = () => {
-    const userNames = userList.map(friend => {
-      return {
-        name: friend.name,
-        id: friend.id,
-      }
-    })
-    let filteredUserNames = userNames.filter(friend =>
-      friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+    // Filter through current user's friends instead of all users
+    let filteredFriends = currentUser.friends.filter(friend =>
+      friend.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      friend.username.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-    if (filteredUserNames.length === 0) {
+    if (filteredFriends.length === 0) {
       return <div style={{ padding: '10px' }}>No Matches</div>
     }
 
-    return filteredUserNames.map((friend, idx) => (
+    return filteredFriends.map((friend, idx) => (
       <div style={{ padding: '10px' }} onClick={() => fetchFriend(friend)} key={idx}>
         <ButtonBase>{friend.name}</ButtonBase>
       </div>
@@ -202,7 +198,7 @@ function Friends() {
             <Grid container spacing={5} justify='center' style={{ marginTop: '0px' }}>
               <Grid item xs={4}>
                 <Typography variant='h5' className={classes.title}>
-                  Search Users
+                  Search Friends
                 </Typography>
               </Grid>
               <Grid item xs={4}>
@@ -227,7 +223,7 @@ function Friends() {
                   <Grid
                     item
                     xs={3}
-                    // style={{backgroundColor: 'red'}}
+                  // style={{backgroundColor: 'red'}}
                   >
                     <Avatar
                       src={currentFriend.profile_img}
@@ -257,7 +253,7 @@ function Friends() {
                   <Grid
                     item
                     xs={3}
-                    // style={{backgroundColor: 'yellow'}}
+                  // style={{backgroundColor: 'yellow'}}
                   >
                     <Typography variant='h1' gutterBottom style={{ fontSize: '1.2em', marginTop: '20px' }}>
                       {currentFriend.name}

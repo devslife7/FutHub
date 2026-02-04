@@ -1,14 +1,10 @@
-const serverURL = process.env.REACT_APP_SERVER_URL
-const popularLeaguesURL = serverURL + '/leagues/popular/'
-const internationalLeaguesURL = serverURL + '/leagues/international/'
-const allLeaguesURL = serverURL + '/leagues/'
+import { mockAPI } from '../../mockData'
 
 export const fetchPopularLeagues = () => {
   return dispatch => {
     dispatch({ type: 'LOADING_LEAGUES' })
 
-    fetch(popularLeaguesURL)
-      .then(resp => resp.json())
+    mockAPI.getPopularLeagues()
       .then(popularLeagues => {
         dispatch({ type: 'ADD_DISPLAY_LEAGUES', payload: popularLeagues })
       })
@@ -19,8 +15,7 @@ export const fetchInternationalLeagues = () => {
   return dispatch => {
     dispatch({ type: 'LOADING_LEAGUES' })
 
-    fetch(internationalLeaguesURL)
-      .then(resp => resp.json())
+    mockAPI.getPopularLeagues()
       .then(internationalLeagues => {
         dispatch({ type: 'ADD_DISPLAY_LEAGUES', payload: internationalLeagues })
       })
@@ -30,8 +25,7 @@ export const fetchAllLeagues = () => {
   return dispatch => {
     dispatch({ type: 'LOADING_LEAGUES' })
 
-    fetch(allLeaguesURL)
-      .then(resp => resp.json())
+    mockAPI.getPopularLeagues()
       .then(allLeagues => {
         dispatch({ type: 'ADD_DISPLAY_LEAGUES', payload: allLeagues })
       })

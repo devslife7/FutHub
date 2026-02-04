@@ -3,12 +3,10 @@ import { useDispatch } from 'react-redux'
 import { setCurrentUser } from './redux/actions/user'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
+import { mockAPI } from './mockData'
 
 import { NavBar } from './layouts'
 import { Login, Signup, Profile, Favorites, Friends, Leagues, Games, Standings, Home } from './views'
-
-const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + '/users/'
 
 export default function App() {
   console.log('renders App')
@@ -18,8 +16,7 @@ export default function App() {
     console.log('renders App on mount')
 
     if (!!localStorage.userId) {
-      fetch(usersURL + localStorage.userId)
-        .then(resp => resp.json())
+      mockAPI.getUser(localStorage.userId)
         .then(user => {
           dispatch(setCurrentUser(user))
         })

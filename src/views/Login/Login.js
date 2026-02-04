@@ -13,10 +13,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import Paper from '@material-ui/core/Paper'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import axios from 'axios'
-
-const serverURL = process.env.REACT_APP_SERVER_URL
-const logInURL = serverURL + '/login/'
+import { mockAPI } from '../../mockData'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />
@@ -90,23 +87,15 @@ export default function Login({ history }) {
     e.preventDefault()
     setIsLoading(true)
 
-    let requestBody = {
-      user: {
-        username: username,
-        password: password,
-      },
-    }
-
     try {
-      const response = await axios.post(logInURL, requestBody)
-      const data = response.data
+      const data = await mockAPI.login(username, password)
 
       localStorage.token = data.token
       dispatch(setCurrentUser(data.user))
       resetForm()
       history.push('/profile')
     } catch (err) {
-      setErrorMessage(err.response.data.error)
+      setErrorMessage(err.response?.data?.error || 'Login failed')
       openSnackBar()
       resetForm()
       return

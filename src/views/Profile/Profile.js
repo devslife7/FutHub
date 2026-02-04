@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser, logOutCurrentUser } from '../../redux/actions/user'
 import { makeStyles } from '@material-ui/core/styles'
@@ -15,9 +15,6 @@ import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
 import InputLabel from '@material-ui/core/InputLabel'
-
-const serverURL = process.env.REACT_APP_SERVER_URL
-const usersURL = serverURL + '/users/'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,11 +53,19 @@ const useStyles = makeStyles(theme => ({
 export default function Profile({ history }) {
   const classes = useStyles()
   const currentUser = useSelector(state => state.user.currentUser)
+  const loggedIn = useSelector(state => state.user.loggedIn)
   const friends = useSelector(state => state.user.currentUser.friends)
   const dispatch = useDispatch()
   const [newName, setNewName] = useState('')
   const [newUserName, setNewUserName] = useState('')
   const [open, setOpen] = useState(false)
+
+  // Redirect to login if user is not authenticated
+  useEffect(() => {
+    if (!loggedIn) {
+      history.push('/login')
+    }
+  }, [loggedIn, history])
 
   const handelLogOut = () => {
     localStorage.clear()
@@ -76,24 +81,14 @@ export default function Profile({ history }) {
   const handleClose = () => setOpen(false)
 
   const handleEditUser = () => {
-    const patchRequest = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: newName,
-        username: newUserName,
-      }),
+    // Mock implementation - just update the user in Redux
+    const updatedUser = {
+      ...currentUser,
+      name: newName,
+      username: newUserName,
     }
 
-    fetch(usersURL + currentUser.id, patchRequest)
-      .then(resp => resp.json())
-      .then(user => {
-        localStorage.userId = user.id
-        dispatch(setCurrentUser(user))
-      })
-
+    dispatch(setCurrentUser(updatedUser))
     handleUploadAvatar()
     handleClose()
   }
@@ -150,28 +145,14 @@ export default function Profile({ history }) {
   const [avatar, setAvatar] = useState('')
 
   const handleUploadAvatar = () => {
-    const formData = new FormData()
-
-    // console.log('formdata one: ', formData)
-    formData.append('avatar', avatar)
-
-    // console.log('formdata.append(avatar, avatar): ', formData)
-    // console.log('formData valid?', !!avatar)
-
-    const uploadURL = serverURL + '/uploadAvatar/'
-
+    // Mock implementation - just update the avatar in Redux if one is selected
     if (!!avatar) {
-      fetch(uploadURL + currentUser.id, {
-        method: 'PATCH',
-        body: formData,
-      })
-        .then(res => res.json())
-        .then(user => {
-          // console.log(user)
-          dispatch(setCurrentUser(user))
-          setAvatar('')
-        })
-        .catch(err => console.log('Avatar Fetch Error: ', err))
+      const updatedUser = {
+        ...currentUser,
+        profile_img: URL.createObjectURL(avatar),
+      }
+      dispatch(setCurrentUser(updatedUser))
+      setAvatar('')
     }
   }
 
