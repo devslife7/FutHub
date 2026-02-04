@@ -66,6 +66,70 @@ const initialUser = {
   user_leagues: [],
 }
 
+const DUMMY_FRIENDS = [
+  {
+    id: 'd1',
+    name: 'John Doe',
+    username: 'johndoe',
+    profile_img: 'https://i.pravatar.cc/150?u=johndoe',
+    invitations: [],
+    watchparties: [{}, {}, {}],
+    friends: [
+      { id: 'sub1', name: 'Jane', username: 'jane_d', profile_img: 'https://i.pravatar.cc/150?u=jane' },
+      { id: 'sub2', name: 'Bob', username: 'bob_s', profile_img: 'https://i.pravatar.cc/150?u=bob' }
+    ],
+    user_leagues: [{}, {}],
+  },
+  {
+    id: 'd2',
+    name: 'Alice Smith',
+    username: 'alice_s',
+    profile_img: 'https://i.pravatar.cc/150?u=alice',
+    invitations: [],
+    watchparties: [{}],
+    friends: [
+      { id: 'sub3', name: 'Charlie', username: 'charlie_Brown', profile_img: 'https://i.pravatar.cc/150?u=charlie' }
+    ],
+    user_leagues: [{}, {}, {}, {}],
+  },
+  {
+    id: 'd3',
+    name: 'Michael Jordan',
+    username: 'mj_23',
+    profile_img: 'https://i.pravatar.cc/150?u=mj',
+    invitations: [],
+    watchparties: [{}, {}, {}, {}, {}],
+    friends: [],
+    user_leagues: [{}],
+  },
+  {
+    id: 'd4',
+    name: 'Serena Williams',
+    username: 'serena_w',
+    profile_img: 'https://i.pravatar.cc/150?u=serena',
+    invitations: [],
+    watchparties: [{}, {}],
+    friends: [
+      { id: 'sub4', name: 'Venus', username: 'venus_w', profile_img: 'https://i.pravatar.cc/150?u=venus' },
+      { id: 'sub5', name: 'Coach', username: 'coach_x', profile_img: 'https://i.pravatar.cc/150?u=coach' }
+    ],
+    user_leagues: [{}, {}, {}],
+  },
+  {
+    id: 'd5',
+    name: 'Lionel Messi',
+    username: 'leo_messi',
+    profile_img: 'https://i.pravatar.cc/150?u=messi',
+    invitations: [],
+    watchparties: [{}, {}, {}, {}, {}, {}, {}],
+    friends: [
+      { id: 'sub6', name: 'Neymar', username: 'neymar_jr', profile_img: 'https://i.pravatar.cc/150?u=neymar' },
+      { id: 'sub7', name: 'Suarez', username: 'luis_suarez', profile_img: 'https://i.pravatar.cc/150?u=suarez' }
+    ],
+    user_leagues: [{}, {}],
+  }
+]
+
 function Friends() {
   console.log('renders Friends')
   const classes = useStyles()
@@ -84,6 +148,12 @@ function Friends() {
   }, [currentUser.friends])
 
   const handleAddFriend = () => {
+    // If it's a dummy friend, just dispatch the action directly to update state (mocking backend success)
+    if (typeof currentFriend.id === 'string' && currentFriend.id.startsWith('d')) {
+      dispatch(addFriend(currentFriend))
+      return
+    }
+
     const postRequest = {
       method: 'POST',
       headers: {
@@ -103,6 +173,17 @@ function Friends() {
   }
 
   const handleRemoveFriend = () => {
+    // If it's a dummy friend, just dispatch the remove action directly
+    // Use a safe check to see if we can just remove it or if it's permanent
+    // For now, let's just allow the dispatch, but we need to make sure reducer handles it safely or we construct a payload it expects.
+    // Actually, for dummy friends that are hardcoded, "removing" them won't remove them from the hardcoded list.
+    if (typeof currentFriend.id === 'string' && currentFriend.id.startsWith('d')) {
+      // Just clear current friend selection or something?
+      // Since they are hardcoded, we can't really remove them from the list.
+      alert("Cannot remove a permanent dummy friend.")
+      return
+    }
+
     const postRequest = {
       method: 'POST',
       headers: {
@@ -121,7 +202,8 @@ function Friends() {
   }
 
   const generateFriends = () => {
-    return currentUser.friends.map((friend, idx) => (
+    const allFriends = [...currentUser.friends, ...DUMMY_FRIENDS].filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i)
+    return allFriends.map((friend, idx) => (
       <ListItem key={idx} style={{ paddingLeft: '40px', marginRight: '0px' }}>
         <ListItemAvatar>
           <Avatar src={friend.profile_img} />
@@ -136,7 +218,7 @@ function Friends() {
 
   const renderUsersList = () => {
     // Filter through current user's friends instead of all users
-    let filteredFriends = currentUser.friends.filter(friend =>
+    let filteredFriends = [...currentUser.friends, ...DUMMY_FRIENDS].filter(friend =>
       friend.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       friend.username.toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -154,6 +236,11 @@ function Friends() {
 
   const fetchFriend = friend => {
     setSearchTerm('')
+
+    if (typeof friend.id === 'string' && friend.id.startsWith('d')) {
+      setCurrentFriend(friend)
+      return
+    }
 
     fetch(userURL + friend.id)
       .then(resp => resp.json())
@@ -184,7 +271,7 @@ function Friends() {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} style={{ maxWidth: '100%', flexBasis: '100%' }}>
                 <Typography variant='h5' className={classes.title} style={{ margin: '30px 0px 15px 0px' }}>
-                  Friends: {currentUser.friends.length}
+                  Friends: {currentUser.friends.length + DUMMY_FRIENDS.length}
                 </Typography>
                 <Paper elevation='0'>
                   <List style={{ height: '50vh', overflow: 'auto' }}>{generateFriends()}</List>
@@ -230,7 +317,7 @@ function Friends() {
                       style={{ margin: 'auto' }}
                       className={classes.large}
                     />
-                    {currentUser.friends.find(friend => friend.id === currentFriend.id) ? (
+                    {currentUser.friends.find(friend => friend.id === currentFriend.id) || (typeof currentFriend.id === 'string' && currentFriend.id.startsWith('d')) ? (
                       <Button
                         variant='outlined'
                         color='primary'
